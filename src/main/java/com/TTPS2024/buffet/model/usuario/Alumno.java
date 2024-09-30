@@ -1,7 +1,6 @@
 package com.TTPS2024.buffet.model.usuario;
 
 import com.TTPS2024.buffet.model.carrito.Compra;
-import com.TTPS2024.buffet.model.menu.Comida;
 import com.TTPS2024.buffet.model.permiso.Rol;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;

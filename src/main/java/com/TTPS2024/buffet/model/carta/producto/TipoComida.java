@@ -1,4 +1,4 @@
-package com.TTPS2024.buffet.model.menu;
+package com.TTPS2024.buffet.model.carta.producto;
 
 public enum TipoComida {
     ENTRADA,

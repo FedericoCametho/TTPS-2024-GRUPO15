@@ -5,8 +5,10 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class ResponsableDeTurno extends Usuario {
-    public ResponsableDeTurno(Integer dni, String email, String nombre, String apellido, Rol rol) {
+    public Turno turno;
+    public ResponsableDeTurno(Integer dni, String email, String nombre, String apellido, Rol rol, Turno turno) {
         super(dni, email, nombre, apellido, rol);
+        this.turno = turno;
     }
 
     public ResponsableDeTurno() {

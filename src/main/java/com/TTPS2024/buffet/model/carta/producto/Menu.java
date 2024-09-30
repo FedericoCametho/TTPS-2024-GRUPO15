@@ -1,4 +1,4 @@
-package com.TTPS2024.buffet.model.menu;
+package com.TTPS2024.buffet.model.carta.producto;
 
 import com.TTPS2024.buffet.model.carrito.Carrito;
 import com.TTPS2024.buffet.model.carrito.Compra;
@@ -7,14 +7,11 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-public class Menu {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String titulo;
+public class Menu extends ProductoComercializable {
+
     @ManyToMany(mappedBy = "menues", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comida> comidas;
-    private Double precio;
+
     @ManyToMany
     @JoinTable(
             name = "menu_carrito",
@@ -27,17 +24,17 @@ public class Menu {
     private Compra compra;
 
     public Menu(String titulo, List<Comida> comidas, Double precio) {
-        this.titulo = titulo;
+        super(titulo, precio);
         this.comidas = comidas;
-        this.precio = precio;
+        this.setComidasEnMenu(comidas);
     }
 
     public Menu() {
+        super();
     }
-    public Long getId() {
-        return id;
+
+    private void setComidasEnMenu(List<Comida> comidas) {
+        comidas.forEach(comida -> comida.setEnMenu(Boolean.TRUE));
     }
-    public Double getPrecio() {
-        return precio;
-    }
+
 }

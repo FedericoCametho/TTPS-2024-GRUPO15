@@ -1,62 +1,64 @@
 # Grupo 15 - TTPS 2024
 
-![guia.png](../buffet/guia.png)
+## Descripción
 
+Este proyecto es parte del trabajo práctico para la materia TTPS 2024. Consiste en un sistema de gestión de menús y comidas para un buffet.
 
-**DEVELOP**: Se van agregando las funcionalidades aca, no se trabaja directo sobre el branch, se crea un branch nuevo por cada funcionalidad (puntos azules), cuando el desarrollador terminó la funcionalidad se hace un *MERGE REQUEST (preferentemente con squash)* hacia el branch **DEVELOP**, se hace una revision del codigo entre los programadores viendo que se hizo y si está bien, si se acepta pasa de version.
+## Stack Tecnológico
 
-**RELEASE**: Cuando todas las funcionalidades estan agregadas correctamente en **DEVELOP** se transfiere todo a este branch, signfica que está en preproduccion, no se hacen mas agregados de funcionalidades y generalmente se testea todo el sistema, una vez comprobado se hace un merge al main, se actualizan las versiones.
+- **Java**: Lenguaje de programación principal.
+- **Spring Boot**: Framework para la creación de aplicaciones Java.
+- **Maven**: Herramienta de gestión de dependencias y construcción del proyecto.
+- **Jakarta Persistence (JPA)**: API para la persistencia de datos.
+- **H2 Database**: Base de datos en memoria para desarrollo y pruebas.
+- **IntelliJ IDEA**: Entorno de desarrollo integrado (IDE).
 
+## Estructura del Proyecto
 
-**MAIN**: Contiene las ultimas funcionalidades del proyecto, es el ultimo paso a actualizar. El codigo que esta en produccion.
+- `src/main/java`: Contiene el código fuente de la aplicación.
+- `src/main/resources`: Contiene los archivos de configuración y recursos estáticos.
+- `src/test/java`: Contiene las pruebas unitarias y de integración.
 
+## Requisitos Previos
 
+- **Java 17** o superior
+- **Maven 3.6** o superior
+- **IntelliJ IDEA** (recomendado)
 
+## Configuración del Entorno
 
-# Guia:
+1. **Clonar el repositorio**:
+    ```bash
+    git clone https://github.com/FedericoCametho/TTPS2024-Buffet.git
+    cd TTPS2024-Buffet
+    ```
 
-Descargan el proyecto, con la consola se colocan en el directorio y ponen
-```
- git checkout develop
-```
-Con ese comando se van a parar en el branch develop que va a tener las ultimas funcionalidades
+2. **Importar el proyecto en IntelliJ IDEA**:
+    - Abrir IntelliJ IDEA.
+    - Seleccionar "Open" y elegir la carpeta del proyecto clonado.
+    - IntelliJ IDEA detectará automáticamente el proyecto Maven y descargará las dependencias necesarias.
 
-Para crear una funcionalidad tienen que crear un branch para ustedes con el nombre que quieran, parados en la rama develop ponen
-```
- git checkout -b funcionalidad1
-```
-Una vez que hayan terminado la funcionalidad, usando el add y hechos los commit, antes de realizar el merge de la rama, hacer un pull en develop(sirve para actualizar su rama a las nuevas funcionalidades que pudieron agregar otras personas mientras ustedes desarrollaban la suya), para hacer simple pongan
-```
- git checkout develop
-```
-```
-git pull origin develop
-```
-Una vez actualizado develop, vuelven a su rama de funcionalidad y hacen el merge de develop a su rama para traer potenciales cambios que hayan habido durante el desarrollo de la funcionalidad.
-```
- git checkout funcionalidad1
-```
-```
-git merge develop
-```
-Esto va a fusionar la rama de develop con los ultimos cambios a la rama funcionalidad1. Entonces queda pushear los cambios de la rama funcionalidad1 al repositorio remoto.
-```
- git push origin funcionalidad1
-```
-Luego de hacer estos pasos, el merge a la rama develop realizarlo desde github. Crear un PULL REQUEST desde la rama funcionalidad1 a develop y pedirle a un compañero  que lo acepte. 
+3. **Configurar la base de datos H2**:
+    - La configuración de la base de datos H2 se encuentra en `src/main/resources/application.properties`.
 
-Una vez realizado esto, desde la consola de comandos del ide, pararse en la rama develop y traerse los cambios fusionados remoto.
-```
- git checkout develop
-```
-```
- git pull origin develop
-```
+## Levantar la Aplicación
 
+1. **Compilar el proyecto**:
+    ```bash
+    mvn clean install
+    ```
 
+2. **Ejecutar la aplicación**:
+    - Desde IntelliJ IDEA:
+        - Navegar a `src/main/java/com/TTPS2024/buffet/BuffetApplication.java`.
+        - Hacer clic derecho y seleccionar "Run 'BuffetApplication'".
+    - Desde la línea de comandos:
+        ```bash
+        mvn spring-boot:run
+        ```
 
-
-
+3. **Acceder a la aplicación**:
+    - La aplicación estará disponible en `http://localhost:8080`.
 
 
 

@@ -1,6 +1,6 @@
 package com.TTPS2024.buffet.model.carrito;
 
-import com.TTPS2024.buffet.model.menu.Menu;
+import com.TTPS2024.buffet.model.carta.producto.ProductoComercializable;
 import com.TTPS2024.buffet.model.usuario.Alumno;
 import jakarta.persistence.*;
 
@@ -17,8 +17,9 @@ public class Compra {
     @JoinColumn(name = "alumno_id")
     private Alumno usuario;
     @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Menu> menues;
+    private List<ProductoComercializable> productos;
     public Double importe;
+    public Boolean pagado;
 
     public Compra() {
 
@@ -26,8 +27,9 @@ public class Compra {
     public Compra(Carrito carrito){
         this.fecha = LocalDateTime.now();
         this.usuario = carrito.getUsuario();
-        this.menues = carrito.getMenues();
+        this.productos = carrito.getProductos();
         this.importe = carrito.getPrecioTotal();
+        this.pagado = false;
     }
 
 

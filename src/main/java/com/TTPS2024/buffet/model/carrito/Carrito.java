@@ -1,11 +1,9 @@
 package com.TTPS2024.buffet.model.carrito;
 
-import com.TTPS2024.buffet.model.menu.Menu;
+import com.TTPS2024.buffet.model.carta.producto.ProductoComercializable;
 import com.TTPS2024.buffet.model.usuario.Alumno;
-import com.TTPS2024.buffet.model.usuario.Usuario;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,13 +12,18 @@ public class Carrito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToMany(mappedBy = "carritos", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Menu> menues;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "carrito_productos",
+            joinColumns = @JoinColumn(name = "carrito_id"),
+            inverseJoinColumns = @JoinColumn(name = "producto_id")
+    )
+    private List<ProductoComercializable> productos;
     @OneToOne
     private Alumno usuario;
 
     public Carrito() {
-        this.menues = new ArrayList<>();
+        this.productos = new ArrayList<>();
     }
     public void setUsuario(Alumno  alumno){
         this.usuario = alumno;
@@ -29,19 +32,19 @@ public class Carrito {
         return this.usuario;
     }
 
-    public boolean agregarMenu(Menu menu){
-        return this.menues.add(menu);
+    public boolean agregarProducto(ProductoComercializable producto){
+        return this.productos.add(producto);
     }
 
-    public boolean quitarMenu(Menu menu){
-        return this.menues.remove(menu);
+    public boolean quitarProducto(ProductoComercializable producto){
+        return this.productos.remove(producto);
     }
-    public List<Menu> getMenues() {
-        return menues;
+    public List<ProductoComercializable> getProductos() {
+        return productos;
     }
 
     public Double getPrecioTotal(){
-        return this.menues.stream().mapToDouble(Menu::getPrecio).sum();
+        return this.productos.stream().mapToDouble(ProductoComercializable::getPrecio).sum();
     }
 
 }
