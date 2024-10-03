@@ -18,9 +18,10 @@ public class SeguridadWeb  {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .requestMatchers("/**").permitAll()
-                .requestMatchers("/comida/agregar").permitAll();
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().permitAll());  // Permitir todas las solicitudes sin restricciones
+
         return http.build();
     }
 }
