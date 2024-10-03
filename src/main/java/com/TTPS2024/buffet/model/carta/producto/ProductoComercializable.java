@@ -8,9 +8,9 @@ import jakarta.persistence.*;
 public abstract class ProductoComercializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nombre;
-    private Double precio;
+    protected Long id;
+    protected String nombre;
+    protected Double precio;
 
     @ManyToOne
     @JoinColumn(name = "compra_id")
