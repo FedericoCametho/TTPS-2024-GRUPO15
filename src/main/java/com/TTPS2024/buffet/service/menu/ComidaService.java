@@ -2,14 +2,12 @@ package com.TTPS2024.buffet.service.menu;
 
 import com.TTPS2024.buffet.dao.menu.ComidaDAO;
 import com.TTPS2024.buffet.model.carta.producto.Comida;
-import com.TTPS2024.buffet.model.carta.producto.EtiquetaComida;
-import com.TTPS2024.buffet.model.carta.producto.TipoComida;
 import com.TTPS2024.buffet.model.request.ComidaRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+
 import java.util.List;
 
 @Service
@@ -31,7 +29,7 @@ public class ComidaService {
     @Transactional
     public Comida saveComida(ComidaRequest comidaRequest) {
         this.sanitizeComidaRequest(comidaRequest);
-        Comida comida = new Comida(comidaRequest.getNombre(), comidaRequest.getTipoComida(), comidaRequest.getPrecio(), comidaRequest.getEtiquetas());
+        Comida comida = new Comida(comidaRequest.getNombre(), comidaRequest.getTipoComida(), comidaRequest.getPrecio());
         return comidaDAO.save(comida);
     }
 
@@ -48,9 +46,6 @@ public class ComidaService {
         }
         if(comidaRequest.getTipoComida() == null){
             throw new IllegalArgumentException("Tipo de comida no puede ser nulo o no existir");
-        }
-        if(comidaRequest.getEtiquetas() == null ){
-            throw new IllegalArgumentException("Etiquetas de comida no pueden ser nulas");
         }
     }
 }

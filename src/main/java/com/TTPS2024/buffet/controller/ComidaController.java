@@ -1,8 +1,6 @@
 package com.TTPS2024.buffet.controller;
 
 import com.TTPS2024.buffet.model.carta.producto.Comida;
-import com.TTPS2024.buffet.model.carta.producto.EtiquetaComida;
-import com.TTPS2024.buffet.model.carta.producto.TipoComida;
 import com.TTPS2024.buffet.model.request.ComidaRequest;
 import com.TTPS2024.buffet.service.menu.ComidaService;
 import org.springframework.beans.factory.annotation.Autowired;

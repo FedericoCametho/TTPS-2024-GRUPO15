@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class Carta {
+public class CartaDelDia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,8 +18,11 @@ public class Carta {
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private boolean activa;
+    @ManyToOne
+    @JoinColumn(name = "carta_semanal_id")
+    private CartaSemanal cartaSemanal;
 
-    public Carta(Menu menuVegetariano, Menu menuComun, DiaSemana diaSemana, LocalDate fechaInicio, LocalDate fechaFin) {
+    public CartaDelDia(Menu menuVegetariano, Menu menuComun, DiaSemana diaSemana, LocalDate fechaInicio, LocalDate fechaFin) {
         this.menuVegetariano = menuVegetariano;
         this.menuComun = menuComun;
         this.diaSemana = diaSemana;
@@ -28,12 +31,15 @@ public class Carta {
         this.activa = true;
     }
 
-    public Carta() {
+    public CartaDelDia() {
     }
 
 
 
     public Long getId() {
         return id;
+    }
+    public DiaSemana getDiaSemana() {
+        return diaSemana;
     }
 }

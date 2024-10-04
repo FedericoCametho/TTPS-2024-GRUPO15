@@ -1,17 +1,20 @@
 package com.TTPS2024.buffet.model.carta.producto;
 
 import com.TTPS2024.buffet.model.carrito.Carrito;
+import com.TTPS2024.buffet.model.carrito.Compra;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
-public class Comida extends ProductoComercializable{
+public class Comida implements ProductoComercializable{
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
+    protected String nombre;
+    protected Double precio;
     private TipoComida tipoComida;
-    @OneToMany
-    private List<EtiquetaComida> etiquetas;
     @ManyToMany
     @JoinTable(
             name = "comida_menu",
@@ -27,13 +30,14 @@ public class Comida extends ProductoComercializable{
             inverseJoinColumns = @JoinColumn(name = "carrito_id")
     )
     private List<Carrito> carritos;
-
+    @ManyToMany(mappedBy = "comidas", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Compra> compras;
     private Boolean enMenu;
 
-    public Comida(String nombre, TipoComida tipoComida, Double precio, List<EtiquetaComida> etiquetas) {
-        super(nombre, precio);
+    public Comida(String nombre, TipoComida tipoComida, Double precio) {
+        this.nombre = nombre;
+        this.precio = precio;
         this.tipoComida = tipoComida;
-        this.etiquetas = etiquetas;
         this.enMenu = false;
     }
 
@@ -47,14 +51,6 @@ public class Comida extends ProductoComercializable{
 
     public void setTipoComida(TipoComida tipoComida) {
         this.tipoComida = tipoComida;
-    }
-
-    public List<EtiquetaComida> getEtiquetas() {
-        return etiquetas;
-    }
-
-    public void setEtiquetas(List<EtiquetaComida> etiquetas) {
-        this.etiquetas = etiquetas;
     }
 
     public List<Menu> getMenues() {
@@ -79,5 +75,25 @@ public class Comida extends ProductoComercializable{
 
     public void setEnMenu(Boolean enMenu) {
         this.enMenu = enMenu;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
+    }
+
+    public Long getId() {
+        return this.id;
     }
 }
