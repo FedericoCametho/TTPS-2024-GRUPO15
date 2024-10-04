@@ -42,4 +42,56 @@ public class CartaDelDia {
     public DiaSemana getDiaSemana() {
         return diaSemana;
     }
+
+    public Menu getMenuVegetariano() {
+        return menuVegetariano;
+    }
+
+    public void setMenuVegetariano(Menu menuVegetariano) {
+        this.menuVegetariano = menuVegetariano;
+    }
+
+    public Menu getMenuComun() {
+        return menuComun;
+    }
+
+    public void setMenuComun(Menu menuComun) {
+        this.menuComun = menuComun;
+    }
+
+    public void setDiaSemana(DiaSemana diaSemana) {
+        this.diaSemana = diaSemana;
+    }
+
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public LocalDate getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(LocalDate fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public boolean isActiva() {
+        return activa;
+    }
+
+    public void setActiva(boolean activa) {
+        this.activa = activa;
+    }
+
+    public CartaSemanal getCartaSemanal() {
+        return cartaSemanal;
+    }
+
+    public void setCartaSemanal(CartaSemanal cartaSemanal) {
+        this.cartaSemanal = cartaSemanal;
+    }
 }

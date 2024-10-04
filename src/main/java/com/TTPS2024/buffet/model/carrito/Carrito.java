@@ -80,4 +80,11 @@ public class Carrito {
         return this.menues.stream().mapToDouble(ProductoComercializable::getPrecio).sum();
     }
 
+    public void setMenues(List<Menu> menues) {
+        this.menues = menues;
+    }
+
+    public void setComidas(List<Comida> comidas) {
+        this.comidas = comidas;
+    }
 }

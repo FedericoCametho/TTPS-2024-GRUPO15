@@ -55,5 +55,54 @@ public class Compra {
         return productos;
     }
 
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
 
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
+    }
+
+    public Alumno getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Alumno usuario) {
+        this.usuario = usuario;
+    }
+
+    public List<Menu> getMenues() {
+        return menues;
+    }
+
+    public void setMenues(List<Menu> menues) {
+        this.menues = menues;
+    }
+
+    public List<Comida> getComidas() {
+        return comidas;
+    }
+
+    public void setComidas(List<Comida> comidas) {
+        this.comidas = comidas;
+    }
+
+    public Double getImporte() {
+        return importe;
+    }
+
+    public void setImporte(Double importe) {
+        this.importe = importe;
+    }
+
+    public Boolean isPagado() {
+        return pagado;
+    }
+
+    public void marcarPagado() {
+        this.pagado = true;
+    }
+    public void marcarImpago(){
+        this.pagado = false;
+    }
 }

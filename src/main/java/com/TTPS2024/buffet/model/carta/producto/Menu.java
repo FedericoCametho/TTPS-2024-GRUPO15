@@ -14,6 +14,8 @@ public class Menu implements ProductoComercializable {
     protected Long id;
     protected String nombre;
     protected Double precio;
+    @Lob
+    private byte[] foto;
     @ManyToMany(mappedBy = "menues", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comida> comidas;
 
@@ -31,16 +33,12 @@ public class Menu implements ProductoComercializable {
         this.nombre = titulo;
         this.precio = precio;
         this.comidas = comidas;
-        this.setComidasEnMenu(comidas);
     }
 
     public Menu() {
         super();
     }
 
-    private void setComidasEnMenu(List<Comida> comidas) {
-        comidas.forEach(comida -> comida.setEnMenu(Boolean.TRUE));
-    }
     public String getNombre() {
         return nombre;
     }
@@ -59,5 +57,37 @@ public class Menu implements ProductoComercializable {
 
     public Long getId() {
         return this.id;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
+    public List<Comida> getComidas() {
+        return comidas;
+    }
+
+    public void setComidas(List<Comida> comidas) {
+        this.comidas = comidas;
+    }
+
+    public List<Carrito> getCarritos() {
+        return carritos;
+    }
+
+    public void setCarritos(List<Carrito> carritos) {
+        this.carritos = carritos;
+    }
+
+    public List<Compra> getCompras() {
+        return compras;
+    }
+
+    public void setCompras(List<Compra> compras) {
+        this.compras = compras;
     }
 }

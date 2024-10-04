@@ -15,6 +15,8 @@ public class Comida implements ProductoComercializable{
     protected String nombre;
     protected Double precio;
     private TipoComida tipoComida;
+    @Lob
+    private byte[] foto;
     @ManyToMany
     @JoinTable(
             name = "comida_menu",
@@ -95,5 +97,25 @@ public class Comida implements ProductoComercializable{
 
     public Long getId() {
         return this.id;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
+    public List<Compra> getCompras() {
+        return compras;
+    }
+
+    public void setCompras(List<Compra> compras) {
+        this.compras = compras;
+    }
+
+    public Boolean getEnMenu() {
+        return enMenu;
     }
 }
