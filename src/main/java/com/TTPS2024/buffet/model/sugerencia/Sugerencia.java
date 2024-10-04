@@ -13,8 +13,8 @@ public class Sugerencia {
     private String titulo;
     private TipoSugerencia tipo;
     private String mensajeOriginal;
-    private String respuesta;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "alumno_id")
     private Alumno alumno;
 
 
@@ -28,8 +28,35 @@ public class Sugerencia {
         this.alumno = alumno;
     }
 
-    private void setRespuesta(String respuesta){
-        this.respuesta = respuesta;
+    public String getTitulo() {
+        return titulo;
     }
 
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public TipoSugerencia getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoSugerencia tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getMensajeOriginal() {
+        return mensajeOriginal;
+    }
+
+    public void setMensajeOriginal(String mensajeOriginal) {
+        this.mensajeOriginal = mensajeOriginal;
+    }
+
+    public Alumno getAlumno() {
+        return alumno;
+    }
+
+    public void setAlumno(Alumno alumno) {
+        this.alumno = alumno;
+    }
 }
