@@ -7,13 +7,8 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-public class Comida implements ProductoComercializable{
+public class Comida extends ProductoComercializable{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
-    protected String nombre;
-    protected Double precio;
     private TipoComida tipoComida;
     @Lob
     private byte[] foto;
@@ -72,26 +67,6 @@ public class Comida implements ProductoComercializable{
 
     public void setEnMenu(Boolean enMenu) {
         this.enMenu = enMenu;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(Double precio) {
-        this.precio = precio;
-    }
-
-    public Long getId() {
-        return this.id;
     }
 
     public byte[] getFoto() {

@@ -7,13 +7,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-public class Menu implements ProductoComercializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
-    protected String nombre;
-    protected Double precio;
+public class Menu extends ProductoComercializable {
     @Lob
     private byte[] foto;
     @ManyToMany(mappedBy = "menues", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -34,25 +28,6 @@ public class Menu implements ProductoComercializable {
         super();
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(Double precio) {
-        this.precio = precio;
-    }
-
-    public Long getId() {
-        return this.id;
-    }
 
     public byte[] getFoto() {
         return foto;
