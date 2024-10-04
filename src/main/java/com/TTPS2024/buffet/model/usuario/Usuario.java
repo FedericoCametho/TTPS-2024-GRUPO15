@@ -14,8 +14,6 @@ public abstract class Usuario {
     private String email;
     private String nombre;
     private String apellido;
-    @ManyToOne
-    @JoinColumn(name = "rol_id")
     private Rol rol;
 
     public Usuario() {

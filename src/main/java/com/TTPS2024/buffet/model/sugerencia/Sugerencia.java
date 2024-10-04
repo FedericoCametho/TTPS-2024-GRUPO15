@@ -1,7 +1,6 @@
 package com.TTPS2024.buffet.model.sugerencia;
 
 import com.TTPS2024.buffet.model.usuario.Alumno;
-import com.TTPS2024.buffet.model.usuario.Usuario;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,7 +14,7 @@ public class Sugerencia {
     private String mensajeOriginal;
     @ManyToOne
     @JoinColumn(name = "alumno_id")
-    private Alumno alumno;
+    private Alumno usuario;
 
 
     public Sugerencia() {
@@ -25,7 +24,7 @@ public class Sugerencia {
         this.titulo = titulo;
         this.tipo = tipo;
         this.mensajeOriginal = mensaje;
-        this.alumno = alumno;
+        this.usuario = alumno;
     }
 
     public String getTitulo() {
@@ -52,11 +51,11 @@ public class Sugerencia {
         this.mensajeOriginal = mensajeOriginal;
     }
 
-    public Alumno getAlumno() {
-        return alumno;
+    public Alumno getUsuario() {
+        return usuario;
     }
 
-    public void setAlumno(Alumno alumno) {
-        this.alumno = alumno;
+    public void setUsuario(Alumno alumno) {
+        this.usuario = alumno;
     }
 }

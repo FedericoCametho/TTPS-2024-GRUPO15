@@ -7,13 +7,8 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-public class Comida implements ProductoComercializable{
+public class Comida extends ProductoComercializable{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
-    protected String nombre;
-    protected Double precio;
     private TipoComida tipoComida;
     @Lob
     private byte[] foto;
@@ -24,14 +19,6 @@ public class Comida implements ProductoComercializable{
             inverseJoinColumns = @JoinColumn(name = "menu_id")
     )
     private List<Menu> menues;
-
-    @ManyToMany
-    @JoinTable(
-            name = "comida_carrito",
-            joinColumns = @JoinColumn(name = "comida_id"),
-            inverseJoinColumns = @JoinColumn(name = "carrito_id")
-    )
-    private List<Carrito> carritos;
     @ManyToMany(mappedBy = "comidas", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Compra> compras;
     private Boolean enMenu;
@@ -63,13 +50,6 @@ public class Comida implements ProductoComercializable{
         this.menues = menues;
     }
 
-    public List<Carrito> getCarritos() {
-        return carritos;
-    }
-
-    public void setCarritos(List<Carrito> carritos) {
-        this.carritos = carritos;
-    }
 
     public boolean isEnMenu() {
         return enMenu;
@@ -77,26 +57,6 @@ public class Comida implements ProductoComercializable{
 
     public void setEnMenu(Boolean enMenu) {
         this.enMenu = enMenu;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(Double precio) {
-        this.precio = precio;
-    }
-
-    public Long getId() {
-        return this.id;
     }
 
     public byte[] getFoto() {
