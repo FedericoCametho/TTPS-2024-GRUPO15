@@ -19,12 +19,7 @@ public class Menu implements ProductoComercializable {
     @ManyToMany(mappedBy = "menues", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comida> comidas;
 
-    @ManyToMany
-    @JoinTable(
-            name = "menu_carrito",
-            joinColumns = @JoinColumn(name = "menu_id"),
-            inverseJoinColumns = @JoinColumn(name = "carrito_id")
-    )
+    @ManyToMany(mappedBy = "menues", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Carrito> carritos;
     @ManyToMany(mappedBy = "menues", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Compra> compras;

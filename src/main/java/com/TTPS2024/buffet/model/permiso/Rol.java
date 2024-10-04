@@ -1,5 +1,6 @@
 package com.TTPS2024.buffet.model.permiso;
 
+import com.TTPS2024.buffet.model.usuario.Usuario;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -17,7 +18,6 @@ public class Rol {
             inverseJoinColumns = @JoinColumn(name = "permiso_id")
     )
     private List<Permiso> permisos;
-
 
 
     public Rol() {

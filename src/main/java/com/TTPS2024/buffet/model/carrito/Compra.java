@@ -28,7 +28,7 @@ public class Compra {
     private List<Menu> menues;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
-            name = "compra_menu",
+            name = "compra_comida",
             joinColumns = @JoinColumn(name = "compra_id"),
             inverseJoinColumns = @JoinColumn(name = "comida_id")
     )
