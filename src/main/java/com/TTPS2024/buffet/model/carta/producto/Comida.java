@@ -19,9 +19,6 @@ public class Comida extends ProductoComercializable{
             inverseJoinColumns = @JoinColumn(name = "menu_id")
     )
     private List<Menu> menues;
-
-    @ManyToMany(mappedBy = "comidas", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Carrito> carritos;
     @ManyToMany(mappedBy = "comidas", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Compra> compras;
     private Boolean enMenu;
@@ -53,13 +50,6 @@ public class Comida extends ProductoComercializable{
         this.menues = menues;
     }
 
-    public List<Carrito> getCarritos() {
-        return carritos;
-    }
-
-    public void setCarritos(List<Carrito> carritos) {
-        this.carritos = carritos;
-    }
 
     public boolean isEnMenu() {
         return enMenu;

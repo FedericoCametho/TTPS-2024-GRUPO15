@@ -1,4 +1,4 @@
-package com.TTPS2024.buffet.model.request;
+package com.TTPS2024.buffet.model.request.menu;
 
 import com.TTPS2024.buffet.model.carta.producto.TipoComida;
 

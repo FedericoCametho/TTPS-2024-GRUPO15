@@ -12,9 +12,6 @@ public class Menu extends ProductoComercializable {
     private byte[] foto;
     @ManyToMany(mappedBy = "menues", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comida> comidas;
-
-    @ManyToMany(mappedBy = "menues", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Carrito> carritos;
     @ManyToMany(mappedBy = "menues", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Compra> compras;
 
@@ -43,14 +40,6 @@ public class Menu extends ProductoComercializable {
 
     public void setComidas(List<Comida> comidas) {
         this.comidas = comidas;
-    }
-
-    public List<Carrito> getCarritos() {
-        return carritos;
-    }
-
-    public void setCarritos(List<Carrito> carritos) {
-        this.carritos = carritos;
     }
 
     public List<Compra> getCompras() {

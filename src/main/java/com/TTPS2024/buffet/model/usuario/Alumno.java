@@ -1,5 +1,6 @@
 package com.TTPS2024.buffet.model.usuario;
 
+import com.TTPS2024.buffet.model.carrito.Carrito;
 import com.TTPS2024.buffet.model.carrito.Compra;
 import com.TTPS2024.buffet.model.permiso.Rol;
 import com.TTPS2024.buffet.model.sugerencia.Sugerencia;

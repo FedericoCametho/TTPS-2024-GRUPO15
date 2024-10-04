@@ -2,7 +2,7 @@ package com.TTPS2024.buffet.service.menu;
 
 import com.TTPS2024.buffet.dao.menu.ComidaDAO;
 import com.TTPS2024.buffet.model.carta.producto.Comida;
-import com.TTPS2024.buffet.model.request.ComidaRequest;
+import com.TTPS2024.buffet.model.request.menu.ComidaRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +24,9 @@ public class ComidaService {
 
     public List<Comida> getComidas() {
         return comidaDAO.findAll();
+    }
+    public List<Comida> getComidasByNombre(String nombre) {
+        return comidaDAO.findByNombre(nombre);
     }
 
     @Transactional

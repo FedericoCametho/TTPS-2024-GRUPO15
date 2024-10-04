@@ -1,7 +1,7 @@
 package com.TTPS2024.buffet.controller;
 
 import com.TTPS2024.buffet.model.carta.producto.Comida;
-import com.TTPS2024.buffet.model.request.ComidaRequest;
+import com.TTPS2024.buffet.model.request.menu.ComidaRequest;
 import com.TTPS2024.buffet.service.menu.ComidaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +25,11 @@ public class ComidaController {
     @PostMapping("/agregar")
     public Comida saveComida(@RequestBody ComidaRequest request) {
         return comidaService.saveComida(request);
+    }
+
+    @GetMapping("/listarPorNombre")
+    public List<Comida> getComidasByName(@RequestParam String nombre) {
+        return comidaService.getComidasByNombre(nombre);
     }
 
 }
