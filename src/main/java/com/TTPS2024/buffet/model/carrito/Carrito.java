@@ -70,4 +70,5 @@ public class Carrito {
     public void setComidas(List<Comida> comidas) {
         this.comidas = comidas;
     }
+
 }

@@ -1,52 +1,46 @@
 package com.TTPS2024.buffet.service.usuario;
 
+
+
+import com.TTPS2024.buffet.controller.request.usuario.AlumnoRequest;
 import com.TTPS2024.buffet.dao.usuario.AlumnoDAO;
-import com.TTPS2024.buffet.model.permiso.Rol;
-import com.TTPS2024.buffet.model.request.usuario.AlumnoRequest;
 import com.TTPS2024.buffet.model.usuario.Alumno;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
-public class AlumnoService {
-
-    private AlumnoDAO alumnoDAO;
+public class AlumnoService extends UsuarioService<Alumno, AlumnoDAO, AlumnoRequest>{
 
     @Autowired
-    public AlumnoService(AlumnoDAO alumnoDAO){
-        this.alumnoDAO = alumnoDAO;
+    public AlumnoService(AlumnoDAO alumnoDAO) {
+        super(alumnoDAO);
     }
 
-    public Alumno getAlumnoById(Long id){
-        return alumnoDAO.findById(id).orElse(null);
+    public List<Alumno> getAlumnosByEnabled() {
+        return this.dao.getByHabilitado();
+    }
+    @Override
+    protected Alumno createUsuario(AlumnoRequest alumnoRequest) {
+        return new Alumno(alumnoRequest.getDni(), alumnoRequest.getEmail(),alumnoRequest.getNombre(), alumnoRequest.getApellido());
     }
 
-    public List<Alumno> getAlumnos(){
-        return alumnoDAO.findAll();
+    @Override
+    protected void setUpdateSpecificFields(Alumno alumno, AlumnoRequest alumnoRequest) {
+        alumno.setFotoDePerfil(alumnoRequest.getFoto());
+        this.validarHabilitado(alumno, alumnoRequest.isHabilitado());
     }
 
-    @Transactional
-    public Alumno saveAlumno(AlumnoRequest alumnoRequest){
-        this.sanitizeAlumnoRequest(alumnoRequest);
-        Alumno alumno = new Alumno(alumnoRequest.getDni(), alumnoRequest.getEmail(), alumnoRequest.getNombre(), alumnoRequest.getApellido(), Rol.ALUMNO);
-        return alumnoDAO.save(alumno);
+    @Override
+    protected void sanitizeRequestSpecificFields(AlumnoRequest usuarioRequest) {
+        // No se requiere sanitizar campos específicos
     }
 
-    private void sanitizeAlumnoRequest(AlumnoRequest alumnoRequest){
-        if(alumnoRequest.getDni() == null || alumnoRequest.getDni() < 0){
-            throw new IllegalArgumentException("DNI de alumno no puede ser nulo o negativo");
-        }
-        if(alumnoRequest.getEmail() == null || alumnoRequest.getEmail().isEmpty()){
-            throw new IllegalArgumentException("Email de alumno no puede ser nulo o vacio");
-        }
-        if(alumnoRequest.getNombre() == null || alumnoRequest.getNombre().isEmpty()){
-            throw new IllegalArgumentException("Nombre de alumno no puede ser nulo o vacio");
-        }
-        if(alumnoRequest.getApellido() == null || alumnoRequest.getApellido().isEmpty()){
-            throw new IllegalArgumentException("Apellido de alumno no puede ser nulo o vacio");
+    private void validarHabilitado(Alumno alumno, boolean nuevoEstado){
+        if(nuevoEstado){
+            alumno.habilitar();
+        } else {
+            alumno.deshabilitar();
         }
     }
 
