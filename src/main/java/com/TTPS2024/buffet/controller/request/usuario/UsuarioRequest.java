@@ -1,17 +1,12 @@
-package com.TTPS2024.buffet.model.request.usuario;
+package com.TTPS2024.buffet.controller.request.usuario;
 
-import com.TTPS2024.buffet.model.carrito.Compra;
-import jakarta.persistence.Lob;
+public abstract class UsuarioRequest {
+    protected Integer dni;
+    protected String email;
+    protected String nombre;
+    protected String apellido;
 
-import java.util.List;
 
-public class AlumnoRequest {
-
-    private Integer dni;
-    private String email;
-    private String nombre;
-    private String apellido;
-    private byte[] fotoDePerfil;
 
     public Integer getDni() {
         return dni;
@@ -43,13 +38,5 @@ public class AlumnoRequest {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
-    }
-
-    public byte[] getFotoDePerfil() {
-        return fotoDePerfil;
-    }
-
-    public void setFotoDePerfil(byte[] fotoDePerfil) {
-        this.fotoDePerfil = fotoDePerfil;
     }
 }

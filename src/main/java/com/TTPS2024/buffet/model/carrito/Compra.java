@@ -19,14 +19,14 @@ public class Compra {
     @ManyToOne
     @JoinColumn(name = "alumno_id")
     private Alumno usuario;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "compra_menu",
             joinColumns = @JoinColumn(name = "compra_id"),
             inverseJoinColumns = @JoinColumn(name = "menu_id")
     )
     private List<Menu> menues;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany( fetch = FetchType.EAGER)
     @JoinTable(
             name = "compra_comida",
             joinColumns = @JoinColumn(name = "compra_id"),
@@ -53,6 +53,14 @@ public class Compra {
         productos.addAll(this.comidas);
         productos.addAll(this.menues);
         return productos;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public LocalDateTime getFecha() {

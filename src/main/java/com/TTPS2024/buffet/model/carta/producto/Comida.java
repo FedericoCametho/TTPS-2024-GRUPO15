@@ -1,6 +1,5 @@
 package com.TTPS2024.buffet.model.carta.producto;
 
-import com.TTPS2024.buffet.model.carrito.Carrito;
 import com.TTPS2024.buffet.model.carrito.Compra;
 import jakarta.persistence.*;
 
@@ -10,22 +9,19 @@ import java.util.List;
 public class Comida extends ProductoComercializable{
 
     private TipoComida tipoComida;
-    @Lob
-    private byte[] foto;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "comida_menu",
             joinColumns = @JoinColumn(name = "comida_id"),
             inverseJoinColumns = @JoinColumn(name = "menu_id")
     )
     private List<Menu> menues;
-    @ManyToMany(mappedBy = "comidas", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "comidas", fetch = FetchType.EAGER)
     private List<Compra> compras;
     private Boolean enMenu;
 
-    public Comida(String nombre, TipoComida tipoComida, Double precio) {
-        this.nombre = nombre;
-        this.precio = precio;
+    public Comida(String nombre, TipoComida tipoComida, Double precio, byte[] foto) {
+        super(nombre, precio, foto);
         this.tipoComida = tipoComida;
         this.enMenu = false;
     }
@@ -59,14 +55,6 @@ public class Comida extends ProductoComercializable{
         this.enMenu = enMenu;
     }
 
-    public byte[] getFoto() {
-        return foto;
-    }
-
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
-    }
-
     public List<Compra> getCompras() {
         return compras;
     }
@@ -77,5 +65,20 @@ public class Comida extends ProductoComercializable{
 
     public Boolean getEnMenu() {
         return enMenu;
+    }
+    public void setComidaInMenu(Menu menu){
+        if(!this.isInMenu(menu)){
+            this.menues.add(menu);
+            this.enMenu = true;
+        }
+    }
+    public void removeComidaFromMenu(Menu menu){
+        if(this.isInMenu(menu)){
+            this.menues.remove(menu);
+            this.enMenu = !this.menues.isEmpty();
+        }
+    }
+    public boolean isInMenu(Menu menu){
+        return this.menues.contains(menu);
     }
 }

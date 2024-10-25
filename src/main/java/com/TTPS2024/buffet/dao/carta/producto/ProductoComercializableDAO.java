@@ -1,6 +1,5 @@
-package com.TTPS2024.buffet.dao.menu;
+package com.TTPS2024.buffet.dao.carta.producto;
 
-import com.TTPS2024.buffet.model.carta.producto.Comida;
 import com.TTPS2024.buffet.model.carta.producto.ProductoComercializable;
 
 import java.util.List;

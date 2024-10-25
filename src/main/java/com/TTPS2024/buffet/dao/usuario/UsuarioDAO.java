@@ -1,9 +1,15 @@
 package com.TTPS2024.buffet.dao.usuario;
 
+import com.TTPS2024.buffet.model.permiso.Rol;
 import com.TTPS2024.buffet.model.usuario.Usuario;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UsuarioDAO {
-    Usuario findByEmail(String email);
-    Usuario findByDni(Integer dni);
+
+import java.util.List;
+public interface UsuarioDAO<T extends Usuario> {
+    T findByEmail(String email);
+    T findByDni(Integer dni);
+    List<T> getUsuariosByRol(Rol rol);
+    List<T> getUsuariosByNombre(String nombre);
+    List<T> getUsuariosByApellido(String apellido);
+
 }

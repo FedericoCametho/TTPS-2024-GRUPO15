@@ -1,6 +1,6 @@
 package com.TTPS2024.buffet.model.usuario;
 
-import com.TTPS2024.buffet.model.carrito.Carrito;
+
 import com.TTPS2024.buffet.model.carrito.Compra;
 import com.TTPS2024.buffet.model.permiso.Rol;
 import com.TTPS2024.buffet.model.sugerencia.Sugerencia;
@@ -12,18 +12,18 @@ import java.util.List;
 
 @Entity
 public class Alumno extends Usuario {
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private List<Compra> compras;
     private Boolean habilitado;
     @Lob
     private byte[] fotoDePerfil;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private List<Sugerencia> sugerencias;
 
 
-    public Alumno(Integer dni, String email, String nombre, String apellido, Rol rol) {
-        super(dni, email, nombre, apellido, rol);
+    public Alumno(Integer dni, String email, String nombre, String apellido) {
+        super(dni, email, nombre, apellido, Rol.ALUMNO);
         this.compras = new ArrayList<>();
         this.habilitado = true;
     }
