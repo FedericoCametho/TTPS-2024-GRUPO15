@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ProductoComercializableDAO<T extends ProductoComercializable> {
 
-    List<T> findByNombre(String nombre);
+    List<T> findByNombreContaining(String nombre);
     List<T> findByPrecio(Double precio);
 
 }
