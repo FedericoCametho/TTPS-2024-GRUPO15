@@ -25,9 +25,9 @@ public class ComidaService extends ProductoComercializableService<Comida,ComidaD
         return this.dao.saveAndFlush(comida);
     }
     @Transactional
-    public Comida updateUnlinkComidaMenuRelation(Menu menu, Long comidaId){
+    public Comida updateUnlinkComidaMenuRelation(Long comidaId){
         Comida comida = this.getProductById(comidaId);
-        comida.removeComidaFromMenu(menu);
+        comida.removeAllComidaFromMenu();
         return this.dao.saveAndFlush(comida);
     }
 
@@ -53,7 +53,7 @@ public class ComidaService extends ProductoComercializableService<Comida,ComidaD
         // no aplica a este caso, solo para menues
     }
     @Override
-    protected void updateSpecificRelations(Comida originalProduc, Comida updatedProduct, ComidaRequest request) {
+    protected void updateSpecificRelations(Comida updatedProduct, ComidaRequest request) {
         // no aplica a este caso, solo para menues
     }
 
