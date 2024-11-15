@@ -5,15 +5,14 @@ import com.TTPS2024.buffet.model.carrito.Compra;
 import com.TTPS2024.buffet.model.carta.CartaDelDia;
 import com.TTPS2024.buffet.model.carta.producto.Menu;
 import com.TTPS2024.buffet.model.carta.producto.ProductoComercializable;
-import org.springframework.stereotype.Component;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
-@Component
-public class MenuTransformer implements ProductoComercializableTransformer<MenuDTO, Menu> {
 
-    public MenuDTO toDTO(Menu menu) {
+public class MenuTransformer {
+
+    public static MenuDTO toDTO(Menu menu) {
         MenuDTO menuDTO = new MenuDTO();
         menuDTO.setId(menu.getId());
         menuDTO.setNombre(menu.getNombre());
@@ -24,6 +23,11 @@ public class MenuTransformer implements ProductoComercializableTransformer<MenuD
         menuDTO.setCartasDelDia(menu.getCartasDelDia().stream().mapToLong(CartaDelDia::getId).boxed().toList());
         menuDTO.setVeggie(menu.isVeggie());
         return menuDTO;
+    }
+
+    public static List<MenuDTO> toDTOList(List<Menu> menues) {
+        return (menues.isEmpty()) ? new ArrayList<>() :
+                menues.stream().map(MenuTransformer::toDTO).toList();
     }
 
 }

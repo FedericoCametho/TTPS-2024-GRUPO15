@@ -21,6 +21,10 @@ public abstract class ProductoComercializable {
         this.foto = foto;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

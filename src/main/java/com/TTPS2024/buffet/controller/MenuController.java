@@ -2,6 +2,7 @@ package com.TTPS2024.buffet.controller;
 
 import com.TTPS2024.buffet.controller.dto.MenuDTO;
 import com.TTPS2024.buffet.controller.request.carta.producto.MenuRequest;
+import com.TTPS2024.buffet.helper.transformer.MenuTransformer;
 import com.TTPS2024.buffet.model.carta.producto.Menu;
 import com.TTPS2024.buffet.service.carta.producto.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,23 +21,26 @@ public class MenuController {
 
     @PostMapping("/agregar")
     public ResponseEntity<MenuDTO> save(@RequestBody MenuRequest menuRequest){
-        return new ResponseEntity<>(this.menuService.save(menuRequest), HttpStatus.OK);
+        Menu menu = this.menuService.save(menuRequest);
+        return new ResponseEntity<>(MenuTransformer.toDTO(menu), HttpStatus.OK);
     }
 
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<MenuDTO> update(@PathVariable Long id,@RequestBody MenuRequest menuRequest){
-        MenuDTO menu = this.menuService.update(id, menuRequest);
-        return (menu != null) ? new ResponseEntity<>(menu, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Menu menu = this.menuService.update(id, menuRequest);
+        return (menu != null) ? new ResponseEntity<>(MenuTransformer.toDTO(menu), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/listar")
     public ResponseEntity<List<MenuDTO>> getMenus(){
-        return new ResponseEntity<>(this.menuService.getAll(), HttpStatus.OK);
+        List<Menu> menues = this.menuService.getAll();
+        return new ResponseEntity<>(MenuTransformer.toDTOList(menues), HttpStatus.OK);
     }
 
     @GetMapping("/listar/{id}")
     public ResponseEntity<MenuDTO> getMenu(@PathVariable("id") Long id){
-        return new ResponseEntity<>(this.menuService.getProductById(id), HttpStatus.OK);
+        Menu menu = this.menuService.getProductById(id);
+        return new ResponseEntity<>(MenuTransformer.toDTO(menu), HttpStatus.OK);
     }
 
 }
