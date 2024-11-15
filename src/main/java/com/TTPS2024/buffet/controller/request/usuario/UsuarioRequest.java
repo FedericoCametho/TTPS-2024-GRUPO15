@@ -5,6 +5,7 @@ public abstract class UsuarioRequest {
     protected String email;
     protected String nombre;
     protected String apellido;
+    protected String contrasena;
 
 
 
@@ -38,5 +39,13 @@ public abstract class UsuarioRequest {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 }

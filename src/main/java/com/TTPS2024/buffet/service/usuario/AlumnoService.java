@@ -4,6 +4,7 @@ package com.TTPS2024.buffet.service.usuario;
 
 import com.TTPS2024.buffet.controller.request.usuario.AlumnoRequest;
 import com.TTPS2024.buffet.dao.usuario.AlumnoDAO;
+import com.TTPS2024.buffet.model.permiso.Rol;
 import com.TTPS2024.buffet.model.usuario.Alumno;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class AlumnoService extends UsuarioService<Alumno, AlumnoDAO, AlumnoReque
     }
     @Override
     protected Alumno createUsuario(AlumnoRequest alumnoRequest) {
-        return new Alumno(alumnoRequest.getDni(), alumnoRequest.getEmail(),alumnoRequest.getNombre(), alumnoRequest.getApellido());
+        return new Alumno(alumnoRequest.getDni(), alumnoRequest.getEmail(),alumnoRequest.getNombre(), alumnoRequest.getApellido(), alumnoRequest.getContrasena());
     }
 
     @Override

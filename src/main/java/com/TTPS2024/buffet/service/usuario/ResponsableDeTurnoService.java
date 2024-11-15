@@ -4,6 +4,7 @@ package com.TTPS2024.buffet.service.usuario;
 
 import com.TTPS2024.buffet.controller.request.usuario.ResponsableDeTurnoRequest;
 import com.TTPS2024.buffet.dao.usuario.ResponsableDeTurnoDAO;
+import com.TTPS2024.buffet.model.permiso.Rol;
 import com.TTPS2024.buffet.model.usuario.ResponsableDeTurno;
 import com.TTPS2024.buffet.model.usuario.Turno;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class ResponsableDeTurnoService extends UsuarioService<ResponsableDeTurno
     }
     @Override
     protected ResponsableDeTurno createUsuario(ResponsableDeTurnoRequest usuarioRequest) {
-        return new ResponsableDeTurno(usuarioRequest.getDni(), usuarioRequest.getEmail(),usuarioRequest.getNombre(), usuarioRequest.getApellido(), usuarioRequest.getTurno());
+        return new ResponsableDeTurno(usuarioRequest.getDni(), usuarioRequest.getEmail(),usuarioRequest.getNombre(), usuarioRequest.getApellido(), usuarioRequest.getTurno(), usuarioRequest.getContrasena());
     }
 
 

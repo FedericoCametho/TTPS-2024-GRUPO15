@@ -1,5 +1,6 @@
 package com.TTPS2024.buffet.controller;
 
+import com.TTPS2024.buffet.controller.request.LoginRequest;
 import com.TTPS2024.buffet.controller.request.usuario.AlumnoRequest;
 import com.TTPS2024.buffet.model.usuario.Alumno;
 import com.TTPS2024.buffet.service.usuario.AlumnoService;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/alumno")
 public class AlumnoController {
 
     @Autowired
@@ -26,6 +27,10 @@ public class AlumnoController {
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Alumno> update(@PathVariable("id") Long id, @RequestBody AlumnoRequest alumnoRequest){
         return new ResponseEntity<>(this.alumnoService.update(id, alumnoRequest), HttpStatus.OK);
+    }
+    @PutMapping("/actualizar-contrasena/{id}")
+    public ResponseEntity<Alumno> update(@PathVariable("id") Long id, @RequestBody String contrasena){
+        return new ResponseEntity<>(this.alumnoService.updatePassword(id, contrasena), HttpStatus.OK);
     }
 
     @GetMapping("/listar")
@@ -57,6 +62,14 @@ public class AlumnoController {
         return new ResponseEntity<>(this.alumnoService.getAlumnosByEnabled(), HttpStatus.OK);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<Alumno> login(@RequestBody LoginRequest loginRequest) {
+        try {
+            Alumno response = this.alumnoService.login(loginRequest);
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
-
+    }
 }

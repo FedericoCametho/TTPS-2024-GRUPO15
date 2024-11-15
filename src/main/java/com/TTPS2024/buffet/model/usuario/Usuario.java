@@ -14,18 +14,20 @@ public abstract class Usuario {
     private String email;
     private String nombre;
     private String apellido;
+    private String contrasena;
     private Rol rol;
 
     public Usuario() {
 
     }
 
-    public Usuario(Integer dni, String email, String nombre, String apellido, Rol rol) {
+    public Usuario(Integer dni, String email, String nombre, String apellido, Rol rol, String contrasena) {
         this.dni = dni;
         this.email = email;
         this.nombre = nombre;
         this.apellido = apellido;
         this.rol = rol;
+        this.contrasena = contrasena;
     }
 
     public Long getId() {
@@ -70,5 +72,13 @@ public abstract class Usuario {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 }
