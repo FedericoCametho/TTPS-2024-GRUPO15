@@ -4,13 +4,14 @@ import com.TTPS2024.buffet.controller.dto.ComidaDTO;
 import com.TTPS2024.buffet.model.carrito.Compra;
 import com.TTPS2024.buffet.model.carta.producto.Comida;
 import com.TTPS2024.buffet.model.carta.producto.ProductoComercializable;
-import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
-@Component
-public class ComidaTransformer implements ProductoComercializableTransformer<ComidaDTO, Comida> {
-    @Override
-    public ComidaDTO toDTO(Comida comida) {
+public class ComidaTransformer  {
+
+    public static ComidaDTO toDTO(Comida comida) {
         ComidaDTO comidaDTO = new ComidaDTO();
         comidaDTO.setId(comida.getId());
         comidaDTO.setNombre(comida.getNombre());
@@ -21,5 +22,10 @@ public class ComidaTransformer implements ProductoComercializableTransformer<Com
         comidaDTO.setCompras(comida.getCompras().stream().mapToLong(Compra::getId).boxed().toList());
         comidaDTO.setEnMenu(comida.getEnMenu() != null);
         return comidaDTO;
+    }
+
+    public static List<ComidaDTO> toDTOList(List<Comida> comidas) {
+        return (comidas.isEmpty()) ? new ArrayList<>() :
+                comidas.stream().map(ComidaTransformer::toDTO).toList();
     }
 }
