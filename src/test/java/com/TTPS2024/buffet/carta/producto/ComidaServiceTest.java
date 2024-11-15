@@ -110,7 +110,6 @@ public class ComidaServiceTest extends AbstractGenericTest {
 
 
     private void testQueryAndValidateComidaById(Long id, ComidaRequest comidaRequest) {
-        this.comidaService.getProductById(99999L);
         Comida comida = this.comidaService.getProductById(id);
         assertNotNull(comida);
         assertEquals(comidaRequest.getTipoComida(), comida.getTipoComida());
