@@ -2,7 +2,6 @@ package com.TTPS2024.buffet.service.carta.producto;
 
 import com.TTPS2024.buffet.controller.request.carta.producto.ComidaRequest;
 import com.TTPS2024.buffet.dao.carta.producto.ComidaDAO;
-import com.TTPS2024.buffet.helper.transformer.ComidaTransformer;
 import com.TTPS2024.buffet.model.carta.producto.Comida;
 import com.TTPS2024.buffet.model.carta.producto.Menu;
 import jakarta.transaction.Transactional;
@@ -14,7 +13,7 @@ import java.util.List;
 @Service
 public class ComidaService extends ProductoComercializableService<Comida,ComidaDAO, ComidaRequest> {
     @Autowired
-    public ComidaService(ComidaDAO comidaDAO, ComidaTransformer comidaTransformer) {
+    public ComidaService(ComidaDAO comidaDAO) {
         super(comidaDAO);
     }
 
