@@ -53,7 +53,7 @@ public abstract class ProductoComercializableService<T extends ProductoComercial
         originalProduct.setFoto(request.getImagen());
         this.setUpdateSpecificFields(originalProduct, request);
         T result = this.dao.saveAndFlush(originalProduct);
-        this.updateSpecificRelations(originalProduct, result, request);
+        this.updateSpecificRelations(result, request);
         return result;
     }
     @Transactional
@@ -121,7 +121,7 @@ public abstract class ProductoComercializableService<T extends ProductoComercial
     }
 
     protected abstract void sanitizeRequestSpecificFields(R requestequest);
-    protected abstract void updateSpecificRelations(T originalProduc, T updatedProduct, R request) ;
+    protected abstract void updateSpecificRelations(T updatedProduct, R request) ;
     protected abstract T createProductoComercializable(R request);
 
     protected abstract void updateComidasEnMenuRelation(T originalProduct, T result);
