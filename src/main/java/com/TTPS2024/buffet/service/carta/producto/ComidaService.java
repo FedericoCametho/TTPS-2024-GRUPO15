@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class ComidaService extends ProductoComercializableService<Comida,ComidaDAO, ComidaRequest> {
     @Autowired
-    public ComidaService(ComidaDAO comidaDAO, ComidaTransformer comidaTransformer) {
+    public ComidaService(ComidaDAO comidaDAO) {
         super(comidaDAO);
     }
 
