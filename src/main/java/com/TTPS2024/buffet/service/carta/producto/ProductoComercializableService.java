@@ -1,10 +1,8 @@
 package com.TTPS2024.buffet.service.carta.producto;
 
-import com.TTPS2024.buffet.controller.dto.ProductoComercializableDTO;
 import com.TTPS2024.buffet.controller.request.carta.producto.ProductoComercializableRequest;
 import com.TTPS2024.buffet.dao.carta.producto.ProductoComercializableDAO;
 import com.TTPS2024.buffet.helper.RequestValidatorHelper;
-import com.TTPS2024.buffet.helper.transformer.ProductoComercializableTransformer;
 import com.TTPS2024.buffet.model.carta.producto.ProductoComercializable;
 import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
