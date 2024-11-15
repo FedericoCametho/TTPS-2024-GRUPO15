@@ -13,19 +13,24 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ComidaService extends ProductoComercializableService<Comida,ComidaDAO, ComidaRequest, ComidaDTO, ComidaTransformer> {
+public class ComidaService extends ProductoComercializableService<Comida,ComidaDAO, ComidaRequest> {
     @Autowired
     public ComidaService(ComidaDAO comidaDAO, ComidaTransformer comidaTransformer) {
-        super(comidaDAO, comidaTransformer);
+        super(comidaDAO);
     }
 
 
     @Transactional
-    public ComidaDTO updateComidaMenuRelation(Menu menu, Long comidaId){
-        Comida comida = this.getProductByIdInternal(comidaId);
+    public Comida updateComidaMenuRelation(Menu menu, Long comidaId){
+        Comida comida = this.getProductById(comidaId);
         comida.setComidaInMenu(menu);
-        Comida result = this.dao.saveAndFlush(comida);
-        return this.transformer.toDTO(result);
+        return this.dao.saveAndFlush(comida);
+    }
+    @Transactional
+    public Comida updateUnlinkComidaMenuRelation(Menu menu, Long comidaId){
+        Comida comida = this.getProductById(comidaId);
+        comida.removeComidaFromMenu(menu);
+        return this.dao.saveAndFlush(comida);
     }
 
     @Override

@@ -9,16 +9,15 @@ import com.TTPS2024.buffet.model.carta.producto.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
-public class MenuService extends ProductoComercializableService<Menu,MenuDAO, MenuRequest, MenuDTO, MenuTransformer> {
+public class MenuService extends ProductoComercializableService<Menu,MenuDAO, MenuRequest> {
     private ComidaService comidaService;
     @Autowired
-    public MenuService(MenuDAO menuDAO, ComidaService comidaService, MenuTransformer menuTransformer) {
-        super(menuDAO, menuTransformer);
+    public MenuService(MenuDAO menuDAO, ComidaService comidaService) {
+        super(menuDAO);
         this.comidaService = comidaService;
     }
 
@@ -47,8 +46,18 @@ public class MenuService extends ProductoComercializableService<Menu,MenuDAO, Me
     public void updateSpecificRelations(Menu originalMenu, Menu updatedMenu, MenuRequest menuRequest){
         List<Long> idComidasMenu = originalMenu.getComidas().stream().mapToLong(Comida::getId).boxed().toList();
         List<Comida> comidasToUpdate = menuRequest.getComidas().stream().filter(comida -> !idComidasMenu.contains(comida.getId())).toList();
+        List<Long> idComidasMenuActualizado = menuRequest.getComidas().stream().map(Comida::getId).toList();
+        List<Comida> comidasToDelete = idComidasMenu.stream().filter(
+                id -> !idComidasMenuActualizado.contains(id)).map(id -> this.comidaService.getProductById(id)).toList();
         if(!comidasToUpdate.isEmpty()){
-            this.updateComidasEnMenuRelation(originalMenu, updatedMenu);
+            comidasToUpdate.forEach(comida -> {
+                this.comidaService.updateComidaMenuRelation(updatedMenu,comida.getId());
+            });
+        }
+        if(!comidasToDelete.isEmpty()){
+            comidasToDelete.forEach(comida ->{
+                this.comidaService.updateUnlinkComidaMenuRelation(updatedMenu, comida.getId());
+            });
         }
     }
 

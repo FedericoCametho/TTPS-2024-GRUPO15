@@ -16,24 +16,23 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public abstract class ProductoComercializableService<T extends ProductoComercializable, S extends ProductoComercializableDAO<T> & JpaRepository<T, Long>,
-        R extends ProductoComercializableRequest, Q extends ProductoComercializableDTO, X extends ProductoComercializableTransformer<Q, T>> {
+        R extends ProductoComercializableRequest> {
     private static final Logger LOGGER = Logger.getLogger(ProductoComercializableService.class.getName());
 
     protected S dao;
-    protected X transformer;
-    public ProductoComercializableService(S dao, X transformer) {
+
+    public ProductoComercializableService(S dao) {
         this.dao = dao;
-        this.transformer = transformer;
     }
 
     @Transactional
-    public Q save(R request) {
+    public T save(R request) {
         this.sanitizeRequest(request);
         try{
             T originalProduct = this.createProductoComercializable(request);
             T result =  this.dao.saveAndFlush(originalProduct);
             this.updateComidasEnMenuRelation(originalProduct, result);
-            return this.transformer.toDTO(result);
+            return result;
         } catch (Exception e){
             LOGGER.info("Error al guardar el producto: " + e.getMessage());
             throw new IllegalArgumentException("El producto ya existe");
@@ -41,7 +40,7 @@ public abstract class ProductoComercializableService<T extends ProductoComercial
     }
 
     @Transactional
-    public Q update(Long id, R request){
+    public T update(Long id, R request){
         RequestValidatorHelper.validateID(id);
         this.sanitizeRequest(request);
         T originalProduct;
@@ -57,7 +56,7 @@ public abstract class ProductoComercializableService<T extends ProductoComercial
         this.setUpdateSpecificFields(originalProduct, request);
         T result = this.dao.saveAndFlush(originalProduct);
         this.updateSpecificRelations(originalProduct, result, request);
-        return this.transformer.toDTO(result);
+        return result;
     }
     @Transactional
     public void delete(Long id) {
@@ -81,44 +80,32 @@ public abstract class ProductoComercializableService<T extends ProductoComercial
             throw new NoResultException("El producto comercializable no existe");
         }
     }
-    protected T getProductByIdInternal(Long id) {
-        RequestValidatorHelper.validateID(id);
-        try{
-            return dao.findById(id).get();
-        } catch (NoSuchElementException e){
-            LOGGER.info("El producto no existe con el id: " + id);
-            throw new NoResultException("El producto con el id "+ id + " no existe");
-        }
-    }
-    public Q getProductById(Long id) {
+    public T getProductById(Long id) {
         RequestValidatorHelper.validateID(id);
         try{
             T result = dao.findById(id).get();
-            return this.transformer.toDTO(result);
+            return result;
         } catch (NoSuchElementException e){
             LOGGER.info("El producto no existe con el id: " + id);
             throw new NoResultException("El producto con el id "+ id + " no existe");
         }
     }
-    public List<Q> getAll() {
-        List<T> result =  dao.findAll();
-        return (result.isEmpty()) ? List.of() : this.transformToDTOmodel(result);
+    public List<T> getAll() {
+        return  dao.findAll();
     }
-    public List<Q> getProductsByName(String name) {
+    public List<T> getProductsByName(String name) {
         RequestValidatorHelper.validateStringInputParameter(name, "El nombre del producto no puede ser nulo o vacío");
         try{
-            List<T> result = dao.findByNombreContaining(name);
-            return (result.isEmpty()) ? List.of() : this.transformToDTOmodel(result);
+            return dao.findByNombreContaining(name);
         } catch (NoResultException e){
             LOGGER.info("El producto no existe con el nombre: " + name);
             throw new IllegalArgumentException("El producto con el nombre "+ name + " no existe");
         }
     }
-    public List<Q> getProductsByPrice(Double price) {
+    public List<T> getProductsByPrice(Double price) {
         RequestValidatorHelper.validateDoubleInputParameter(price, "El precio del producto no puede ser nulo o negativo");
         try{
-            List<T> result = dao.findByPrecio(price);
-            return (result.isEmpty()) ? List.of() : this.transformToDTOmodel(result);
+            return dao.findByPrecio(price);
         } catch (NoResultException e){
             LOGGER.info("El producto no existe con el precio: " + price);
             throw new NoResultException("El producto con el precio "+ price + " no existe");
@@ -143,11 +130,6 @@ public abstract class ProductoComercializableService<T extends ProductoComercial
 
     protected abstract void setUpdateSpecificFields(T product, R request) ;
 
-    protected List<Q> transformToDTOmodel(List<T> products){
-        return products.stream().map(prod -> this.transformer.toDTO(prod)).collect(Collectors.toList());
-    }
-    protected Q transformToDTOmodel(T product){
-        return this.transformer.toDTO(product);
-    }
+
 
 }
