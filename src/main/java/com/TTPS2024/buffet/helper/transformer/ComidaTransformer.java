@@ -20,7 +20,7 @@ public class ComidaTransformer  {
         comidaDTO.setFoto(comida.getFoto());
         comidaDTO.setMenues(comida.getMenues().stream().mapToLong(ProductoComercializable::getId).boxed().toList());
         comidaDTO.setCompras(comida.getCompras().stream().mapToLong(Compra::getId).boxed().toList());
-        comidaDTO.setEnMenu(comida.getEnMenu() != null);
+        comidaDTO.setEnMenu(comida.getEnMenu());
         return comidaDTO;
     }
 

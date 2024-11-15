@@ -3,6 +3,7 @@ package com.TTPS2024.buffet.model.carta.producto;
 import com.TTPS2024.buffet.model.carrito.Compra;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,6 +24,8 @@ public class Comida extends ProductoComercializable{
     public Comida(String nombre, TipoComida tipoComida, Double precio, byte[] foto) {
         super(nombre, precio, foto);
         this.tipoComida = tipoComida;
+        this.menues = new ArrayList<>();
+        this.compras = new ArrayList<>();
         this.enMenu = false;
     }
 
@@ -72,11 +75,8 @@ public class Comida extends ProductoComercializable{
             this.enMenu = true;
         }
     }
-    public void removeComidaFromMenu(Menu menu){
-        if(this.isInMenu(menu)){
-            this.menues.remove(menu);
-            this.enMenu = !this.menues.isEmpty();
-        }
+    public void removeAllComidaFromMenu(){
+        this.menues.clear();
     }
     public boolean isInMenu(Menu menu){
         return this.menues.contains(menu);
