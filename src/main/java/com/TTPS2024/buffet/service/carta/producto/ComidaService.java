@@ -1,26 +1,31 @@
 package com.TTPS2024.buffet.service.carta.producto;
 
+import com.TTPS2024.buffet.controller.dto.ComidaDTO;
 import com.TTPS2024.buffet.controller.request.carta.producto.ComidaRequest;
 import com.TTPS2024.buffet.dao.carta.producto.ComidaDAO;
+import com.TTPS2024.buffet.helper.transformer.ComidaTransformer;
 import com.TTPS2024.buffet.model.carta.producto.Comida;
 import com.TTPS2024.buffet.model.carta.producto.Menu;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class ComidaService extends ProductoComercializableService<Comida,ComidaDAO, ComidaRequest> {
+public class ComidaService extends ProductoComercializableService<Comida,ComidaDAO, ComidaRequest, ComidaDTO, ComidaTransformer> {
     @Autowired
-    public ComidaService(ComidaDAO comidaDAO) {
-        super(comidaDAO);
+    public ComidaService(ComidaDAO comidaDAO, ComidaTransformer comidaTransformer) {
+        super(comidaDAO, comidaTransformer);
     }
 
 
     @Transactional
-    public Comida updateComidaMenuRelation(Menu menu, Long comidaId){
-        Comida comida = this.getProductById(comidaId);
+    public ComidaDTO updateComidaMenuRelation(Menu menu, Long comidaId){
+        Comida comida = this.getProductByIdInternal(comidaId);
         comida.setComidaInMenu(menu);
-        return this.dao.saveAndFlush(comida);
+        Comida result = this.dao.saveAndFlush(comida);
+        return this.transformer.toDTO(result);
     }
 
     @Override

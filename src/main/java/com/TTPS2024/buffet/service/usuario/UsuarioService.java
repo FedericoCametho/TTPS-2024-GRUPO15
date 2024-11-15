@@ -94,7 +94,7 @@ public abstract class UsuarioService<T extends Usuario,S extends UsuarioDAO<T> &
     public List<T> getUsersByName(String name) {
         RequestValidatorHelper.validateStringInputParameter(name, "El nombre no puede ser nulo o vacio");
         try{
-            return dao.getUsuariosByNombre(name);
+            return dao.getUsuariosByNombreContaining(name);
         } catch (NoResultException e){
             LOGGER.info("No se encontraron usuarios con el nombre: " + name);
             return new ArrayList<>();
@@ -104,7 +104,7 @@ public abstract class UsuarioService<T extends Usuario,S extends UsuarioDAO<T> &
     public List<T> getUsersByLastName(String lastName) {
         RequestValidatorHelper.validateStringInputParameter(lastName, "El apellido no puede ser nulo o vacio");
         try{
-            return dao.getUsuariosByApellido(lastName);
+            return dao.getUsuariosByApellidoContaining(lastName);
         } catch (NoResultException e){
             LOGGER.info("No se encontraron usuarios con el apellido: " + lastName);
             return new ArrayList<>();
