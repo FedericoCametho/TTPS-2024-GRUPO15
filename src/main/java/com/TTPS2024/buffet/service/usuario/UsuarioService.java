@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.logging.Logger;
 
 public abstract class UsuarioService<T extends Usuario,S extends UsuarioDAO<T> & JpaRepository<T, Long>, R extends UsuarioRequest> {
@@ -48,7 +49,7 @@ public abstract class UsuarioService<T extends Usuario,S extends UsuarioDAO<T> &
             user = this.dao.getById(id);
         } catch (NoResultException e){
             LOGGER.info("El usuario no existe con el id: " + id);
-            throw new IllegalArgumentException("El usuario no existe");
+            throw new IllegalArgumentException("El usuario no existe con el id: " + id);
         }
         user.setNombre(usuarioRequest.getNombre());
         user.setApellido(usuarioRequest.getApellido());
@@ -65,7 +66,7 @@ public abstract class UsuarioService<T extends Usuario,S extends UsuarioDAO<T> &
             this.dao.deleteById(id);
         } catch (NoResultException e){
             LOGGER.info("El usuario no existe con el id: " + id);
-            throw new IllegalArgumentException("El usuario no existe");
+            throw new IllegalArgumentException("El usuario no existe con el id: " + id);
         }
     }
     @Transactional
@@ -77,23 +78,23 @@ public abstract class UsuarioService<T extends Usuario,S extends UsuarioDAO<T> &
             this.dao.delete(user);
         } catch (NoResultException e){
             LOGGER.info("El usuario no existe con el id: " + user.getId());
-            throw new IllegalArgumentException("El usuario no existe");
+            throw new NoResultException("El usuario no existe con el id: " + user.getId());
         }
     }
     public T getUserById(Long id) {
         RequestValidatorHelper.validateID(id);
         try{
-            return dao.findById(id).orElse(null);
-        } catch (NoResultException e){
+            return dao.findById(id).get();
+        } catch (NoSuchElementException e){
             LOGGER.info("El usuario no existe con el id: " + id);
-            throw new IllegalArgumentException("El usuario no existe");
+            throw new NoResultException("El usuario no existe con el id: " + id);
         }
     }
 
     public List<T> getUsersByName(String name) {
         RequestValidatorHelper.validateStringInputParameter(name, "El nombre no puede ser nulo o vacio");
         try{
-            return dao.getUsuariosByNombre(name);
+            return dao.getUsuariosByNombreContaining(name);
         } catch (NoResultException e){
             LOGGER.info("No se encontraron usuarios con el nombre: " + name);
             return new ArrayList<>();
@@ -103,7 +104,7 @@ public abstract class UsuarioService<T extends Usuario,S extends UsuarioDAO<T> &
     public List<T> getUsersByLastName(String lastName) {
         RequestValidatorHelper.validateStringInputParameter(lastName, "El apellido no puede ser nulo o vacio");
         try{
-            return dao.getUsuariosByApellido(lastName);
+            return dao.getUsuariosByApellidoContaining(lastName);
         } catch (NoResultException e){
             LOGGER.info("No se encontraron usuarios con el apellido: " + lastName);
             return new ArrayList<>();

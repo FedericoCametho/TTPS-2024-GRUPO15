@@ -1,20 +1,24 @@
 package com.TTPS2024.buffet.service.carta.producto;
 
+import com.TTPS2024.buffet.controller.dto.MenuDTO;
 import com.TTPS2024.buffet.controller.request.carta.producto.MenuRequest;
 import com.TTPS2024.buffet.dao.carta.producto.MenuDAO;
+import com.TTPS2024.buffet.helper.transformer.MenuTransformer;
 import com.TTPS2024.buffet.model.carta.producto.Comida;
 import com.TTPS2024.buffet.model.carta.producto.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class MenuService extends ProductoComercializableService<Menu,MenuDAO, MenuRequest> {
+public class MenuService extends ProductoComercializableService<Menu,MenuDAO, MenuRequest, MenuDTO, MenuTransformer> {
     private ComidaService comidaService;
     @Autowired
-    public MenuService(MenuDAO menuDAO, ComidaService comidaService) {
-        super(menuDAO);
+    public MenuService(MenuDAO menuDAO, ComidaService comidaService, MenuTransformer menuTransformer) {
+        super(menuDAO, menuTransformer);
         this.comidaService = comidaService;
     }
 

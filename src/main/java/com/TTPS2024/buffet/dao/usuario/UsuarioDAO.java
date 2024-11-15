@@ -9,7 +9,7 @@ public interface UsuarioDAO<T extends Usuario> {
     T findByEmail(String email);
     T findByDni(Integer dni);
     List<T> getUsuariosByRol(Rol rol);
-    List<T> getUsuariosByNombre(String nombre);
-    List<T> getUsuariosByApellido(String apellido);
+    List<T> getUsuariosByNombreContaining(String nombre);
+    List<T> getUsuariosByApellidoContaining(String apellido);
 
 }
