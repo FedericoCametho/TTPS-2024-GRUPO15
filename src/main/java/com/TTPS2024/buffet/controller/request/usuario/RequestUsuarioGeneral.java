@@ -1,12 +1,10 @@
 package com.TTPS2024.buffet.controller.request.usuario;
 
-public abstract class UsuarioRequest {
+public abstract class RequestUsuarioGeneral {
     protected Integer dni;
     protected String email;
     protected String nombre;
     protected String apellido;
-
-
 
     public Integer getDni() {
         return dni;

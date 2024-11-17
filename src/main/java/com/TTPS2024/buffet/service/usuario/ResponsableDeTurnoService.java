@@ -2,7 +2,8 @@ package com.TTPS2024.buffet.service.usuario;
 
 
 
-import com.TTPS2024.buffet.controller.request.usuario.ResponsableDeTurnoRequest;
+import com.TTPS2024.buffet.controller.request.usuario.create.ResponsableDeTurnoRequest;
+import com.TTPS2024.buffet.controller.request.usuario.update.ResponsableDeTurnoRequestUpdate;
 import com.TTPS2024.buffet.dao.usuario.ResponsableDeTurnoDAO;
 import com.TTPS2024.buffet.model.usuario.ResponsableDeTurno;
 import com.TTPS2024.buffet.model.usuario.Turno;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.logging.Logger;
 @Service
-public class ResponsableDeTurnoService extends UsuarioService<ResponsableDeTurno,ResponsableDeTurnoDAO, ResponsableDeTurnoRequest> {
+public class ResponsableDeTurnoService extends UsuarioService<ResponsableDeTurno,ResponsableDeTurnoDAO, ResponsableDeTurnoRequest, ResponsableDeTurnoRequestUpdate> {
     private static final Logger LOGGER = Logger.getLogger(ResponsableDeTurnoService.class.getName());
     @Autowired
     public ResponsableDeTurnoService(ResponsableDeTurnoDAO responsableDeTurnoDAO) {
@@ -32,12 +33,25 @@ public class ResponsableDeTurnoService extends UsuarioService<ResponsableDeTurno
     }
 
     @Override
+    protected void setUpdateSpecificFields(ResponsableDeTurno user, ResponsableDeTurnoRequestUpdate usuarioRequest) {
+        user.setTurno(usuarioRequest.getTurno());
+    }
+
+    @Override
+    protected void sanitizeRequestSpecificFields(ResponsableDeTurnoRequestUpdate usuarioRequest) {
+        if(usuarioRequest.getTurno() == null){
+            LOGGER.info("ERROR EN EL REQUEST: El turno es requerido");
+            throw new IllegalArgumentException("El turno es requerido y solo pueden ser MANANA o TARDE");
+        }
+    }
+
+    @Override
     protected void setUpdateSpecificFields(ResponsableDeTurno responsableDeTurno, ResponsableDeTurnoRequest responsableDeTurnoRequest) {
         responsableDeTurno.setTurno(responsableDeTurnoRequest.getTurno());
     }
     @Override
     protected ResponsableDeTurno createUsuario(ResponsableDeTurnoRequest usuarioRequest) {
-        return new ResponsableDeTurno(usuarioRequest.getDni(), usuarioRequest.getEmail(),usuarioRequest.getNombre(), usuarioRequest.getApellido(), usuarioRequest.getTurno());
+        return new ResponsableDeTurno(usuarioRequest.getDni(), usuarioRequest.getEmail(),usuarioRequest.getNombre(), usuarioRequest.getApellido(), usuarioRequest.getTurno(), usuarioRequest.getContrasena());
     }
 
 

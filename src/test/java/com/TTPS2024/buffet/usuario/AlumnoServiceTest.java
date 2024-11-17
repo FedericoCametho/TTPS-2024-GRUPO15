@@ -2,7 +2,7 @@ package com.TTPS2024.buffet.usuario;
 
 
 import com.TTPS2024.buffet.AbstractGenericTest;
-import com.TTPS2024.buffet.controller.request.usuario.AlumnoRequest;
+import com.TTPS2024.buffet.controller.request.usuario.create.AlumnoRequest;
 import com.TTPS2024.buffet.model.permiso.Rol;
 import com.TTPS2024.buffet.model.usuario.Alumno;
 import org.junit.jupiter.api.*;

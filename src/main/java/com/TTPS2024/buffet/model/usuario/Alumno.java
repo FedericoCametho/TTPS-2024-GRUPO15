@@ -22,9 +22,10 @@ public class Alumno extends Usuario {
     private List<Sugerencia> sugerencias;
 
 
-    public Alumno(Integer dni, String email, String nombre, String apellido) {
-        super(dni, email, nombre, apellido, Rol.ALUMNO);
+    public Alumno(Integer dni, String email, String nombre, String apellido, String contrasena) {
+        super(dni, email, nombre, apellido, Rol.ALUMNO, contrasena);
         this.compras = new ArrayList<>();
+        this.sugerencias = new ArrayList<>();
         this.habilitado = true;
     }
 

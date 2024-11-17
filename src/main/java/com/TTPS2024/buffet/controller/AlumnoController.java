@@ -1,6 +1,10 @@
 package com.TTPS2024.buffet.controller;
 
-import com.TTPS2024.buffet.controller.request.usuario.AlumnoRequest;
+import com.TTPS2024.buffet.controller.dto.AlumnoDTO;
+import com.TTPS2024.buffet.controller.request.usuario.LoginRequest;
+import com.TTPS2024.buffet.controller.request.usuario.create.AlumnoRequest;
+import com.TTPS2024.buffet.controller.request.usuario.update.AlumnoRequestUpdate;
+import com.TTPS2024.buffet.helper.transformer.usuario.AlumnoTransformer;
 import com.TTPS2024.buffet.model.usuario.Alumno;
 import com.TTPS2024.buffet.service.usuario.AlumnoService;
 import jakarta.websocket.server.PathParam;
@@ -12,51 +16,63 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/alumno")
 public class AlumnoController {
 
     @Autowired
     public AlumnoService alumnoService;
 
     @PostMapping("/registrar")
-    public ResponseEntity<Alumno> save(@RequestBody AlumnoRequest alumnoRequest){
-        return new ResponseEntity<>(this.alumnoService.save(alumnoRequest), HttpStatus.OK);
+    public ResponseEntity<AlumnoDTO> save(@RequestBody AlumnoRequest alumnoRequest){
+        return new ResponseEntity<>(AlumnoTransformer.toDTO(this.alumnoService.save(alumnoRequest)), HttpStatus.OK);
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Alumno> update(@PathVariable("id") Long id, @RequestBody AlumnoRequest alumnoRequest){
-        return new ResponseEntity<>(this.alumnoService.update(id, alumnoRequest), HttpStatus.OK);
+    public ResponseEntity<AlumnoDTO> update(@PathVariable("id") Long id, @RequestBody AlumnoRequestUpdate alumnoRequestupdate){
+        return new ResponseEntity<>(AlumnoTransformer.toDTO(this.alumnoService.update(id, alumnoRequestupdate)), HttpStatus.OK);
+    }
+    @PutMapping("/actualizar-contrasena/{id}")
+    public ResponseEntity<AlumnoDTO> updatePassword(@PathVariable("id") Long id, @RequestBody String contrasena){
+        return new ResponseEntity<>(AlumnoTransformer.toDTO(this.alumnoService.updatePassword(id, contrasena)), HttpStatus.OK);
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Alumno>> getAlumnos(){
-        return new ResponseEntity<>(this.alumnoService.getAll(), HttpStatus.OK);
+    public ResponseEntity<List<AlumnoDTO>> getAlumnos(){
+        return new ResponseEntity<>(AlumnoTransformer.toDTOList(this.alumnoService.getAll()), HttpStatus.OK);
     }
     @GetMapping("/listarPorDni/{dni}")
-    public ResponseEntity<Alumno> getAlumnosByDni(@PathVariable Integer dni){
+    public ResponseEntity<AlumnoDTO> getAlumnosByDni(@PathVariable Integer dni){
         Alumno alumno = this.alumnoService.getUserByDni(dni);
-        return (alumno != null) ? new ResponseEntity<>(alumno, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return (alumno != null) ? new ResponseEntity<>(AlumnoTransformer.toDTO(alumno), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     @GetMapping("/listarPorEmail")
-    public ResponseEntity<Alumno> getAlumnoByEmail(@PathParam("email") String email){
+    public ResponseEntity<AlumnoDTO> getAlumnoByEmail(@PathParam("email") String email){
         Alumno alumno = this.alumnoService.getUserByEmail(email);
-        return (alumno != null) ? new ResponseEntity<>(alumno, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return (alumno != null) ? new ResponseEntity<>(AlumnoTransformer.toDTO(alumno), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/listarPorNombre")
-    public ResponseEntity<List<Alumno>> getAlumnosByName(@PathParam("nombre") String nombre){
-        return new ResponseEntity<>(this.alumnoService.getUsersByName(nombre), HttpStatus.OK);
+    public ResponseEntity<List<AlumnoDTO>> getAlumnosByName(@PathParam("nombre") String nombre){
+        return new ResponseEntity<>(AlumnoTransformer.toDTOList(this.alumnoService.getUsersByName(nombre)), HttpStatus.OK);
     }
 
     @GetMapping("/listarPorApellido")
-    public ResponseEntity<List<Alumno>> getAlumnosByLastName(@PathParam("apellido") String apellido){
-        return new ResponseEntity<>(this.alumnoService.getUsersByLastName(apellido), HttpStatus.OK);
+    public ResponseEntity<List<AlumnoDTO>> getAlumnosByLastName(@PathParam("apellido") String apellido){
+        return new ResponseEntity<>(AlumnoTransformer.toDTOList(this.alumnoService.getUsersByLastName(apellido)), HttpStatus.OK);
     }
     @GetMapping("/listarHabilitados")
-    public ResponseEntity<List<Alumno>> getAlumnosEnabled(){
-        return new ResponseEntity<>(this.alumnoService.getAlumnosByEnabled(), HttpStatus.OK);
+    public ResponseEntity<List<AlumnoDTO>> getAlumnosEnabled(){
+        return new ResponseEntity<>(AlumnoTransformer.toDTOList(this.alumnoService.getAlumnosByEnabled()), HttpStatus.OK);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<AlumnoDTO> login(@RequestBody LoginRequest loginRequest) {
+        try {
+            Alumno response = this.alumnoService.login(loginRequest);
+            return ResponseEntity.ok(AlumnoTransformer.toDTO(response));
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
-
+    }
 }

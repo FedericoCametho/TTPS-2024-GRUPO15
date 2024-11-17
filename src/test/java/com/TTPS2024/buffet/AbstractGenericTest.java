@@ -5,7 +5,7 @@ import com.TTPS2024.buffet.controller.request.carta.CartaSemanalRequest;
 import com.TTPS2024.buffet.controller.request.carta.producto.ComidaRequest;
 import com.TTPS2024.buffet.controller.request.carta.producto.MenuRequest;
 import com.TTPS2024.buffet.controller.request.sugerencia.SugerenciaRequest;
-import com.TTPS2024.buffet.controller.request.usuario.AlumnoRequest;
+import com.TTPS2024.buffet.controller.request.usuario.create.AlumnoRequest;
 import com.TTPS2024.buffet.dao.carrito.CompraDAO;
 import com.TTPS2024.buffet.dao.carta.CartaDelDiaDAO;
 import com.TTPS2024.buffet.dao.carta.CartaSemanalDAO;
@@ -15,7 +15,6 @@ import com.TTPS2024.buffet.dao.sugerencia.SugerenciaDAO;
 import com.TTPS2024.buffet.dao.usuario.AlumnoDAO;
 
 import com.TTPS2024.buffet.model.carta.CartaDelDia;
-import com.TTPS2024.buffet.model.carta.CartaSemanal;
 import com.TTPS2024.buffet.model.carta.DiaSemana;
 import com.TTPS2024.buffet.model.carta.producto.Comida;
 import com.TTPS2024.buffet.model.carta.producto.TipoComida;
@@ -30,12 +29,10 @@ import com.TTPS2024.buffet.service.usuario.AlumnoService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.params.provider.Arguments;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

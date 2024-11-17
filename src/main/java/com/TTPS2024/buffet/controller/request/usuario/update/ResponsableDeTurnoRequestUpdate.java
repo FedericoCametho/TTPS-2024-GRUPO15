@@ -1,12 +1,12 @@
-package com.TTPS2024.buffet.controller.request.usuario;
+package com.TTPS2024.buffet.controller.request.usuario.update;
 
 
 import com.TTPS2024.buffet.model.usuario.Turno;
 
-public class ResponsableDeTurnoRequest extends UsuarioRequest{
+public class ResponsableDeTurnoRequestUpdate extends UsuarioRequestUpdate {
     private Turno turno;
 
-    public ResponsableDeTurnoRequest() {
+    public ResponsableDeTurnoRequestUpdate() {
         super();
     }
 
