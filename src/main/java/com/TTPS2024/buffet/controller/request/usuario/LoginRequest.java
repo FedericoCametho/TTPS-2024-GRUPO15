@@ -1,4 +1,4 @@
-package com.TTPS2024.buffet.controller.request;
+package com.TTPS2024.buffet.controller.request.usuario;
 
 public class LoginRequest {
     private String email;

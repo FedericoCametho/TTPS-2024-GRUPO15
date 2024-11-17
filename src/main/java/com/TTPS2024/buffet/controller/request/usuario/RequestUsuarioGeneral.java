@@ -1,13 +1,10 @@
 package com.TTPS2024.buffet.controller.request.usuario;
 
-public abstract class UsuarioRequest {
+public abstract class RequestUsuarioGeneral {
     protected Integer dni;
     protected String email;
     protected String nombre;
     protected String apellido;
-    protected String contrasena;
-
-
 
     public Integer getDni() {
         return dni;
@@ -39,13 +36,5 @@ public abstract class UsuarioRequest {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
-    }
-
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
     }
 }
