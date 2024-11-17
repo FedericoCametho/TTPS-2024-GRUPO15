@@ -1,16 +1,18 @@
 package com.TTPS2024.buffet.service.usuario;
 
 
-import com.TTPS2024.buffet.controller.request.usuario.UsuarioRequest;
+import com.TTPS2024.buffet.controller.request.usuario.LoginRequest;
+import com.TTPS2024.buffet.controller.request.usuario.RequestUsuarioGeneral;
+import com.TTPS2024.buffet.controller.request.usuario.create.UsuarioRequest;
+import com.TTPS2024.buffet.controller.request.usuario.update.UsuarioRequestUpdate;
 import com.TTPS2024.buffet.dao.usuario.UsuarioDAO;
 import com.TTPS2024.buffet.helper.RequestValidatorHelper;
+import com.TTPS2024.buffet.helper.security.PasswordEncryptionUtil;
 import com.TTPS2024.buffet.model.permiso.Rol;
 import com.TTPS2024.buffet.model.usuario.Usuario;
 import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
 
 
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.logging.Logger;
 
-public abstract class UsuarioService<T extends Usuario,S extends UsuarioDAO<T> & JpaRepository<T, Long>, R extends UsuarioRequest> {
+public abstract class UsuarioService<T extends Usuario,S extends UsuarioDAO<T> & JpaRepository<T, Long>, R extends UsuarioRequest, U extends UsuarioRequestUpdate> {
     private static final Logger LOGGER = Logger.getLogger(UsuarioService.class.getName());
 
     protected S dao;
@@ -56,6 +58,23 @@ public abstract class UsuarioService<T extends Usuario,S extends UsuarioDAO<T> &
         user.setEmail(usuarioRequest.getEmail());
         user.setDni(usuarioRequest.getDni());
         this.setUpdateSpecificFields(user, usuarioRequest);
+        return this.dao.saveAndFlush(user);
+    }
+
+    @Transactional
+    public T updatePassword(Long id, String password){
+        RequestValidatorHelper.validateID(id);
+        if(password == null || password.isEmpty()){
+            throw new IllegalArgumentException("La contrasena no puede ser nula o vacia");
+        }
+        T user;
+        try{
+            user = this.dao.getById(id);
+        } catch (NoResultException e){
+            LOGGER.info("El usuario no existe con el id: " + id);
+            throw new IllegalArgumentException("El usuario no existe con el id: " + id);
+        }
+        user.setContrasena(PasswordEncryptionUtil.encryptPassword(password));
         return this.dao.saveAndFlush(user);
     }
 
@@ -142,7 +161,7 @@ public abstract class UsuarioService<T extends Usuario,S extends UsuarioDAO<T> &
         return dao.getUsuariosByRol(rol);
     }
 
-    private void sanitizeRequest(R usuarioRequest) {
+    protected void sanitizeRequest(R usuarioRequest) {
         if(usuarioRequest.getNombre() == null || usuarioRequest.getNombre().isEmpty()){
             throw new IllegalArgumentException("El nombre no puede ser nulo o vacio");
         }
@@ -152,6 +171,10 @@ public abstract class UsuarioService<T extends Usuario,S extends UsuarioDAO<T> &
         if(usuarioRequest.getEmail() == null || usuarioRequest.getEmail().isEmpty()){
             throw new IllegalArgumentException("El email  no puede ser nulo o vacio");
         }
+        if(usuarioRequest.getContrasena() == null || usuarioRequest.getContrasena().isEmpty()){
+            throw new IllegalArgumentException("La contrasena no puede ser nula o vacia");
+        }
+        usuarioRequest.setContrasena(PasswordEncryptionUtil.encryptPassword(usuarioRequest.getContrasena()));
         this.validateDNI(usuarioRequest.getDni());
         this.sanitizeRequestSpecificFields(usuarioRequest);
     }
@@ -171,10 +194,46 @@ public abstract class UsuarioService<T extends Usuario,S extends UsuarioDAO<T> &
         }
     }
 
+    public T login(LoginRequest loginRequest){
+        this.sanitizeLoginRequest(loginRequest);
+        T usuario = this.getUserByEmail(loginRequest.getEmail());
+        if(usuario == null){
+            throw new IllegalArgumentException("El email no se encuentra registrado");
+        }
+        if(!PasswordEncryptionUtil.matchPassword(loginRequest.getContrasena(), usuario.getContrasena())){
+            throw new IllegalArgumentException("La contrasena es incorrecta");
+        }
+        return usuario;
+    }
+
+    private void sanitizeLoginRequest(LoginRequest loginRequest){
+        if(loginRequest.getEmail() == null || loginRequest.getEmail().isEmpty()){
+            throw new IllegalArgumentException("El email no puede ser nulo o vacio");
+        }
+        if(loginRequest.getContrasena() == null || loginRequest.getContrasena().isEmpty()) {
+            throw new IllegalArgumentException("La contrasena no puede ser nula o vacia");
+        }
+    }
+
 
     protected abstract T createUsuario(R usuarioRequest);
     protected abstract void setUpdateSpecificFields(T user, R usuarioRequest) ;
     protected abstract void sanitizeRequestSpecificFields(R usuarioRequest);
+    protected abstract void setUpdateSpecificFields(T user, U usuarioRequest) ;
+    protected abstract void sanitizeRequestSpecificFields(U usuarioRequest);
 
+    protected void sanitizeRequest(U usuarioRequestUpdate) {
+        if(usuarioRequestUpdate.getNombre() == null || usuarioRequestUpdate.getNombre().isEmpty()){
+            throw new IllegalArgumentException("El nombre no puede ser nulo o vacio");
+        }
+        if(usuarioRequestUpdate.getApellido() == null || usuarioRequestUpdate.getApellido().isEmpty()){
+            throw new IllegalArgumentException("El apellido no puede ser nulo o vacio");
+        }
+        if(usuarioRequestUpdate.getEmail() == null || usuarioRequestUpdate.getEmail().isEmpty()){
+            throw new IllegalArgumentException("El email  no puede ser nulo o vacio");
+        }
+        this.validateDNI(usuarioRequestUpdate.getDni());
+        this.sanitizeRequestSpecificFields(usuarioRequestUpdate);
+    }
 }
 

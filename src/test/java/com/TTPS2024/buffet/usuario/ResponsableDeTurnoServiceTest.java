@@ -1,7 +1,7 @@
 package com.TTPS2024.buffet.usuario;
 
 
-import com.TTPS2024.buffet.controller.request.usuario.ResponsableDeTurnoRequest;
+import com.TTPS2024.buffet.controller.request.usuario.create.ResponsableDeTurnoRequest;
 import com.TTPS2024.buffet.dao.usuario.ResponsableDeTurnoDAO;
 import com.TTPS2024.buffet.model.usuario.ResponsableDeTurno;
 import com.TTPS2024.buffet.model.usuario.Turno;

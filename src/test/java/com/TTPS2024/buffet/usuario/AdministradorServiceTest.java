@@ -1,6 +1,6 @@
 package com.TTPS2024.buffet.usuario;
 
-import com.TTPS2024.buffet.controller.request.usuario.AdministradorRequest;
+import com.TTPS2024.buffet.controller.request.usuario.create.AdministradorRequest;
 import com.TTPS2024.buffet.dao.usuario.AdministradorDAO;
 import com.TTPS2024.buffet.model.permiso.Rol;
 import com.TTPS2024.buffet.model.usuario.Administrador;

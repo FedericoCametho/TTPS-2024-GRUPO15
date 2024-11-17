@@ -1,4 +1,4 @@
-package com.TTPS2024.buffet.controller.request.usuario;
+package com.TTPS2024.buffet.controller.request.usuario.create;
 
 public class AlumnoRequest extends UsuarioRequest {
     private byte[] foto;
@@ -6,6 +6,7 @@ public class AlumnoRequest extends UsuarioRequest {
 
     public AlumnoRequest() {
         super();
+        this.contrasena = CONTRASENA_DEFAULT;
     }
 
 
