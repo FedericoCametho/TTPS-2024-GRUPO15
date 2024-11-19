@@ -6,7 +6,6 @@ public class AlumnoRequest extends UsuarioRequest {
 
     public AlumnoRequest() {
         super();
-        this.contrasena = CONTRASENA_DEFAULT;
     }
 
 
