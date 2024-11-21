@@ -5,7 +5,8 @@ import java.util.List;
 
 public class MenuRequest extends ProductoComercializableRequest {
 
-    private List<Comida> comidas;
+    private List<Long> comidas; // Listado de ID
+
     private boolean isVeggie;
 
     public boolean isVeggie() {
@@ -16,11 +17,11 @@ public class MenuRequest extends ProductoComercializableRequest {
         isVeggie = veggie;
     }
 
-    public List<Comida> getComidas() {
+    public List<Long> getComidas() {
         return comidas;
     }
 
-    public void setComidas(List<Comida> comidas) {
+    public void setComidas(List<Long> comidas) {
         this.comidas = comidas;
     }
 }

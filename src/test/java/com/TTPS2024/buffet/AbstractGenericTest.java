@@ -17,6 +17,7 @@ import com.TTPS2024.buffet.dao.usuario.AlumnoDAO;
 import com.TTPS2024.buffet.model.carta.CartaDelDia;
 import com.TTPS2024.buffet.model.carta.DiaSemana;
 import com.TTPS2024.buffet.model.carta.producto.Comida;
+import com.TTPS2024.buffet.model.carta.producto.ProductoComercializable;
 import com.TTPS2024.buffet.model.carta.producto.TipoComida;
 import com.TTPS2024.buffet.model.sugerencia.TipoSugerencia;
 import com.TTPS2024.buffet.service.carrito.CompraService;
@@ -188,7 +189,7 @@ public abstract class AbstractGenericTest {
         menuRequest.setNombre(nombre);
         menuRequest.setPrecio(precio);
         menuRequest.setImagen(null);
-        menuRequest.setComidas(comidasList);
+        menuRequest.setComidas(comidasList.stream().mapToLong(ProductoComercializable::getId).boxed().toList());
         menuRequest.setVeggie(isVeggie);
         return menuRequest;
     }
