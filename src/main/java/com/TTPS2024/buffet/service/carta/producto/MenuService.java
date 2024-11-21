@@ -45,14 +45,22 @@ public class MenuService extends ProductoComercializableService<Menu,MenuDAO, Me
 
     @Override
     public void updateSpecificRelations(Menu updatedMenu, MenuRequest menuRequest){
-            menuRequest.getComidas().forEach(comida -> {
-                this.comidaService.updateComidaMenuRelation(updatedMenu,comida.getId());
+            menuRequest.getComidas().forEach(comidaId -> {
+                this.comidaService.updateComidaMenuRelation(updatedMenu, comidaId);
             });
     }
 
     @Override
     protected Menu createProductoComercializable(MenuRequest request) {
-        return new Menu(request.getNombre(), request.getPrecio(), request.getComidas(), request.getImagen(), request.isVeggie());
+        return new Menu(request.getNombre(), request.getPrecio(), this.getComidasFromIds(request.getComidas()), request.getImagen(), request.isVeggie());
+    }
+
+    private List<Comida> getComidasFromIds(List<Long> comidasIds){
+        List<Comida> comidas = new ArrayList<>();
+        comidasIds.forEach(id -> {
+            comidas.add(this.comidaService.getProductById(id));
+        });
+        return comidas;
     }
 
 }
