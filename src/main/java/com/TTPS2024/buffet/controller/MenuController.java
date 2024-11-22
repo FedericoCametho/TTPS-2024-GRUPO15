@@ -1,6 +1,6 @@
 package com.TTPS2024.buffet.controller;
 
-import com.TTPS2024.buffet.controller.dto.MenuDTO;
+import com.TTPS2024.buffet.controller.dto.carta.producto.MenuDTO;
 import com.TTPS2024.buffet.controller.request.carta.producto.MenuRequest;
 import com.TTPS2024.buffet.helper.transformer.carta.producto.MenuTransformer;
 import com.TTPS2024.buffet.model.carta.producto.Menu;

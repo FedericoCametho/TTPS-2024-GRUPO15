@@ -85,6 +85,13 @@ public class CartaDelDia {
         this.activa = activa;
     }
 
+    public void activar(){
+        this.activa = true;
+    }
+    public void desactivar(){
+        this.activa = false;
+    }
+
     public CartaSemanal getCartaSemanal() {
         return cartaSemanal;
     }

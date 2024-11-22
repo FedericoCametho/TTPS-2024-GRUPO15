@@ -1,6 +1,6 @@
 package com.TTPS2024.buffet.controller;
 
-import com.TTPS2024.buffet.controller.dto.AlumnoDTO;
+import com.TTPS2024.buffet.controller.dto.usuario.AlumnoDTO;
 import com.TTPS2024.buffet.controller.request.usuario.LoginRequest;
 import com.TTPS2024.buffet.controller.request.usuario.create.AlumnoRequest;
 import com.TTPS2024.buffet.controller.request.usuario.update.AlumnoRequestUpdate;
