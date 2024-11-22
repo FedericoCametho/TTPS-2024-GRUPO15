@@ -28,26 +28,6 @@ public class AlumnoService extends UsuarioService<Alumno, AlumnoDAO, AlumnoReque
         return this.dao.getByHabilitado();
     }
 
-    @Transactional
-    public Alumno update(Long id, AlumnoRequestUpdate alumnoRequestUpdate){
-        RequestValidatorHelper.validateID(id);
-        this.sanitizeRequest(alumnoRequestUpdate);
-        Alumno user;
-        try{
-            user = this.dao.getById(id);
-        } catch (NoResultException e){
-            LOGGER.info("El usuario no existe con el id: " + id);
-            throw new IllegalArgumentException("El usuario no existe con el id: " + id);
-        }
-        user.setNombre(alumnoRequestUpdate.getNombre());
-        user.setApellido(alumnoRequestUpdate.getApellido());
-        user.setEmail(alumnoRequestUpdate.getEmail());
-        user.setDni(alumnoRequestUpdate.getDni());
-        this.setUpdateSpecificFields(user, alumnoRequestUpdate);
-        return this.dao.saveAndFlush(user);
-    }
-
-
     @Override
     protected Alumno createUsuario(AlumnoRequest alumnoRequest) {
         return new Alumno(alumnoRequest.getDni(), alumnoRequest.getEmail(),alumnoRequest.getNombre(), alumnoRequest.getApellido(), alumnoRequest.getContrasena());

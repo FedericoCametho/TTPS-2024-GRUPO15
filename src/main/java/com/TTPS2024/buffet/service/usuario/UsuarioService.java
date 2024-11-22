@@ -10,6 +10,8 @@ import com.TTPS2024.buffet.helper.RequestValidatorHelper;
 import com.TTPS2024.buffet.helper.security.PasswordEncryptionUtil;
 import com.TTPS2024.buffet.model.permiso.Rol;
 import com.TTPS2024.buffet.model.usuario.Usuario;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -43,13 +45,13 @@ public abstract class UsuarioService<T extends Usuario,S extends UsuarioDAO<T> &
     }
 
     @Transactional
-    public T update(Long id, R usuarioRequest){
+    public T update(Long id, U usuarioRequest){
         RequestValidatorHelper.validateID(id);
         this.sanitizeRequest(usuarioRequest);
         T user;
         try{
-            user = this.dao.getById(id);
-        } catch (NoResultException e){
+            user = this.dao.findById(id).orElseThrow(NoResultException::new);
+        } catch (NoResultException | EntityNotFoundException ex){
             LOGGER.info("El usuario no existe con el id: " + id);
             throw new IllegalArgumentException("El usuario no existe con el id: " + id);
         }

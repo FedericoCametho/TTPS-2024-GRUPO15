@@ -5,6 +5,7 @@ import com.TTPS2024.buffet.helper.RequestValidatorHelper;
 import com.TTPS2024.buffet.model.carrito.Carrito;
 import com.TTPS2024.buffet.model.carrito.Compra;
 import com.TTPS2024.buffet.model.usuario.Alumno;
+import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,8 +72,8 @@ public class CompraService {
     public Compra getById(Long id) {
         RequestValidatorHelper.validateID(id);
         try {
-            return this.compraDAO.findById(id).orElse(null);
-        } catch (Exception e) {
+            return this.compraDAO.findById(id).orElseThrow(NoResultException::new);
+        } catch (NoResultException e) {
             LOGGER.info("No se encontro compra con id: " + id);
             throw new IllegalArgumentException("Error al recuperar la compra por ID");
         }

@@ -7,6 +7,7 @@ import com.TTPS2024.buffet.model.sugerencia.Sugerencia;
 import com.TTPS2024.buffet.model.sugerencia.TipoSugerencia;
 import com.TTPS2024.buffet.model.usuario.Alumno;
 import com.TTPS2024.buffet.service.usuario.AlumnoService;
+import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,8 +53,8 @@ public class SugerenciaService {
     public Sugerencia getById(Long id){
         RequestValidatorHelper.validateID(id);
         try{
-            return this.sugerenciaDAO.findById(id).orElse(null);
-        } catch (Exception e){
+            return this.sugerenciaDAO.findById(id).orElseThrow(NoResultException::new);
+        } catch (NoResultException e){
             LOGGER.info("No se encontro sugerencia con id: " + id);
             throw new IllegalArgumentException("No se encontro sugerencia con id: " + id);
         }

@@ -5,6 +5,7 @@ import com.TTPS2024.buffet.dao.carta.CartaSemanalDAO;
 import com.TTPS2024.buffet.helper.RequestValidatorHelper;
 import com.TTPS2024.buffet.model.carta.CartaDelDia;
 import com.TTPS2024.buffet.model.carta.CartaSemanal;
+import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,8 +41,8 @@ public class CartaSemanalService {
     public CartaSemanal getById(Long id) {
         RequestValidatorHelper.validateID(id);
         try{
-            return this.cartaSemanalDAO.findById(id).orElse(null);
-        } catch (Exception e) {
+            return this.cartaSemanalDAO.findById(id).orElseThrow(NoResultException::new);
+        } catch (NoResultException e) {
             LOGGER.info("No se encontro carta semanal con id: " + id);
             throw new IllegalArgumentException("No se encontro carta semanal con id: " + id);
         }
