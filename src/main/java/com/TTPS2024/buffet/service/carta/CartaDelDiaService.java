@@ -45,8 +45,8 @@ public class CartaDelDiaService {
     public CartaDelDia getById(Long id) {
         RequestValidatorHelper.validateID(id);
         try {
-            return this.cartaDelDiaDAO.findById(id).orElse(null);
-        } catch (Exception e) {
+            return this.cartaDelDiaDAO.findById(id).orElseThrow(NoResultException::new);
+        } catch (NoResultException e) {
             LOGGER.info("No se encontro carta del dia con id: " + id);
             throw new IllegalArgumentException("No se encontro carta del dia con id: " + id);
         }
