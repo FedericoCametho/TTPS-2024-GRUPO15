@@ -70,7 +70,7 @@ public class CartaSemanalService {
             throw new IllegalArgumentException("Se deben cargar las 5 cartas del dia");
         }
 
-        checkUnaPorDia(this.getCartasDelDia(cartaSemanalRequest.getCartasDelDia()));
+        checkUnaPorDia(this.cartaDelDiaService.getCartasDelDiaByIds(cartaSemanalRequest.getCartasDelDia()));
 
     }
 
@@ -85,14 +85,7 @@ public class CartaSemanalService {
 
 
     private CartaSemanal createCartaSemanal(CartaSemanalRequest cartaSemanalRequest) {
-        CartaSemanal cartaSemanal = new CartaSemanal();
-        cartaSemanal.setNombre(cartaSemanalRequest.getNombre());
-        cartaSemanal.setCartas(this.getCartasDelDia(cartaSemanalRequest.getCartasDelDia()));
-        return cartaSemanal;
-    }
-
-    private List<CartaDelDia> getCartasDelDia(List<Long> cartasDelDiaIds) {
-        return cartasDelDiaIds.stream().map(this.cartaDelDiaService::getById).collect(Collectors.toList());
+        return new CartaSemanal(this.cartaDelDiaService.getCartasDelDiaByIds(cartaSemanalRequest.getCartasDelDia()), cartaSemanalRequest.getNombre());
     }
 
     public List<CartaSemanal> getAll() {

@@ -7,7 +7,7 @@ import java.util.List;
 public class CartaSemanalDTO {
 
     private String nombre;
-    private List<Long> cartasDelDia;
+    private List<CartaDelDiaDTO> cartasDelDia;
 
     public String getNombre() {
         return nombre;
@@ -17,11 +17,11 @@ public class CartaSemanalDTO {
         this.nombre = nombre;
     }
 
-    public List<Long> getCartasDelDia() {
+    public List<CartaDelDiaDTO> getCartasDelDia() {
         return cartasDelDia;
     }
 
-    public void setCartasDelDia(List<Long> cartasDelDia) {
+    public void setCartasDelDia(List<CartaDelDiaDTO> cartasDelDia) {
         this.cartasDelDia = cartasDelDia;
     }
 }

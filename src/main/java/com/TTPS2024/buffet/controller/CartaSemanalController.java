@@ -37,7 +37,7 @@ public class CartaSemanalController {
         return new ResponseEntity<>(CartaSemanalTransformer.toDTOList(cartasSemanal), HttpStatus.OK);
     }
 
-    @GetMapping("/listarPorId/{id}")
+    @GetMapping("/listar/{id}")
     public ResponseEntity<CartaSemanalDTO> getCartaSemanalById(@PathVariable("id") Long id){
         CartaSemanal cartaSemanal = this.cartaSemanalService.getById(id);
         return new ResponseEntity<>(CartaSemanalTransformer.toDTO(cartaSemanal), HttpStatus.OK);
@@ -50,8 +50,8 @@ public class CartaSemanalController {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<String> deleteCartaSemanal(@PathVariable("id") Long id){
+    public ResponseEntity<Long> deleteCartaSemanal(@PathVariable("id") Long id){
         this.cartaSemanalService.delete(id);
-        return new ResponseEntity<>("Carta semanal eliminada", HttpStatus.OK);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 }
