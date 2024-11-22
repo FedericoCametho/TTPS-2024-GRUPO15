@@ -1,6 +1,8 @@
 package com.TTPS2024.buffet.controller.request.carta;
 
+import com.TTPS2024.buffet.model.carta.CartaSemanal;
 import com.TTPS2024.buffet.model.carta.DiaSemana;
+import com.TTPS2024.buffet.model.carta.producto.Menu;
 
 import java.util.List;
 
@@ -8,8 +10,8 @@ import java.util.List;
 public class CartaDelDiaRequest {
     private List<Long> menues;
     private DiaSemana diaSemana;
-    private Long cartaSemanal;
     private boolean isActiva;
+
 
     public DiaSemana getDiaSemana() {
         return diaSemana;
@@ -17,14 +19,6 @@ public class CartaDelDiaRequest {
 
     public void setDiaSemana(DiaSemana diaSemana) {
         this.diaSemana = diaSemana;
-    }
-
-    public Long getCartaSemanal() {
-        return cartaSemanal;
-    }
-
-    public void setCartaSemanal(Long cartaSemanal) {
-        this.cartaSemanal = cartaSemanal;
     }
 
     public List<Long> getMenues() {

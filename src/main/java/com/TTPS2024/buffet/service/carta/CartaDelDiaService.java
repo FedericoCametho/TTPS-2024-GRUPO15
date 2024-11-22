@@ -53,29 +53,29 @@ public class CartaDelDiaService {
     }
 
     private Menu getMenuVegetariano(List<Long> menues) {
-        return menues.stream()
-                .map(menuService::getProductById)
-                .filter(Menu::isVeggie)
-                .findFirst()
-                .orElse(null);
+        List<Menu> menuResult = this.menuService.getMenuesVeggieByIds(menues);
+        return menuResult.size() == 1 ? menuResult.get(0) : null;
     }
 
     private Menu getMenuComun(List<Long> menues) {
-        return menues.stream()
-                .map(menuService::getProductById)
-                .filter(menu -> !menu.isVeggie())
-                .findFirst()
-                .orElse(null);
+        List<Menu> menuResult = this.menuService.getMenuesComunByIds(menues);
+        return menuResult.size() == 1 ? menuResult.get(0) : null;
     }
 
     private void sanitize(CartaDelDiaRequest cartaDelDiaRequest) {
 
+        if (cartaDelDiaRequest.getMenues() == null || cartaDelDiaRequest.getMenues().size() != 2) {
+            throw new IllegalArgumentException("Se requieren dos menues");
+        }
+
         if (this.getMenuComun(cartaDelDiaRequest.getMenues()) == null) {
             throw new IllegalArgumentException("Menu comun es requerido");
         }
+
         if (this.getMenuVegetariano(cartaDelDiaRequest.getMenues()) == null) {
             throw new IllegalArgumentException("Menu vegetariano es requerido");
         }
+
         if (cartaDelDiaRequest.getDiaSemana() == null) {
             throw new IllegalArgumentException("Dia de la semana es requerido");
         }
@@ -136,10 +136,6 @@ public class CartaDelDiaService {
         return cartaDelDia;
     }
 
-    public CartaDelDia update(CartaDelDia cartaDelDia) {
-        return cartaDelDiaDAO.saveAndFlush(cartaDelDia);
-    }
-
     public List<CartaDelDia> getAll() {
         return cartaDelDiaDAO.findAll();
     }
@@ -181,6 +177,18 @@ public class CartaDelDiaService {
     
     public Menu getMenuFromIds(Long id){
         return this.menuService.getProductById(id);
+    }
+
+    public CartaDelDia activate(Long id){
+        CartaDelDia cartaDelDia = this.getById(id);
+        cartaDelDia.activar();
+        return this.cartaDelDiaDAO.saveAndFlush(cartaDelDia);
+    }
+
+    public CartaDelDia deactivate(Long id){
+        CartaDelDia cartaDelDia = this.getById(id);
+        cartaDelDia.desactivar();
+        return this.cartaDelDiaDAO.saveAndFlush(cartaDelDia);
     }
 
 }

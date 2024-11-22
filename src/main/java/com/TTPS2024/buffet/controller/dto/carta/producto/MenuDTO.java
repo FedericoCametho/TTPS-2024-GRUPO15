@@ -5,7 +5,7 @@ import java.util.List;
 
 public class MenuDTO extends ProductoComercializableDTO{
 
-    private List<Long> comidas;
+    private List<ComidaDTO> comidas;
 
     private List<Long> compras;
 
@@ -13,11 +13,11 @@ public class MenuDTO extends ProductoComercializableDTO{
     private boolean isVeggie;
 
 
-    public List<Long> getComidas() {
+    public List<ComidaDTO> getComidas() {
         return comidas;
     }
 
-    public void setComidas(List<Long> comidas) {
+    public void setComidas(List<ComidaDTO> comidas) {
         this.comidas = comidas;
     }
 

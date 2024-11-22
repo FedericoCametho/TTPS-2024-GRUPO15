@@ -45,10 +45,21 @@ public class CartaDelDiaController {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<String> deleteCartaDelDia(@PathVariable("id") Long id) {
+    public ResponseEntity<Long> deleteCartaDelDia(@PathVariable("id") Long id) {
         cartaDelDiaService.delete(id);
-        return new ResponseEntity<>("Carta del dia eliminada", HttpStatus.OK);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
+    @PutMapping("/activar/{id}")
+    public ResponseEntity<CartaDelDiaDTO> activateCartaDelDia(@PathVariable("id") Long id) {
+        CartaDelDia result = cartaDelDiaService.activate(id);
+        return new ResponseEntity<>(CartaDelDiaTransformer.toDTO(result), HttpStatus.OK);
+    }
+
+    @PutMapping("/desactivar/{id}")
+    public ResponseEntity<CartaDelDiaDTO> deactivateCartaDelDia(@PathVariable("id") Long id) {
+        CartaDelDia result = cartaDelDiaService.deactivate(id);
+        return new ResponseEntity<>(CartaDelDiaTransformer.toDTO(result), HttpStatus.OK);
+    }
 
 }
