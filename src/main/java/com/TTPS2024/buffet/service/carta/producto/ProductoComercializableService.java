@@ -80,10 +80,11 @@ public abstract class ProductoComercializableService<T extends ProductoComercial
     }
     public T getProductById(Long id) {
         RequestValidatorHelper.validateID(id);
+        T result;
         try{
-            T result = dao.findById(id).get();
+            result = dao.findById(id).orElseThrow(NoResultException::new);
             return result;
-        } catch (NoSuchElementException e){
+        } catch (NoResultException e){
             LOGGER.info("El producto no existe con el id: " + id);
             throw new NoResultException("El producto con el id "+ id + " no existe");
         }
