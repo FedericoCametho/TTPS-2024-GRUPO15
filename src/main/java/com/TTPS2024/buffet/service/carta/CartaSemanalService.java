@@ -70,7 +70,7 @@ public class CartaSemanalService {
             throw new IllegalArgumentException("Se deben cargar las 5 cartas del dia");
         }
 
-        checkUnaPorDia(cartaSemanalRequest.getCartasDelDia());
+        checkUnaPorDia(this.getCartasDelDia(cartaSemanalRequest.getCartasDelDia()));
 
     }
 
@@ -87,8 +87,12 @@ public class CartaSemanalService {
     private CartaSemanal createCartaSemanal(CartaSemanalRequest cartaSemanalRequest) {
         CartaSemanal cartaSemanal = new CartaSemanal();
         cartaSemanal.setNombre(cartaSemanalRequest.getNombre());
-        cartaSemanal.setCartas(cartaSemanalRequest.getCartasDelDia());
+        cartaSemanal.setCartas(this.getCartasDelDia(cartaSemanalRequest.getCartasDelDia()));
         return cartaSemanal;
+    }
+
+    private List<CartaDelDia> getCartasDelDia(List<Long> cartasDelDiaIds) {
+        return cartasDelDiaIds.stream().map(this.cartaDelDiaService::getById).collect(Collectors.toList());
     }
 
     public List<CartaSemanal> getAll() {
@@ -137,9 +141,14 @@ public class CartaSemanalService {
 
     private void updateSpecificRelations(CartaSemanal originalCartaSemanal, CartaSemanal updatedCartaSemanal, CartaSemanalRequest cartaSemanalRequest) {
         List<Long> idCartasDelDiaOriginal = originalCartaSemanal.getCartas().stream().mapToLong(CartaDelDia::getId).boxed().toList();
-        List<Long> idCartasDelDiaRequest = cartaSemanalRequest.getCartasDelDia().stream().mapToLong(CartaDelDia::getId).boxed().toList();
+        List<Long> idCartasDelDiaRequest = cartaSemanalRequest.getCartasDelDia();
 
-        List<CartaDelDia> cartasDelDiaToUpdate = cartaSemanalRequest.getCartasDelDia().stream().filter(cartaDelDiaRequest -> !idCartasDelDiaOriginal.contains(cartaDelDiaRequest.getId())).collect(Collectors.toList());
+        List<CartaDelDia> cartasDelDiaToUpdate = cartaSemanalRequest.getCartasDelDia().stream()
+        .filter(cartaDelDiaRequest -> !idCartasDelDiaOriginal.contains(cartaDelDiaRequest))
+        .map(cartaDelDiaService::getById)
+        .collect(Collectors.toList());
+
+//        List<CartaDelDia> cartasDelDiaToUpdate = cartaSemanalRequest.getCartasDelDia().stream().filter(cartaDelDiaRequest -> !idCartasDelDiaOriginal.contains(cartaDelDiaRequest.getId())).collect(Collectors.toList());
 
         if(!cartasDelDiaToUpdate.isEmpty()){
             this.updateCartasDelDiaRelation(cartasDelDiaToUpdate, updatedCartaSemanal);

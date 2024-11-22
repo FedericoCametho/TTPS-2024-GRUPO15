@@ -1,20 +1,19 @@
-package com.TTPS2024.buffet.controller.request.carta;
+package com.TTPS2024.buffet.controller.dto.carta;
 
 import com.TTPS2024.buffet.model.carta.CartaDelDia;
 
 import java.util.List;
 
-public class CartaSemanalRequest {
+public class CartaSemanalDTO {
 
     private String nombre;
     private List<Long> cartasDelDia;
 
-
-    public String getNombre(){
-        return this.nombre;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombre(String nombre){
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
@@ -25,6 +24,4 @@ public class CartaSemanalRequest {
     public void setCartasDelDia(List<Long> cartasDelDia) {
         this.cartasDelDia = cartasDelDia;
     }
-
-
 }
