@@ -53,15 +53,7 @@ public class MenuService extends ProductoComercializableService<Menu,MenuDAO, Me
 
     @Override
     protected Menu createProductoComercializable(MenuRequest request) {
-        return new Menu(request.getNombre(), request.getPrecio(), this.getComidasFromIds(request.getComidas()), request.getImagen(), request.isVeggie());
-    }
-
-    private List<Comida> getComidasFromIds(List<Long> comidasIds){
-        List<Comida> comidas = new ArrayList<>();
-        comidasIds.forEach(id -> {
-            comidas.add(this.comidaService.getProductById(id));
-        });
-        return comidas;
+        return new Menu(request.getNombre(), request.getPrecio(), this.comidaService.getProductsFromIds(request.getComidas()), request.getImagen(), request.isVeggie());
     }
 
     public List<Menu> getMenuesVeggieByIds(List<Long> ids){
