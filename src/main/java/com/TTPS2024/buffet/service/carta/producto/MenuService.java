@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MenuService extends ProductoComercializableService<Menu,MenuDAO, MenuRequest> {
@@ -61,6 +62,14 @@ public class MenuService extends ProductoComercializableService<Menu,MenuDAO, Me
             comidas.add(this.comidaService.getProductById(id));
         });
         return comidas;
+    }
+
+    public List<Menu> getMenuesVeggieByIds(List<Long> ids){
+       return this.getProductsFromIds(ids).stream().filter(Menu::isVeggie).collect(Collectors.toList());
+    }
+
+    public List<Menu> getMenuesComunByIds(List<Long> ids){
+        return this.getProductsFromIds(ids).stream().filter(menu -> !menu.isVeggie()).collect(Collectors.toList());
     }
 
 }
