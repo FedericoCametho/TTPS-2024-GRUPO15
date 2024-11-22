@@ -82,11 +82,7 @@ public class CartaDelDiaService {
     }
 
     public CartaDelDia createCartaDelDia(CartaDelDiaRequest cartaDelDiaRequest) {
-        CartaDelDia cartaDelDia = new CartaDelDia();
-        cartaDelDia.setDiaSemana(cartaDelDiaRequest.getDiaSemana());
-        cartaDelDia.agregarMenuComun(this.getMenuComun(cartaDelDiaRequest.getMenues()));
-        cartaDelDia.agregarMenuVeggie(this.getMenuVegetariano(cartaDelDiaRequest.getMenues()));
-        return cartaDelDia;
+        return new CartaDelDia(List.of(this.getMenuComun(cartaDelDiaRequest.getMenues()), this.getMenuVegetariano(cartaDelDiaRequest.getMenues())),cartaDelDiaRequest.getDiaSemana());
     }
 
     @Transactional
@@ -189,6 +185,10 @@ public class CartaDelDiaService {
         CartaDelDia cartaDelDia = this.getById(id);
         cartaDelDia.desactivar();
         return this.cartaDelDiaDAO.saveAndFlush(cartaDelDia);
+    }
+
+    public List<CartaDelDia> getCartasDelDiaByIds(List<Long> ids){
+        return this.cartaDelDiaDAO.findAllById(ids);
     }
 
 }
