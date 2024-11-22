@@ -6,6 +6,8 @@ import com.TTPS2024.buffet.helper.RequestValidatorHelper;
 import com.TTPS2024.buffet.model.carta.CartaDelDia;
 import com.TTPS2024.buffet.model.carta.CartaSemanal;
 import com.TTPS2024.buffet.model.carta.DiaSemana;
+import com.TTPS2024.buffet.model.carta.producto.Menu;
+import com.TTPS2024.buffet.service.carta.producto.MenuService;
 import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,10 @@ import java.util.logging.Logger;
 public class CartaDelDiaService {
     private static final Logger LOGGER = Logger.getLogger(CartaDelDiaService.class.getName());
     private CartaDelDiaDAO cartaDelDiaDAO;
+
+    @Autowired
+    private MenuService menuService;
+
     @Autowired
     public CartaDelDiaService(CartaDelDiaDAO cartaDelDiaDAO) {
         this.cartaDelDiaDAO = cartaDelDiaDAO;
@@ -46,11 +52,28 @@ public class CartaDelDiaService {
         }
     }
 
+    private Menu getMenuVegetariano(List<Long> menues) {
+        return menues.stream()
+                .map(menuService::getProductById)
+                .filter(Menu::isVeggie)
+                .findFirst()
+                .orElse(null);
+    }
+
+    private Menu getMenuComun(List<Long> menues) {
+        return menues.stream()
+                .map(menuService::getProductById)
+                .filter(menu -> !menu.isVeggie())
+                .findFirst()
+                .orElse(null);
+    }
+
     private void sanitize(CartaDelDiaRequest cartaDelDiaRequest) {
-        if (cartaDelDiaRequest.getMenuComun() == null) {
+
+        if (this.getMenuComun(cartaDelDiaRequest.getMenues()) == null) {
             throw new IllegalArgumentException("Menu comun es requerido");
         }
-        if (cartaDelDiaRequest.getMenuVegetariano() == null) {
+        if (this.getMenuVegetariano(cartaDelDiaRequest.getMenues()) == null) {
             throw new IllegalArgumentException("Menu vegetariano es requerido");
         }
         if (cartaDelDiaRequest.getDiaSemana() == null) {
@@ -61,8 +84,8 @@ public class CartaDelDiaService {
     public CartaDelDia createCartaDelDia(CartaDelDiaRequest cartaDelDiaRequest) {
         CartaDelDia cartaDelDia = new CartaDelDia();
         cartaDelDia.setDiaSemana(cartaDelDiaRequest.getDiaSemana());
-        cartaDelDia.agregarMenuComun(cartaDelDiaRequest.getMenuComun());
-        cartaDelDia.agregarMenuVeggie(cartaDelDiaRequest.getMenuVegetariano());
+        cartaDelDia.agregarMenuComun(this.getMenuComun(cartaDelDiaRequest.getMenues()));
+        cartaDelDia.agregarMenuVeggie(this.getMenuVegetariano(cartaDelDiaRequest.getMenues()));
         return cartaDelDia;
     }
 
@@ -90,7 +113,7 @@ public class CartaDelDiaService {
     }
 
     @Transactional
-    public void update(Long id, CartaDelDiaRequest cartaDelDiaRequest) {
+    public CartaDelDia update(Long id, CartaDelDiaRequest cartaDelDiaRequest) {
         RequestValidatorHelper.validateID(id);
         this.sanitize(cartaDelDiaRequest);
         CartaDelDia cartaDelDia;
@@ -101,15 +124,16 @@ public class CartaDelDiaService {
             throw new IllegalArgumentException("La carta del dia no existe");
         }
         cartaDelDia.setDiaSemana(cartaDelDiaRequest.getDiaSemana());
-        cartaDelDia.agregarMenuComun(cartaDelDiaRequest.getMenuComun());
-        cartaDelDia.agregarMenuVeggie(cartaDelDiaRequest.getMenuVegetariano());
+        cartaDelDia.agregarMenuComun(this.getMenuComun(cartaDelDiaRequest.getMenues()));
+        cartaDelDia.agregarMenuVeggie(this.getMenuVegetariano(cartaDelDiaRequest.getMenues()));
         cartaDelDia.setActiva(cartaDelDiaRequest.isActiva());
         try{
-            this.cartaDelDiaDAO.saveAndFlush(cartaDelDia);
+            CartaDelDia result = this.cartaDelDiaDAO.saveAndFlush(cartaDelDia);
         } catch (Exception e){
             LOGGER.info("Error al actualizar la carta del dia");
             throw new IllegalArgumentException("Error al actualizar la carta del dia");
         }
+        return cartaDelDia;
     }
 
     public CartaDelDia update(CartaDelDia cartaDelDia) {
@@ -153,6 +177,10 @@ public class CartaDelDiaService {
         }catch(Exception e){
             throw new IllegalArgumentException("Error al eliminar la relacion con la carta semanal");
         }
+    }
+    
+    public Menu getMenuFromIds(Long id){
+        return this.menuService.getProductById(id);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.TTPS2024.buffet.controller.dto;
+package com.TTPS2024.buffet.controller.dto.carta.producto;
 
 
 import com.TTPS2024.buffet.model.carta.producto.TipoComida;
