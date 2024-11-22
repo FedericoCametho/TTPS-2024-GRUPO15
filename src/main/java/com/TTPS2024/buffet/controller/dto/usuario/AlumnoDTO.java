@@ -1,4 +1,4 @@
-package com.TTPS2024.buffet.controller.dto;
+package com.TTPS2024.buffet.controller.dto.usuario;
 
 import jakarta.persistence.Lob;
 

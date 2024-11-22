@@ -128,6 +128,12 @@ public abstract class ProductoComercializableService<T extends ProductoComercial
 
     protected abstract void setUpdateSpecificFields(T product, R request) ;
 
+    protected List<T> getProductsFromIds(List<Long> ids){
+        if (ids == null || ids.isEmpty()) {
+            throw new IllegalArgumentException("Menu debe tener al menos una comida");
+        }
+        return this.dao.findAllById(ids);
+    }
 
 
 }

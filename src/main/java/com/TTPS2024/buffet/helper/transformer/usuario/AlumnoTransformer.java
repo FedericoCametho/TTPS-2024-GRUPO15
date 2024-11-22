@@ -1,6 +1,6 @@
 package com.TTPS2024.buffet.helper.transformer.usuario;
 
-import com.TTPS2024.buffet.controller.dto.AlumnoDTO;
+import com.TTPS2024.buffet.controller.dto.usuario.AlumnoDTO;
 import com.TTPS2024.buffet.model.carrito.Compra;
 import com.TTPS2024.buffet.model.sugerencia.Sugerencia;
 import com.TTPS2024.buffet.model.usuario.Alumno;
