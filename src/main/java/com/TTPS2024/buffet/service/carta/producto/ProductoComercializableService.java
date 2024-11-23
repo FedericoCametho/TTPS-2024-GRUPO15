@@ -43,7 +43,7 @@ public abstract class ProductoComercializableService<T extends ProductoComercial
         this.sanitizeRequest(request);
         T originalProduct;
         try{
-            originalProduct = this.dao.getById(id);
+            originalProduct = this.dao.findById(id).orElseThrow(NoResultException::new);
         } catch (NoResultException e){
             LOGGER.info("El producto no existe con el id: " + id);
             throw new NoResultException("El producto con el id "+ id + " no existe");

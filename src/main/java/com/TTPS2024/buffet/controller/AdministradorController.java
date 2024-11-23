@@ -47,7 +47,7 @@ public class AdministradorController {
     }
 
     @PutMapping("/actualizar-contrasena/{id}")
-    public ResponseEntity<AdministradorDTO> updatePassword(@PathVariable("id") Long id, @RequestBody String contrasena){
+    public ResponseEntity<AdministradorDTO> updatePassword(@PathVariable("id") Long id, @RequestParam("contrasena") String contrasena){
         return new ResponseEntity<>(AdministradorTransformer.toDTO(this.administradorService.updatePassword(id, contrasena)), HttpStatus.OK);
     }
 

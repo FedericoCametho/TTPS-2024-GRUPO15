@@ -32,7 +32,7 @@ public class AlumnoController {
         return new ResponseEntity<>(AlumnoTransformer.toDTO(this.alumnoService.update(id, alumnoRequestupdate)), HttpStatus.OK);
     }
     @PutMapping("/actualizar-contrasena/{id}")
-    public ResponseEntity<AlumnoDTO> updatePassword(@PathVariable("id") Long id, @RequestBody String contrasena){
+    public ResponseEntity<AlumnoDTO> updatePassword(@PathVariable("id") Long id, @RequestParam("contrasena") String contrasena){
         return new ResponseEntity<>(AlumnoTransformer.toDTO(this.alumnoService.updatePassword(id, contrasena)), HttpStatus.OK);
     }
 
