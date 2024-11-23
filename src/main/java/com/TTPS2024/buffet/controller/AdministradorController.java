@@ -3,6 +3,7 @@ package com.TTPS2024.buffet.controller;
 import com.TTPS2024.buffet.controller.dto.usuario.AdministradorDTO;
 import com.TTPS2024.buffet.controller.request.usuario.LoginRequest;
 import com.TTPS2024.buffet.controller.request.usuario.create.AdministradorRequest;
+import com.TTPS2024.buffet.controller.request.usuario.update.AdministradorRequestUpdate;
 import com.TTPS2024.buffet.helper.transformer.usuario.AdministradorTransformer;
 import com.TTPS2024.buffet.model.usuario.Administrador;
 import com.TTPS2024.buffet.service.usuario.AdministradorService;
@@ -41,8 +42,8 @@ public class AdministradorController {
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<AdministradorDTO> update(@PathVariable("id") Long id, @RequestBody AdministradorRequest administradorRequest){
-        return new ResponseEntity<>(AdministradorTransformer.toDTO(this.administradorService.update(id, administradorRequest)), HttpStatus.OK);
+    public ResponseEntity<AdministradorDTO> update(@PathVariable("id") Long id, @RequestBody AdministradorRequestUpdate administradorRequestUpdate){
+        return new ResponseEntity<>(AdministradorTransformer.toDTO(this.administradorService.update(id, administradorRequestUpdate)), HttpStatus.OK);
     }
 
     @PutMapping("/actualizar-contrasena/{id}")
