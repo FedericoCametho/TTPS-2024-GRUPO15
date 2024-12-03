@@ -1,16 +1,16 @@
 <h2>Login</h2>
-<form (ngSubmit)="login()">
+<form id="loginform" [formGroup]="formulario" (ngSubmit)="login()">
   <div>
     <label for="email">Email:</label>
-    <input type="email" id="email" [(ngModel)]="user.email" name="email" required>
+    <input type="email" id="email" formControlName="email" name="email" required>
   </div>
   <div>
     <label for="contrasena">Contraseña:</label>
-    <input type="password" id="contrasena" [(ngModel)]="user.contrasena" name="contrasena" required>
+    <input type="password" id="contrasena" formControlName="contrasena" name="contrasena" required>
   </div>
   <div>
     <label for="tipoUsuario">Tipo de Usuario:</label>
-    <select id="tipoUsuario" [(ngModel)]="user.tipoUsuario" name="tipoUsuario" required>
+    <select id="tipoUsuario" formControlName="tipoUsuario" name="tipoUsuario" required>
       <option value="" disabled selected>Seleccione un tipo de usuario</option>
       <option value="ADMINISTRADOR">Administrador</option>
       <option value="RESPONSABLE_TURNO">Responsable de Turno</option>

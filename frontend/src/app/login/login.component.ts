@@ -2,30 +2,33 @@ import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   imports: [CommonModule,
-    FormsModule],
+    FormsModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   //styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  user: any;
+  formulario: FormGroup
 
-  constructor(private authService: AuthService, private router: Router) { 
+  constructor(private authService: AuthService, private router: Router, private fb: FormBuilder) { 
+      this.formulario = this.fb.group({
+      email: ['', Validators.required],
+      contrasena: ['', Validators.required],
+      tipoUsuario: ['', Validators.required]
+    });
+  }
 
-  };
+  
 
   login(): void {
-    const loginRequest = {
-      email: this.user.email,
-      contrasena: this.user.contrasena,
-    }
-    const tipoUsuario = this.user.tipoUsuario;
+    const {email, contrasena, tipoUsuario } = this.formulario.value;
     
-    this.authService.login(loginRequest, tipoUsuario).subscribe(
+    this.authService.login({email:email, contrasena:contrasena}, tipoUsuario.toLowerCase()).subscribe(
       response => {
         console.log('User logged in successfully');
         this.router.navigate(['/home']);

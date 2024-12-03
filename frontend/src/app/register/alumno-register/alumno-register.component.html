@@ -1,24 +1,24 @@
 <h2>Registro de un nuevo Alumno</h2>
-<form (ngSubmit)="register()">
+<form [formGroup]="formulario" (ngSubmit)="register()">
   <div>
     <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" [(ngModel)]="alumnoRequest.nombre" name="nombre" required>
+    <input type="text" id="nombre" formControlName="nombre" name="nombre" required>
   </div>
   <div>
     <label for="apellido">Apellido:</label>
-    <input type="text" id="apellido" [(ngModel)]="alumnoRequest.apellido" name="apellido" required>
+    <input type="text" id="apellido" formControlName="apellido" name="apellido" required>
   </div>
   <div>
     <label for="dni">DNI:</label>
-    <input type="number" id="dni" [(ngModel)]="alumnoRequest.dni" name="dni" required>
+    <input type="number" id="dni" formControlName="dni" name="dni" required>
   </div>
   <div>
     <label for="email">Email:</label>
-    <input type="email" id="email" [(ngModel)]="alumnoRequest.email" name="email" required>
+    <input type="email" id="email" formControlName="email" name="email" required>
   </div>
   <div>
     <label for="contrasena">Contraseña:</label>
-    <input type="password" id="contrasena" [(ngModel)]="alumnoRequest.contrasena" name="contrasena" required>
+    <input type="password" id="contrasena" formControlName="contrasena" name="contrasena" required>
   </div>
   <div>
     <label for="foto">Foto:</label>
