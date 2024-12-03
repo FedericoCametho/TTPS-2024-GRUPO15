@@ -1,0 +1,28 @@
+<h2>Registro de un nuevo Alumno</h2>
+<form (ngSubmit)="register()">
+  <div>
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" [(ngModel)]="alumnoRequest.nombre" name="nombre" required>
+  </div>
+  <div>
+    <label for="apellido">Apellido:</label>
+    <input type="text" id="apellido" [(ngModel)]="alumnoRequest.apellido" name="apellido" required>
+  </div>
+  <div>
+    <label for="dni">DNI:</label>
+    <input type="number" id="dni" [(ngModel)]="alumnoRequest.dni" name="dni" required>
+  </div>
+  <div>
+    <label for="email">Email:</label>
+    <input type="email" id="email" [(ngModel)]="alumnoRequest.email" name="email" required>
+  </div>
+  <div>
+    <label for="contrasena">Contraseña:</label>
+    <input type="password" id="contrasena" [(ngModel)]="alumnoRequest.contrasena" name="contrasena" required>
+  </div>
+  <div>
+    <label for="foto">Foto:</label>
+    <input type="file" id="foto" (change)="onFileSelected($event)">
+  </div>
+  <button type="submit">Registrarse</button>
+</form>

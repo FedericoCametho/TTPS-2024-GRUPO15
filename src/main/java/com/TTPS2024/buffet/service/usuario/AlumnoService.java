@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -30,12 +31,16 @@ public class AlumnoService extends UsuarioService<Alumno, AlumnoDAO, AlumnoReque
 
     @Override
     protected Alumno createUsuario(AlumnoRequest alumnoRequest) {
-        return new Alumno(alumnoRequest.getDni(), alumnoRequest.getEmail(),alumnoRequest.getNombre(), alumnoRequest.getApellido(), alumnoRequest.getContrasena());
+        Alumno alumno =  new Alumno(alumnoRequest.getDni(), alumnoRequest.getEmail(),alumnoRequest.getNombre(), alumnoRequest.getApellido(), alumnoRequest.getContrasena());
+        this.setUpdateSpecificFields(alumno, alumnoRequest);
+        return alumno;
     }
 
     @Override
     protected void setUpdateSpecificFields(Alumno alumno, AlumnoRequest alumnoRequest) {
-        alumno.setFotoDePerfil(alumnoRequest.getFoto());
+        if(alumnoRequest.getFoto() != null){
+            alumno.setFotoDePerfil(Base64.getDecoder().decode(alumnoRequest.getFoto()));
+        }
         this.validarHabilitado(alumno, alumnoRequest.isHabilitado());
     }
 
