@@ -33,7 +33,7 @@ public class ResponsableDeTurnoController {
         return new ResponseEntity<>(ResponsableDeTurnoTransformer.toDTO(this.ResponsableDeTurnoService.update(id, ResponsableDeTurnoRequestupdate)), HttpStatus.OK);
     }
     @PutMapping("/actualizar-contrasena/{id}")
-    public ResponseEntity<ResponsableDeTurnoDTO> updatePassword(@PathVariable("id") Long id, @RequestBody String contrasena){
+    public ResponseEntity<ResponsableDeTurnoDTO> updatePassword(@PathVariable("id") Long id, @RequestParam("contrasena") String contrasena){
         return new ResponseEntity<>(ResponsableDeTurnoTransformer.toDTO(this.ResponsableDeTurnoService.updatePassword(id, contrasena)), HttpStatus.OK);
     }
 

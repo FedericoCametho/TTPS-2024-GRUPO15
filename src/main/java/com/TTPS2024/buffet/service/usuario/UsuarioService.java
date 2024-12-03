@@ -71,7 +71,7 @@ public abstract class UsuarioService<T extends Usuario,S extends UsuarioDAO<T> &
         }
         T user;
         try{
-            user = this.dao.getById(id);
+            user = this.dao.findById(id).orElseThrow(NoResultException::new);
         } catch (NoResultException e){
             LOGGER.info("El usuario no existe con el id: " + id);
             throw new IllegalArgumentException("El usuario no existe con el id: " + id);
