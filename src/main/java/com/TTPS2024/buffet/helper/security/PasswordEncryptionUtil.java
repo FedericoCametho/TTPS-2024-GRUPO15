@@ -8,7 +8,7 @@ public class PasswordEncryptionUtil {
     private static final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
-    public static String encryptPassword(String plainPassword) {
+    public static String   encryptPassword(String plainPassword) {
         return passwordEncoder.encode(plainPassword);
     }
 
