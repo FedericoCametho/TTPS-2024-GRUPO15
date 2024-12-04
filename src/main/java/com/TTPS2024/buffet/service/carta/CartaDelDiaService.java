@@ -136,8 +136,8 @@ public class CartaDelDiaService {
         return cartaDelDiaDAO.findAll();
     }
 
-    public List<CartaDelDia> getCartaDelDiaByDiaSemana(DiaSemana diaSemana) {
-        return cartaDelDiaDAO.getCartaDelDiaByDiaSemana(diaSemana);
+    public CartaDelDia getCartaDelDiaByDiaSemana(DiaSemana diaSemana) {
+        return cartaDelDiaDAO.getCartaDelDiaByDiaSemana(diaSemana).stream().filter(CartaDelDia::isActiva).findFirst().orElseThrow(NoResultException::new);
     }
 
     @Transactional

@@ -4,6 +4,7 @@ import com.TTPS2024.buffet.controller.dto.carta.CartaDelDiaDTO;
 import com.TTPS2024.buffet.controller.request.carta.CartaDelDiaRequest;
 import com.TTPS2024.buffet.helper.transformer.carta.CartaDelDiaTransformer;
 import com.TTPS2024.buffet.model.carta.CartaDelDia;
+import com.TTPS2024.buffet.model.carta.DiaSemana;
 import com.TTPS2024.buffet.service.carta.CartaDelDiaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,7 @@ public class CartaDelDiaController {
         return new ResponseEntity<>(CartaDelDiaTransformer.toDTOList(cartaDelDias),HttpStatus.OK);
     }
 
-    @GetMapping("listar/{id}")
+    @GetMapping("/listar/{id}")
     public ResponseEntity<CartaDelDiaDTO> getCartaDelDia(@PathVariable("id") Long id) {
         CartaDelDia cartaDelDia = this.cartaDelDiaService.getById(id);
         return new ResponseEntity<>(CartaDelDiaTransformer.toDTO(cartaDelDia), HttpStatus.OK);
@@ -60,6 +61,12 @@ public class CartaDelDiaController {
     public ResponseEntity<CartaDelDiaDTO> deactivateCartaDelDia(@PathVariable("id") Long id) {
         CartaDelDia result = cartaDelDiaService.deactivate(id);
         return new ResponseEntity<>(CartaDelDiaTransformer.toDTO(result), HttpStatus.OK);
+    }
+
+    @GetMapping("/listarDia/{dia}")
+    public ResponseEntity<CartaDelDiaDTO> getCartaDelDiaByDia(@PathVariable("dia") DiaSemana dia) {
+        CartaDelDia cartaDelDia = this.cartaDelDiaService.getCartaDelDiaByDiaSemana(dia);
+        return new ResponseEntity<>(CartaDelDiaTransformer.toDTO(cartaDelDia), HttpStatus.OK);
     }
 
 }

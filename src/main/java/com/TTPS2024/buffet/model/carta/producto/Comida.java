@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 public class Comida extends ProductoComercializable{
 
-    private TipoComida tipoComida;
+        private TipoComida tipoComida;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "comida_menu",

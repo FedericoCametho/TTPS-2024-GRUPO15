@@ -3,7 +3,7 @@ import { Comida } from './comida';
 
 export class Menu extends ProductoComercializable {
   comidas: Array<Comida> | undefined;
-
+  
   constructor(
     id: number,
     nombre: string,

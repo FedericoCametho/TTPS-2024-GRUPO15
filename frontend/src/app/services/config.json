@@ -3,5 +3,6 @@
     "registrar":"/registrar",
     "listar":"/listar",
     "actualizar":"/actualizar",
-    "login":"/login"
+    "login":"/login",
+    "cartaDelDia": "/cartaDelDia"
 }
