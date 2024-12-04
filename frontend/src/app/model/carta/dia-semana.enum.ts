@@ -3,5 +3,5 @@ export enum DiaSemana {
     MARTES = 'MARTES',
     MIERCOLES = 'MIERCOLES',
     JUEVES = 'JUEVES',
-    VIERNES = 'VIERNES' 
+    VIERNES = 'VIERNES'
 }

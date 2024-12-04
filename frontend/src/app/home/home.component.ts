@@ -15,24 +15,32 @@ export class HomeComponent implements OnInit {
   cartas: CartaDelDia[] = [];
   cartaDelDia: CartaDelDia | undefined;
 
-  constructor(private cartaDelDiaService: CartaDelDiaService,) { }
+  constructor(private cartaDelDiaService: CartaDelDiaService) { }
 
   ngOnInit(): void {
-    const diasSemana = ['domingo', 'LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'sabado'];
     const hoy = new Date();
-    const diaHoy = diasSemana[hoy.getDay()];
+    const diaSemanaMap: { [key: number]: DiaSemana } = {
+      1: DiaSemana.LUNES,
+      2: DiaSemana.MARTES,
+      3: DiaSemana.MIERCOLES,
+      4: DiaSemana.JUEVES,
+      5: DiaSemana.VIERNES,
+    };
+    const diaHoy: DiaSemana = diaSemanaMap[hoy.getDay()];
 
-    this.cartaDelDiaService.getCartaDelDia().subscribe((resp) => {
-      this.cartas = resp.map(item => new CartaDelDia(
-        item.id,
-        item.menus || [],
-        item.diaSemana as DiaSemana,
-        item.activa,
-      ));
-
-      this.cartaDelDia = this.cartas.find(carta => carta.diaSemana === diaHoy);
+    this.cartaDelDiaService.getCartaDelDiaByDiaSemana(diaHoy).subscribe((resp) => {
+      this.cartaDelDia = resp;  
     });
 
+    // this.cartaDelDiaService.getCartaDelDia().subscribe((resp) => {
+    //   this.cartas = resp.map(item => new CartaDelDia(
+    //     item.id,
+    //     item.menus || [],
+    //     item.diaSemana as DiaSemana,
+    //     item.activa,
+    //   ));
 
+    //   this.cartaDelDia = this.cartas.find(carta => carta.diaSemana === diaHoy);
+    // });
   }
 }

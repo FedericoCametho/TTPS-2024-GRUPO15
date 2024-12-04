@@ -7,8 +7,6 @@ import { MenuCreateComponent } from './menu-create/menu-create.component';
 import { MenuUpdateComponent } from './menu-update/menu-update.component';
 import { MenuListComponent } from './menu-list/menu-list.component';
 import { ComidaComponent } from './comida-list/comida.component';
-import { HomeListMenuComponent } from './home-list-menu/home-list-menu.component';
-
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -17,7 +15,6 @@ export const routes: Routes = [
     { path: 'menu-create', component: MenuCreateComponent },
     { path: 'menu-update/:id', component: MenuUpdateComponent },
     { path: 'menu-list', component: MenuListComponent },
-    { path: 'home-menu-list', component: HomeListMenuComponent },
     { path: 'comida-list', component: ComidaComponent}
 ];
 
