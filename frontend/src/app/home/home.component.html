@@ -1,1 +1,42 @@
-<p>home works!</p>
+<nav class="navbar">
+    <div class="navbar-left">
+        <img src="Qué_Comemos_logo.png" alt="¿Qué comemos? Logo" class="logo" [routerLink]="['/']">
+        <span class="brand-name"><a [routerLink]="['/home-menu-list']">Menues</a></span>
+    </div>
+    <div class="navbar-right">
+        <button class="btn-primary" [routerLink]="['/login']">Iniciar Sesión</button>
+        <button class="btn-secondary">Registrarse</button>
+    </div>
+</nav>
+
+<main class="main-content">
+    <header class="header">
+        <h1>Buffet Informática UNLP</h1>
+        <p>Ofrecemos a diario diversos menús cuidadosamente planificados por nutricionistas de la UNLP</p>
+    </header>
+
+    <section class="menu-grid">
+        <div class="menu-card" *ngIf="cartaDelDia">
+            <div class="card-content">
+                <h2>CARTA DEL DIA<br>{{ cartaDelDia.diaSemana }}</h2>
+                <div class="card-content" *ngFor="let menu of cartaDelDia.menus">
+                    <p>{{ menu.nombre }}</p>
+                    <div *ngIf="menu.comidas && menu.comidas.length > 0">
+                        <h3>Comidas:</h3>
+                        <ul>
+                            <li *ngFor="let comida of menu.comidas">
+                                <b>{{ comida.tipoComida }}:</b>
+                                {{ comida.nombre }}
+                                <b>Precio: </b>${{ comida.precio }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <p>¿Qué comemos? - Buffet Informática UNLP © 2024. Todos los derechos reservados.</p>
+</footer>

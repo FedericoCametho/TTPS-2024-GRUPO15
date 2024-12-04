@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ComidaService } from '../services/comida.service';
-import { Comida } from '../model/producto/comida';
+import { Comida } from '../model/carta/producto/comida';
 
 @Component({
   selector: 'app-comida',
@@ -13,13 +13,13 @@ export class ComidaComponent {
   private comidasList: Comida[] = [];
 
   constructor(
-    private ComidaService : ComidaService
-  ){}
+    private ComidaService: ComidaService
+  ) { }
 
-  ngOnInit():void{
+  ngOnInit(): void {
     this.ComidaService.getComidas().subscribe((resp) => {
-        this.comidasList = resp;
-        console.log(this.comidasList);
+      this.comidasList = resp;
+      console.log(this.comidasList);
     })
   }
 

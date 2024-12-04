@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './menu-list.component.css'
 })
 export class MenuListComponent {
-
+  
 }
