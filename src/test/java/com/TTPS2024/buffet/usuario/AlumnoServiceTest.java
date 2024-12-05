@@ -49,8 +49,8 @@ public class AlumnoServiceTest extends AbstractGenericTest {
         assertNotNull(alumno);
         assertEquals(alumnoModificationRequestUpdate.getNombre(), alumno.getNombre());
         assertEquals(alumnoModificationRequestUpdate.getApellido(), alumno.getApellido());
-        assertEquals(alumnoModificationRequestUpdate.getEmail(), alumno.getEmail());
-        assertEquals(alumnoModificationRequestUpdate.getDni(), alumno.getDni());
+        assertEquals(alumnoToUpdate.getEmail(), alumno.getEmail());
+        assertEquals(alumnoToUpdate.getDni(), alumno.getDni());
     }
 
     @Test

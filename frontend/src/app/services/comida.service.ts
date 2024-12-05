@@ -3,6 +3,7 @@ import { baseUrl, registrar, listar, actualizar } from './config.json';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Comida } from '../model/carta/producto/comida';
+import { environment as env } from '../model/environment/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class ComidaService {
 
 
   getComidas() {
-    return this.http.get<Comida[]>(`${baseUrl}/comida${listar}`)
+    return this.http.get<Comida[]>(`${env.url}/comida${listar}`)
   }
 
 }

@@ -31,16 +31,6 @@ public class AdministradorController {
         return new ResponseEntity<>(AdministradorTransformer.toDTOList(this.administradorService.getAll()), HttpStatus.OK);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<AdministradorDTO> login(@RequestBody LoginRequest loginRequest){
-        try{
-            Administrador response = this.administradorService.login(loginRequest);
-            return ResponseEntity.ok(AdministradorTransformer.toDTO(response));
-        } catch (IllegalArgumentException e){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-    }
-
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<AdministradorDTO> update(@PathVariable("id") Long id, @RequestBody AdministradorRequestUpdate administradorRequestUpdate){
         return new ResponseEntity<>(AdministradorTransformer.toDTO(this.administradorService.update(id, administradorRequestUpdate)), HttpStatus.OK);

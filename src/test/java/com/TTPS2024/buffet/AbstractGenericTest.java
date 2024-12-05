@@ -134,8 +134,6 @@ public abstract class AbstractGenericTest {
         AlumnoRequestUpdate alumnoRequest = new AlumnoRequestUpdate();
         alumnoRequest.setNombre(nombre);
         alumnoRequest.setApellido(apellido);
-        alumnoRequest.setEmail(email);
-        alumnoRequest.setDni(dni);
         alumnoRequest.setFoto(null);
         alumnoRequest.setHabilitado(habilitado);
         return alumnoRequest;
@@ -264,11 +262,11 @@ public abstract class AbstractGenericTest {
     protected List<CartaSemanalRequest> createCartaSemanalRequestWithData() {
         return List.of(
                 this.createCartaSemanalRequest("Carta de Navidad",List.of(
-                                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.LUNES).get(0),
-                                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.MARTES).get(0),
-                                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.MIERCOLES).get(0),
-                                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.JUEVES).get(0),
-                                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.VIERNES).get(0)
+                                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.LUNES),
+                                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.MARTES),
+                                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.MIERCOLES),
+                                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.JUEVES),
+                                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.VIERNES)
                         ))
                 );
     }

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { baseUrl, listar} from './config.json';
 import { Menu } from '../model/carta/producto/menu';
 import { Router } from '@angular/router';
+import { environment as env } from '../model/environment/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class MenuService {
   // }
 
   getMenus() {
-    return this.http.get<Menu[]>(`${baseUrl}/menu${listar}`)
+    return this.http.get<Menu[]>(`${env.url}/menu${listar}`)
   }
 
   // getMenuById(id: number): Observable<any> {

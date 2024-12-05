@@ -4,6 +4,8 @@ import { baseUrl, listar, cartaDelDia } from './config.json';
 import { CartaDelDia } from '../model/carta/cartaDelDia';
 import { Router } from '@angular/router';
 import { DiaSemana } from '../model/carta/dia-semana.enum';
+import { environment as env } from '../model/environment/environment';
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +15,11 @@ export class CartaDelDiaService {
   constructor(private http: HttpClient, private router: Router) { }
 
   getCartaDelDia() {
-    return this.http.get<CartaDelDia[]>(`${baseUrl}${cartaDelDia}${listar}`)
+    return this.http.get<CartaDelDia[]>(`${env.url}${cartaDelDia}${listar}`)
   }
 
   getCartaDelDiaByDiaSemana(diaSemana: DiaSemana) {
-    return this.http.get<CartaDelDia>(`${baseUrl}${cartaDelDia}${listar}Dia/${diaSemana}`)
+    return this.http.get<CartaDelDia>(`${env.url}${cartaDelDia}${listar}Dia/${diaSemana}`)
   }
 
 }

@@ -31,11 +31,11 @@ public class CartaSemanalServiceTest extends AbstractGenericTest {
     @Order(1)
     public void testCreateCartaSemanal() {
         CartaSemanalRequest cartaSemanalRequest = this.createCartaSemanalRequest("Carta de EXTRA",List.of(
-                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.LUNES).get(0),
-                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.MARTES).get(0),
-                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.MIERCOLES).get(0),
-                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.JUEVES).get(0),
-                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.VIERNES).get(0)
+                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.LUNES),
+                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.MARTES),
+                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.MIERCOLES),
+                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.JUEVES),
+                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.VIERNES)
         ));
         CartaSemanal cartaSemanal = this.cartaSemanalService.save(cartaSemanalRequest);
         this.testQueryAndValidateCartaSemanalById(cartaSemanal.getId(), cartaSemanalRequest);
@@ -63,10 +63,10 @@ public class CartaSemanalServiceTest extends AbstractGenericTest {
         cartaSemanalRequest.setNombre(cartaSemanal.getNombre() + " UPDATED");
         cartaSemanalRequest.setCartasDelDia(List.of(
                 this.cartaDelDiaService.getById(cartaDelDia.getId()).getId(),
-                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.MARTES).get(0).getId(),
-                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.MIERCOLES).get(0).getId(),
-                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.JUEVES).get(0).getId(),
-                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.VIERNES).get(0).getId()
+                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.MARTES).getId(),
+                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.MIERCOLES).getId(),
+                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.JUEVES).getId(),
+                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.VIERNES).getId()
         ));
 
 

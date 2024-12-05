@@ -57,8 +57,6 @@ public abstract class UsuarioService<T extends Usuario,S extends UsuarioDAO<T> &
         }
         user.setNombre(usuarioRequest.getNombre());
         user.setApellido(usuarioRequest.getApellido());
-        user.setEmail(usuarioRequest.getEmail());
-        user.setDni(usuarioRequest.getDni());
         this.setUpdateSpecificFields(user, usuarioRequest);
         return this.dao.saveAndFlush(user);
     }
@@ -196,16 +194,13 @@ public abstract class UsuarioService<T extends Usuario,S extends UsuarioDAO<T> &
         }
     }
 
-    public T login(LoginRequest loginRequest){
+    public boolean login(LoginRequest loginRequest){
         this.sanitizeLoginRequest(loginRequest);
         T usuario = this.getUserByEmail(loginRequest.getEmail());
         if(usuario == null){
-            throw new IllegalArgumentException("El email no se encuentra registrado");
+            return false;
         }
-        if(!PasswordEncryptionUtil.matchPassword(loginRequest.getContrasena(), usuario.getContrasena())){
-            throw new IllegalArgumentException("La contrasena es incorrecta");
-        }
-        return usuario;
+        return PasswordEncryptionUtil.matchPassword(loginRequest.getContrasena(), usuario.getContrasena());
     }
 
     private void sanitizeLoginRequest(LoginRequest loginRequest){
@@ -231,10 +226,6 @@ public abstract class UsuarioService<T extends Usuario,S extends UsuarioDAO<T> &
         if(usuarioRequestUpdate.getApellido() == null || usuarioRequestUpdate.getApellido().isEmpty()){
             throw new IllegalArgumentException("El apellido no puede ser nulo o vacio");
         }
-        if(usuarioRequestUpdate.getEmail() == null || usuarioRequestUpdate.getEmail().isEmpty()){
-            throw new IllegalArgumentException("El email  no puede ser nulo o vacio");
-        }
-        this.validateDNI(usuarioRequestUpdate.getDni());
         this.sanitizeRequestSpecificFields(usuarioRequestUpdate);
     }
 }

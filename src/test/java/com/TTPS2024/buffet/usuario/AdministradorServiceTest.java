@@ -117,8 +117,8 @@ public class AdministradorServiceTest {
         assertNotNull(administrador);
         assertEquals(administradorModificationRequest.getNombre(), administrador.getNombre());
         assertEquals(administradorModificationRequest.getApellido(), administrador.getApellido());
-        assertEquals(administradorModificationRequest.getEmail(), administrador.getEmail());
-        assertEquals(administradorModificationRequest.getDni(), administrador.getDni());
+        assertEquals(administradorToUpdate.getEmail(), administrador.getEmail());
+        assertEquals(administradorToUpdate.getDni(), administrador.getDni());
     }
 
     @Test
@@ -171,8 +171,6 @@ public class AdministradorServiceTest {
         AdministradorRequestUpdate administradorRequest = new AdministradorRequestUpdate();
         administradorRequest.setNombre(nombre);
         administradorRequest.setApellido(apellido);
-        administradorRequest.setEmail(email);
-        administradorRequest.setDni(dni);
         return administradorRequest;
     }
 
