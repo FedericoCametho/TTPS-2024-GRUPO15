@@ -6,6 +6,7 @@ import com.TTPS2024.buffet.controller.request.carta.producto.ComidaRequest;
 import com.TTPS2024.buffet.controller.request.carta.producto.MenuRequest;
 import com.TTPS2024.buffet.controller.request.sugerencia.SugerenciaRequest;
 import com.TTPS2024.buffet.controller.request.usuario.create.AlumnoRequest;
+import com.TTPS2024.buffet.controller.request.usuario.update.AlumnoRequestUpdate;
 import com.TTPS2024.buffet.dao.carrito.CompraDAO;
 import com.TTPS2024.buffet.dao.carta.CartaDelDiaDAO;
 import com.TTPS2024.buffet.dao.carta.CartaSemanalDAO;
@@ -129,6 +130,16 @@ public abstract class AbstractGenericTest {
         alumnoRequest.setFoto(null);
         return alumnoRequest;
     }
+    protected AlumnoRequestUpdate createAlumnoRequestUpdate(String nombre, String apellido, String email, Integer dni, boolean habilitado) {
+        AlumnoRequestUpdate alumnoRequest = new AlumnoRequestUpdate();
+        alumnoRequest.setNombre(nombre);
+        alumnoRequest.setApellido(apellido);
+        alumnoRequest.setEmail(email);
+        alumnoRequest.setDni(dni);
+        alumnoRequest.setFoto(null);
+        alumnoRequest.setHabilitado(habilitado);
+        return alumnoRequest;
+    }
 
     private List<MenuRequest> createMenuRequestWithData() {
         return List.of(
@@ -233,9 +244,8 @@ public abstract class AbstractGenericTest {
     protected CartaDelDiaRequest createCartaDelDiaRequest (String menuComunP, String menuVegetarianoP, DiaSemana diaSemana) {
         CartaDelDiaRequest cartaDelDiaRequest = new CartaDelDiaRequest();
 
-        cartaDelDiaRequest.setMenues(List.of(this.menuService.getProductsByName(menuComunP).get(0),this.menuService.getProductsByName(menuVegetarianoP).get(0)));
+        cartaDelDiaRequest.setMenues(List.of(this.menuService.getProductsByName(menuComunP).get(0).getId(),this.menuService.getProductsByName(menuVegetarianoP).get(0).getId()));
         cartaDelDiaRequest.setDiaSemana(diaSemana);
-        cartaDelDiaRequest.setCartaSemanal(null);
 
         return cartaDelDiaRequest;
     }
@@ -266,7 +276,7 @@ public abstract class AbstractGenericTest {
     protected CartaSemanalRequest createCartaSemanalRequest(String nombre, List<CartaDelDia> cartasDelDia) {
         CartaSemanalRequest cartaSemanalRequest = new CartaSemanalRequest();
         cartaSemanalRequest.setNombre(nombre);
-        cartaSemanalRequest.setCartasDelDia(cartasDelDia);
+        cartaSemanalRequest.setCartasDelDia(cartasDelDia.stream().map(CartaDelDia::getId).toList());
         return cartaSemanalRequest;
     }
 

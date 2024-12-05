@@ -2,6 +2,7 @@ package com.TTPS2024.buffet.usuario;
 
 
 import com.TTPS2024.buffet.controller.request.usuario.create.ResponsableDeTurnoRequest;
+import com.TTPS2024.buffet.controller.request.usuario.update.ResponsableDeTurnoRequestUpdate;
 import com.TTPS2024.buffet.dao.usuario.ResponsableDeTurnoDAO;
 import com.TTPS2024.buffet.model.usuario.ResponsableDeTurno;
 import com.TTPS2024.buffet.model.usuario.Turno;
@@ -67,9 +68,15 @@ public class ResponsableDeTurnoServiceTest {
     public void testUpdateResponsableDeTurno(){
         ResponsableDeTurno responsableDeTurnoToUpdate = this.responsableDeTurnoService.getUserByEmail("roman@gmail.com");
         assertNotNull(responsableDeTurnoToUpdate);
-        ResponsableDeTurnoRequest responsableDeTurnoModificationRequest = this.createResponsableDeTurnoRequest("Juan", responsableDeTurnoToUpdate.getApellido(), responsableDeTurnoToUpdate.getEmail(), responsableDeTurnoToUpdate.getDni(), Turno.MANANA);
-        ResponsableDeTurno responsableDeTurnoUpdated = this.responsableDeTurnoService.update(responsableDeTurnoToUpdate.getId(), responsableDeTurnoModificationRequest);
-        this.testQueryAndValidateResponsableDeTurnoById(responsableDeTurnoUpdated.getId(), responsableDeTurnoModificationRequest);
+        ResponsableDeTurnoRequestUpdate responsableDeTurnoModificationRequestUpdate = this.createResponsableDeTurnoRequestUpdate("Juan", responsableDeTurnoToUpdate.getApellido(), responsableDeTurnoToUpdate.getEmail(), responsableDeTurnoToUpdate.getDni(), Turno.MANANA);
+        ResponsableDeTurno responsableDeTurnoUpdated = this.responsableDeTurnoService.update(responsableDeTurnoToUpdate.getId(), responsableDeTurnoModificationRequestUpdate);
+
+        ResponsableDeTurno responsableDeTurno = this.responsableDeTurnoService.getUserById(responsableDeTurnoUpdated.getId());
+        assertNotNull(responsableDeTurno);
+        assertEquals(responsableDeTurnoModificationRequestUpdate.getNombre(), responsableDeTurno.getNombre());
+        assertEquals(responsableDeTurnoModificationRequestUpdate.getApellido(), responsableDeTurno.getApellido());
+        assertEquals(responsableDeTurnoModificationRequestUpdate.getEmail(), responsableDeTurno.getEmail());
+        assertEquals(responsableDeTurnoModificationRequestUpdate.getDni(), responsableDeTurno.getDni());
     }
 
     @Test
@@ -132,6 +139,16 @@ public class ResponsableDeTurnoServiceTest {
     }
     private ResponsableDeTurnoRequest createResponsableDeTurnoRequest(String nombre, String apellido, String email, int dni, Turno turno){
         ResponsableDeTurnoRequest responsableDeTurnoRequest = new ResponsableDeTurnoRequest();
+        responsableDeTurnoRequest.setNombre(nombre);
+        responsableDeTurnoRequest.setApellido(apellido);
+        responsableDeTurnoRequest.setEmail(email);
+        responsableDeTurnoRequest.setDni(dni);
+        responsableDeTurnoRequest.setTurno(turno);
+        return responsableDeTurnoRequest;
+    }
+
+    private ResponsableDeTurnoRequestUpdate createResponsableDeTurnoRequestUpdate(String nombre, String apellido, String email, int dni, Turno turno){
+        ResponsableDeTurnoRequestUpdate responsableDeTurnoRequest = new ResponsableDeTurnoRequestUpdate();
         responsableDeTurnoRequest.setNombre(nombre);
         responsableDeTurnoRequest.setApellido(apellido);
         responsableDeTurnoRequest.setEmail(email);

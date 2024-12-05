@@ -1,6 +1,7 @@
 package com.TTPS2024.buffet.usuario;
 
 import com.TTPS2024.buffet.controller.request.usuario.create.AdministradorRequest;
+import com.TTPS2024.buffet.controller.request.usuario.update.AdministradorRequestUpdate;
 import com.TTPS2024.buffet.dao.usuario.AdministradorDAO;
 import com.TTPS2024.buffet.model.permiso.Rol;
 import com.TTPS2024.buffet.model.usuario.Administrador;
@@ -109,9 +110,15 @@ public class AdministradorServiceTest {
     public void testUpdateAdministrador(){
         Administrador administradorToUpdate = administradorService.getUserByEmail("jsv@gmail.com");
         assertNotNull(administradorToUpdate);
-        AdministradorRequest administradorModificationRequest = this.createAdministradorRequest("La Brujita", administradorToUpdate.getApellido(), administradorToUpdate.getEmail(), administradorToUpdate.getDni());
+        AdministradorRequestUpdate administradorModificationRequest = this.createAdministradorRequestUpdate("La Brujita", administradorToUpdate.getApellido(), administradorToUpdate.getEmail(), administradorToUpdate.getDni());
         Administrador administradorUpdated = administradorService.update(administradorToUpdate.getId(), administradorModificationRequest);
-        this.queryAndValidateAdministradorById(administradorUpdated.getId(), administradorModificationRequest);
+
+        Administrador administrador = administradorService.getUserById(administradorUpdated.getId());
+        assertNotNull(administrador);
+        assertEquals(administradorModificationRequest.getNombre(), administrador.getNombre());
+        assertEquals(administradorModificationRequest.getApellido(), administrador.getApellido());
+        assertEquals(administradorModificationRequest.getEmail(), administrador.getEmail());
+        assertEquals(administradorModificationRequest.getDni(), administrador.getDni());
     }
 
     @Test
@@ -153,6 +160,15 @@ public class AdministradorServiceTest {
 
     private AdministradorRequest createAdministradorRequest(String nombre, String apellido, String email, Integer dni ){
         AdministradorRequest administradorRequest = new AdministradorRequest();
+        administradorRequest.setNombre(nombre);
+        administradorRequest.setApellido(apellido);
+        administradorRequest.setEmail(email);
+        administradorRequest.setDni(dni);
+        return administradorRequest;
+    }
+
+    private AdministradorRequestUpdate createAdministradorRequestUpdate(String nombre, String apellido, String email, Integer dni ){
+        AdministradorRequestUpdate administradorRequest = new AdministradorRequestUpdate();
         administradorRequest.setNombre(nombre);
         administradorRequest.setApellido(apellido);
         administradorRequest.setEmail(email);

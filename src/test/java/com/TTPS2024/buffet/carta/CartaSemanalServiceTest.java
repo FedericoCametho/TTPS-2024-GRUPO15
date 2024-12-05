@@ -6,6 +6,7 @@ import com.TTPS2024.buffet.controller.request.carta.CartaSemanalRequest;
 import com.TTPS2024.buffet.model.carta.CartaDelDia;
 import com.TTPS2024.buffet.model.carta.CartaSemanal;
 import com.TTPS2024.buffet.model.carta.DiaSemana;
+import org.assertj.core.util.Sets;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -48,7 +49,7 @@ public class CartaSemanalServiceTest extends AbstractGenericTest {
         assertNotNull(cartaSemanal);
         assertEquals(5, cartaSemanal.getCartas().size());
 
-        Set<Long> requestCartasDelDiaIds = cartaSemanalRequest.getCartasDelDia().stream().map(CartaDelDia::getId).collect(Collectors.toSet());
+        Set<Long> requestCartasDelDiaIds = Sets.newHashSet(cartaSemanalRequest.getCartasDelDia());
         Set<Long> cartasDelDiaIds = cartaSemanal.getCartas().stream().map(CartaDelDia::getId).collect(Collectors.toSet());
         assertEquals(requestCartasDelDiaIds, cartasDelDiaIds);
     }
@@ -61,11 +62,11 @@ public class CartaSemanalServiceTest extends AbstractGenericTest {
         CartaSemanalRequest cartaSemanalRequest = new CartaSemanalRequest();
         cartaSemanalRequest.setNombre(cartaSemanal.getNombre() + " UPDATED");
         cartaSemanalRequest.setCartasDelDia(List.of(
-                this.cartaDelDiaService.getById(cartaDelDia.getId()),
-                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.MARTES).get(0),
-                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.MIERCOLES).get(0),
-                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.JUEVES).get(0),
-                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.VIERNES).get(0)
+                this.cartaDelDiaService.getById(cartaDelDia.getId()).getId(),
+                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.MARTES).get(0).getId(),
+                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.MIERCOLES).get(0).getId(),
+                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.JUEVES).get(0).getId(),
+                this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.VIERNES).get(0).getId()
         ));
 
 

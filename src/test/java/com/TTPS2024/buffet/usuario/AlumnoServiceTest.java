@@ -3,6 +3,7 @@ package com.TTPS2024.buffet.usuario;
 
 import com.TTPS2024.buffet.AbstractGenericTest;
 import com.TTPS2024.buffet.controller.request.usuario.create.AlumnoRequest;
+import com.TTPS2024.buffet.controller.request.usuario.update.AlumnoRequestUpdate;
 import com.TTPS2024.buffet.model.permiso.Rol;
 import com.TTPS2024.buffet.model.usuario.Alumno;
 import org.junit.jupiter.api.*;
@@ -40,10 +41,16 @@ public class AlumnoServiceTest extends AbstractGenericTest {
     public void updateAlumnoTest(){
         Alumno alumnoToUpdate = this.alumnoService.getUserByEmail("roman@gmail.com");
         assertNotNull(alumnoToUpdate);
-        AlumnoRequest alumnoModificationRequest = this.createAlumnoRequest("Enzo", alumnoToUpdate.getApellido(), alumnoToUpdate.getEmail(), alumnoToUpdate.getDni());
-        alumnoModificationRequest.setHabilitado(false);
-        Alumno alumnoUpdated = this.alumnoService.update(alumnoToUpdate.getId(), alumnoModificationRequest);
-        this.testQueryAndValidateAlumnoById(alumnoUpdated.getId(), alumnoModificationRequest);
+        AlumnoRequestUpdate alumnoModificationRequestUpdate = this.createAlumnoRequestUpdate("Enzo", alumnoToUpdate.getApellido(), alumnoToUpdate.getEmail(), alumnoToUpdate.getDni(), false);
+        Alumno alumnoUpdated = this.alumnoService.update(alumnoToUpdate.getId(), alumnoModificationRequestUpdate);
+
+
+        Alumno alumno = this.alumnoService.getUserById(alumnoUpdated.getId());
+        assertNotNull(alumno);
+        assertEquals(alumnoModificationRequestUpdate.getNombre(), alumno.getNombre());
+        assertEquals(alumnoModificationRequestUpdate.getApellido(), alumno.getApellido());
+        assertEquals(alumnoModificationRequestUpdate.getEmail(), alumno.getEmail());
+        assertEquals(alumnoModificationRequestUpdate.getDni(), alumno.getDni());
     }
 
     @Test

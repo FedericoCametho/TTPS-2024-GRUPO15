@@ -31,12 +31,11 @@ public class CartaDelDiaServiceTest extends AbstractGenericTest {
     private void testQueryAndValidateCartaDelDiaById(Long id, CartaDelDiaRequest cartaDelDiaRequest) {
         CartaDelDia cartaDelDia = this.cartaDelDiaService.getById(id);
         assertNotNull(cartaDelDia);
-        Menu menuComunRequest = this.menuService.getProductById(cartaDelDiaRequest.getMenuComun().getId());
-        Menu menuVegetarianoRequest = this.menuService.getProductById(cartaDelDiaRequest.getMenuVegetariano().getId());
+        Menu menuComunRequest = this.menuService.getProductById(cartaDelDiaRequest.getMenues().get(0));
+        Menu menuVegetarianoRequest = this.menuService.getProductById(cartaDelDiaRequest.getMenues().get(1));
         assertEquals(menuComunRequest.getId(), cartaDelDia.getMenuComun().getId());
         assertEquals(menuVegetarianoRequest.getId(), cartaDelDia.getMenuVegetariano().getId());
         assertEquals(cartaDelDiaRequest.getDiaSemana(), cartaDelDia.getDiaSemana());
-        assertEquals(cartaDelDia.getCartaSemanal().getId(), cartaDelDiaRequest.getCartaSemanal().getId());
     }
 
 
@@ -45,9 +44,8 @@ public class CartaDelDiaServiceTest extends AbstractGenericTest {
     public void testUpdateCartaDelDia() {
         CartaDelDia cartaDelDia = this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.LUNES).get(0);
         CartaDelDiaRequest cartaDelDiaRequest = new CartaDelDiaRequest();
-        cartaDelDiaRequest.setMenues(List.of(this.menuService.getProductsByName("Menu Martes Comun").get(0),this.menuService.getProductsByName("Menu Martes Vegano").get(0)));
+        cartaDelDiaRequest.setMenues(List.of(this.menuService.getProductsByName("Menu Martes Comun").get(0).getId(),this.menuService.getProductsByName("Menu Martes Vegano").get(0).getId()));
         cartaDelDiaRequest.setDiaSemana(DiaSemana.MARTES);
-        cartaDelDiaRequest.setCartaSemanal(cartaDelDia.getCartaSemanal());
         this.cartaDelDiaService.update(cartaDelDia.getId(), cartaDelDiaRequest);
         this.testQueryAndValidateCartaDelDiaById(cartaDelDia.getId(), cartaDelDiaRequest);
     }
