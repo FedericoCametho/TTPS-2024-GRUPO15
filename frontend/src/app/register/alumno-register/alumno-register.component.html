@@ -1,28 +1,37 @@
-<h2>Registro de un nuevo Alumno</h2>
-<form [formGroup]="formulario" (ngSubmit)="register()">
-  <div>
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" formControlName="nombre" name="nombre" required>
+<form class="container mb-3 card" [formGroup]="formulario" (ngSubmit)="register()">
+  <h2 class="row justify-content-center mb-3">Registro de un nuevo Alumno</h2>
+  <div class="row justify-content-center">
+    <div class="col-xl-6">
+      <div class="input-group mb-3">
+        <span class="input-group-text">Nombre:</span>
+        <input class="form-control" type="text" id="nombre" formControlName="nombre" name="nombre" required placeholder="Ej: Mariano">
+      </div>
+      
+      <div class="input-group mb-3">
+        <span class="input-group-text">Apellido:</span>
+        <input class="form-control" type="text" id="apellido" formControlName="apellido" name="apellido" required placeholder="Ej: Gomez">
+      </div>
+      
+      <div class="input-group mb-3">
+        <span class="input-group-text">DNI:</span>
+        <input class="form-control" type="number" id="dni" formControlName="dni" name="dni" required placeholder="Ej: 43322232">
+      </div>
+      
+      <div class="input-group mb-3">
+        <span class="input-group-text">Correo Electrónico:</span>
+        <input class="form-control" type="email" id="email" formControlName="email" name="email" required placeholder="Ej: gomezmariano@gmail.com">
+      </div>
+      
+      <div class="input-group mb-3">
+        <span class="input-group-text">Contraseña:</span>
+        <input class="form-control" type="password" id="contrasena" formControlName="contrasena" name="contrasena" required placeholder="">
+      </div>
+      
+      <div class="mb-3">
+        <label for="foto" class="form-label">Foto de perfil</label>
+        <input class="form-control" type="file" id="foto" (change)="onFileSelected($event)">
+      </div>
+      <button class="btn btn-primary mb-3" type="submit">Registrarse</button>
+    </div>
   </div>
-  <div>
-    <label for="apellido">Apellido:</label>
-    <input type="text" id="apellido" formControlName="apellido" name="apellido" required>
-  </div>
-  <div>
-    <label for="dni">DNI:</label>
-    <input type="number" id="dni" formControlName="dni" name="dni" required>
-  </div>
-  <div>
-    <label for="email">Email:</label>
-    <input type="email" id="email" formControlName="email" name="email" required>
-  </div>
-  <div>
-    <label for="contrasena">Contraseña:</label>
-    <input type="password" id="contrasena" formControlName="contrasena" name="contrasena" required>
-  </div>
-  <div>
-    <label for="foto">Foto:</label>
-    <input type="file" id="foto" (change)="onFileSelected($event)">
-  </div>
-  <button type="submit">Registrarse</button>
-</form>
+  </form>
