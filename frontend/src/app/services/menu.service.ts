@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { baseUrl, listar, agregar, actualizar } from './config.json';
 import { Menu } from '../model/carta/producto/menu';
 import { Router } from '@angular/router';
+import { MenuRequest } from '../model/carta/producto/request/menuRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +23,11 @@ export class MenuService {
     return this.http.get<Menu[]>(`${baseUrl}/menu${listar}`)
   }
 
-  create(menu: Menu) {
+  create(menu: MenuRequest) {
     return this.http.post<Menu>(`${baseUrl}/menu${agregar}`, menu);
   }
 
-  update(menu: Menu, id: number) {
+  update(menu: MenuRequest, id: number) {
     return this.http.put<Menu>(`${baseUrl}/menu${actualizar}/${id}`, menu);
   }
 

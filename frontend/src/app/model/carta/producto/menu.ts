@@ -11,7 +11,7 @@ export class Menu extends ProductoComercializable {
     precio: number,
     veggie: boolean,
     comidas: Array<Comida>,
-    foto?: Uint8Array
+    foto?: string
   ) {
     super(id, nombre, precio, foto);
     this.comidas = comidas;
