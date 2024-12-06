@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { baseUrl, listar} from './config.json';
+import { baseUrl, listar, agregar, actualizar } from './config.json';
 import { Menu } from '../model/carta/producto/menu';
 import { Router } from '@angular/router';
 
@@ -20,6 +20,18 @@ export class MenuService {
 
   getMenus() {
     return this.http.get<Menu[]>(`${baseUrl}/menu${listar}`)
+  }
+
+  create(menu: Menu) {
+    return this.http.post<Menu>(`${baseUrl}/menu${agregar}`, menu);
+  }
+
+  update(menu: Menu, id: number) {
+    return this.http.put<Menu>(`${baseUrl}/menu${actualizar}/${id}`, menu);
+  }
+
+  getMenuById(id: number) {
+    return this.http.get<Menu>(`${baseUrl}/menu${listar}/${id}`);
   }
 
   // getMenuById(id: number): Observable<any> {

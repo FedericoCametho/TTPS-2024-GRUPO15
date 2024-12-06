@@ -4,6 +4,7 @@ import com.TTPS2024.buffet.controller.dto.carta.producto.ComidaDTO;
 import com.TTPS2024.buffet.controller.request.carta.producto.ComidaRequest;
 import com.TTPS2024.buffet.helper.transformer.carta.producto.ComidaTransformer;
 import com.TTPS2024.buffet.model.carta.producto.Comida;
+import com.TTPS2024.buffet.model.carta.producto.TipoComida;
 import com.TTPS2024.buffet.service.carta.producto.ComidaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,6 +46,12 @@ public class ComidaController {
     @GetMapping("/listarPorNombre")
     public ResponseEntity<List<ComidaDTO>> getComidasByName(@RequestParam String nombre) {
         List<Comida> comidas = this.comidaService.getProductsByName(nombre);
+        return new ResponseEntity<>(ComidaTransformer.toDTOList(comidas), HttpStatus.OK);
+    }
+
+    @GetMapping("/listarPorTipo/{tipo}")
+    public ResponseEntity<List<ComidaDTO>> getComidasByTipoComida(@PathVariable("tipo") TipoComida tipo) {
+        List<Comida> comidas = this.comidaService.getComidasByTipoComida(tipo);
         return new ResponseEntity<>(ComidaTransformer.toDTOList(comidas), HttpStatus.OK);
     }
 

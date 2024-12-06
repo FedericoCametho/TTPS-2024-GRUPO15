@@ -1,11 +1,118 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';;
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { MenuService } from '../services/menu.service';
+import { Menu } from '../model/carta/producto/menu';
+import { Comida } from '../model/carta/producto/comida';
+import { ComidaService } from '../services/comida.service';
+import { TipoComida } from '../model/carta/producto/tipo-comida.enum';
 
 @Component({
   selector: 'app-menu-update',
-  imports: [],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './menu-update.component.html',
   styleUrl: './menu-update.component.css'
 })
 export class MenuUpdateComponent {
+  menuForm: FormGroup;
+  entradas: Comida[] = [];
+  bebidas: Comida[] = [];
+  platosPrincipales: Comida[] = [];
+  postres: Comida[] = [];
+  menuId: number;
 
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private menuService: MenuService,
+    private comidaService: ComidaService
+  ) {
+    this.menuForm = this.fb.group({
+      titulo: ['', [Validators.required]],
+      foto: [''],
+      precio: ['', [Validators.required, Validators.min(0)]],
+      esVegano: [false, [Validators.required]],
+      comidas: this.fb.group({
+        entrada: ['', [Validators.required]],
+        bebida: ['', [Validators.required]],
+        platoPrincipal: ['', [Validators.required]],
+        postre: ['', [Validators.required]]
+      })
+    });
+    this.menuId = this.route.snapshot.params['id'];
+  }
+
+  ngOnInit(): void {
+    this.menuService.getMenuById(this.menuId).subscribe((menu) => {
+      this.menuForm.patchValue({
+        titulo: menu.nombre,
+        foto: menu.foto,
+        precio: menu.precio,
+        esVegano: menu.veggie,
+        comidas: {
+          entrada: menu.comidas.find(c => c.tipoComida === 'ENTRADA')?.id,
+          bebida: menu.comidas.find(c => c.tipoComida === 'BEBIDA')?.id,
+          platoPrincipal: menu.comidas.find(c => c.tipoComida === 'PLATO_PRINCIPAL')?.id,
+          postre: menu.comidas.find(c => c.tipoComida === 'POSTRE')?.id
+        }
+      });
+    });
+
+    this.comidaService.getComidasByTipo(TipoComida.ENTRADA).subscribe((resp) => {
+      this.entradas = resp;
+    });
+
+    this.comidaService.getComidasByTipo(TipoComida.BEBIDA).subscribe((resp) => {
+      this.bebidas = resp;
+    });
+
+    this.comidaService.getComidasByTipo(TipoComida.PLATO_PRINCIPAL).subscribe((resp) => {
+      this.platosPrincipales = resp;
+    });
+
+    this.comidaService.getComidasByTipo(TipoComida.POSTRE).subscribe((resp) => {
+      this.postres = resp;
+    });
+  }
+
+  get titulo() { return this.menuForm.get('titulo'); }
+  get foto() { return this.menuForm.get('foto'); }
+  get precio() { return this.menuForm.get('precio'); }
+  get esVegano() { return this.menuForm.get('esVegano'); }
+  get entrada() { return this.menuForm.get('comidas.entrada'); }
+  get bebida() { return this.menuForm.get('comidas.bebida'); }
+  get platoPrincipal() { return this.menuForm.get('comidas.platoPrincipal'); }
+  get postre() { return this.menuForm.get('comidas.postre'); }
+
+  onSubmit(): void {
+    if (this.menuForm.valid) {
+      const menu: Menu = {
+        id: this.menuId,
+        nombre: this.titulo?.value,
+        precio: this.precio?.value,
+        veggie: this.esVegano?.value,
+        foto: this.foto?.value,
+        comidas: [
+          this.entrada?.value,
+          this.bebida?.value,
+          this.platoPrincipal?.value,
+          this.postre?.value
+        ]
+      };
+
+      this.menuService.update(menu, this.menuId).subscribe(response => {
+        console.log('Menú actualizado:', response);
+        this.router.navigate(['/menu-list']);
+      }, error => {
+        console.error('Error al actualizar el menú:', error);
+      });
+    } else {
+      console.log('Formulario no válido');
+    }
+  }
 }
