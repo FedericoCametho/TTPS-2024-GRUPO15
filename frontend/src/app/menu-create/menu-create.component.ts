@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MenuService } from '../services/menu.service';
-import { Menu } from '../model/carta/producto/menu';
 
 import { ReactiveFormsModule } from '@angular/forms';;
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -11,6 +10,7 @@ import Swal from 'sweetalert2';
 
 import { ComidaService } from '../services/comida.service';
 import { TipoComida } from '../model/carta/producto/tipo-comida.enum';
+import { MenuRequest } from '../model/carta/producto/request/menuRequest';
 
 
 @Component({
@@ -25,6 +25,7 @@ export class MenuCreateComponent {
   bebidas: any[] = [];
   platosPrincipales: any[] = [];
   postres: any[] = [];
+  menuRequest: MenuRequest = new MenuRequest();
 
   constructor(
     private fb: FormBuilder,
@@ -64,29 +65,22 @@ export class MenuCreateComponent {
     });
   }
 
-  get titulo() { return this.menuForm.get('titulo'); }
-  get foto() { return this.menuForm.get('foto'); }
-  get precio() { return this.menuForm.get('precio'); }
-  get esVegano() { return this.menuForm.get('esVegano'); }
-  get entrada() { return this.menuForm.get('comidas.entrada'); }
-  get bebida() { return this.menuForm.get('comidas.bebida'); }
-  get platoPrincipal() { return this.menuForm.get('comidas.platoPrincipal'); }
-  get postre() { return this.menuForm.get('comidas.postre'); }
-
 
   onSubmit(): void {
     if (this.menuForm.valid) {
-      const menu: Menu = {
+      const { titulo, precio, esVegano, foto, comidas } = this.menuForm.value;
+      const { entrada, bebida, platoPrincipal, postre } = comidas;
+      const menu: MenuRequest = {
         id: 0, // El id se genera automáticamente en el backend
-        nombre: this.titulo?.value,
-        precio: this.precio?.value,
-        veggie: this.esVegano?.value,
-        foto: this.foto?.value,
+        nombre: titulo,
+        precio: precio,
+        veggie: esVegano,
+        foto: foto,
         comidas: [
-          this.entrada?.value,
-          this.bebida?.value,
-          this.platoPrincipal?.value,
-          this.postre?.value
+          entrada,
+          bebida,
+          platoPrincipal,
+          postre
         ]
       };
 

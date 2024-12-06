@@ -6,7 +6,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MenuService } from '../services/menu.service';
-import { Menu } from '../model/carta/producto/menu';
 import { Comida } from '../model/carta/producto/comida';
 import { ComidaService } from '../services/comida.service';
 import { TipoComida } from '../model/carta/producto/tipo-comida.enum';
@@ -95,15 +94,6 @@ export class MenuUpdateComponent {
       this.postres = resp;
     });
   }
-
-  get titulo() { return this.menuForm.get('titulo'); }
-  get foto() { return this.menuForm.get('foto'); }
-  get precio() { return this.menuForm.get('precio'); }
-  get esVegano() { return this.menuForm.get('esVegano'); }
-  get entrada() { return this.menuForm.get('comidas.entrada'); }
-  get bebida() { return this.menuForm.get('comidas.bebida'); }
-  get platoPrincipal() { return this.menuForm.get('comidas.platoPrincipal'); }
-  get postre() { return this.menuForm.get('comidas.postre'); }
 
   onSubmit(): void {
     if (this.menuForm.valid) {
