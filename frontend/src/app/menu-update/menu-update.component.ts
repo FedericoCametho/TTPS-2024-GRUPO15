@@ -95,6 +95,15 @@ export class MenuUpdateComponent {
     });
   }
 
+  get titulo() { return this.menuForm.get('titulo'); }
+  get foto() { return this.menuForm.get('foto'); }
+  get precio() { return this.menuForm.get('precio'); }
+  get esVegano() { return this.menuForm.get('esVegano'); }
+  get entrada() { return this.menuForm.get('comidas.entrada'); }
+  get bebida() { return this.menuForm.get('comidas.bebida'); }
+  get platoPrincipal() { return this.menuForm.get('comidas.platoPrincipal'); }
+  get postre() { return this.menuForm.get('comidas.postre'); }
+
   onSubmit(): void {
     if (this.menuForm.valid) {
       const {titulo, precio, esVegano, comidas } = this.menuForm.value;

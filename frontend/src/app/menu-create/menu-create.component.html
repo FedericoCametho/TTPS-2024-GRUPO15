@@ -10,10 +10,10 @@
         </div>
     </div>
 
-    <div class="form-group">
-        <label for="foto">Foto</label>
-        <input id="foto" formControlName="foto" type="file" class="form-control-file">
-    </div>
+  <div class="mb-3">
+    <label for="foto" class="form-label">Foto</label>
+    <input class="form-control" type="file" id="foto" (change)="onFileSelected($event)">
+  </div>
 
     <div class="form-group">
         <label for="precio">Precio</label>

@@ -47,6 +47,21 @@ export class MenuCreateComponent {
     });
   }
 
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        this.menuRequest.foto = reader.result as string;
+      };
+
+      reader.readAsDataURL(file); // Leer el archivo como Base64
+    }
+  }
+
   ngOnInit(): void {
     this.comidaService.getComidasByTipo(TipoComida.ENTRADA).subscribe((resp) => {
       this.entradas = resp;
@@ -64,6 +79,15 @@ export class MenuCreateComponent {
       this.postres = resp;
     });
   }
+
+  get titulo() { return this.menuForm.get('titulo'); }
+  get foto() { return this.menuForm.get('foto'); }
+  get precio() { return this.menuForm.get('precio'); }
+  get esVegano() { return this.menuForm.get('esVegano'); }
+  get entrada() { return this.menuForm.get('comidas.entrada'); }
+  get bebida() { return this.menuForm.get('comidas.bebida'); }
+  get platoPrincipal() { return this.menuForm.get('comidas.platoPrincipal'); }
+  get postre() { return this.menuForm.get('comidas.postre'); }
 
 
   onSubmit(): void {
