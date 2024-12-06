@@ -1,1 +1,77 @@
-<p>menu-create works!</p>
+<div class="container mt-5">
+    <h2>Crear Menu</h2>
+</div>
+<form [formGroup]="menuForm" (ngSubmit)="onSubmit()" class="container mt-5">
+    <div class="form-group">
+        <label for="titulo">Título</label>
+        <input id="titulo" formControlName="titulo" class="form-control">
+        <div *ngIf="titulo?.invalid && (titulo?.dirty || titulo?.touched)" class="text-danger">
+            <div *ngIf="titulo?.errors?.['required']">El título es obligatorio.</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="foto">Foto</label>
+        <input id="foto" formControlName="foto" type="file" class="form-control-file">
+    </div>
+
+    <div class="form-group">
+        <label for="precio">Precio</label>
+        <input id="precio" formControlName="precio" type="number" class="form-control">
+        <div *ngIf="precio?.invalid && (precio?.dirty || precio?.touched)" class="text-danger">
+            <div *ngIf="precio?.errors?.['required']">El precio es obligatorio.</div>
+            <div *ngIf="precio?.errors?.['min']">El precio debe ser mayor o igual a 0.</div>
+        </div>
+    </div>
+
+    <div class="form-group form-check">
+        <input id="esVegano" formControlName="esVegano" type="checkbox" class="form-check-input">
+        <label for="esVegano" class="form-check-label">Es Vegano</label>
+    </div>
+
+    <div formGroupName="comidas">
+        <div class="form-group">
+            <label for="entrada">Entrada</label>
+            <select id="entrada" formControlName="entrada" class="form-control">
+                <option *ngFor="let entrada of entradas" [value]="entrada.id">{{ entrada.nombre }}</option>
+            </select>
+            <div *ngIf="entrada?.invalid && (entrada?.dirty || entrada?.touched)" class="text-danger">
+                <div *ngIf="entrada?.errors?.['required']">La entrada es obligatoria.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="bebida">Bebida</label>
+            <select id="bebida" formControlName="bebida" class="form-control">
+                <option *ngFor="let bebida of bebidas" [value]="bebida.id">{{ bebida.nombre }}</option>
+            </select>
+            <div *ngIf="bebida?.invalid && (bebida?.dirty || bebida?.touched)" class="text-danger">
+                <div *ngIf="bebida?.errors?.['required']">La bebida es obligatoria.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="platoPrincipal">Plato Principal</label>
+            <select id="platoPrincipal" formControlName="platoPrincipal" class="form-control">
+                <option *ngFor="let platoPrincipal of platosPrincipales" [value]="platoPrincipal.id">{{
+                    platoPrincipal.nombre }}</option>
+            </select>
+            <div *ngIf="platoPrincipal?.invalid && (platoPrincipal?.dirty || platoPrincipal?.touched)"
+                class="text-danger">
+                <div *ngIf="platoPrincipal?.errors?.['required']">El plato principal es obligatorio.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="postre">Postre</label>
+            <select id="postre" formControlName="postre" class="form-control">
+                <option *ngFor="let postre of postres" [value]="postre.id">{{ postre.nombre }}</option>
+            </select>
+            <div *ngIf="postre?.invalid && (postre?.dirty || postre?.touched)" class="text-danger">
+                <div *ngIf="postre?.errors?.['required']">El postre es obligatorio.</div>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="menuForm.invalid">Crear Menú</button>
+</form>

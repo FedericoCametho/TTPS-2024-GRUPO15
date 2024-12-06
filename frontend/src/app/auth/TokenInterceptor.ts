@@ -14,6 +14,6 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpClient } from
               }
             });
           
-          return next.handle(req);
+          return next.handle(authReq);
         }
 }

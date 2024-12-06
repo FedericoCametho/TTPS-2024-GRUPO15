@@ -10,6 +10,7 @@
                 <h4>{{ menu.nombre }}</h4>
                 <p><b>Precio</b>: ${{ menu.precio }}</p>
                 <button (click)="verDetalles(menu)" class="btn-primary">Detalles</button>
+                <button [routerLink]="['/menu-update/', menu.id]">Modificar</button>
             </div>
         </div>
     </section>
@@ -21,14 +22,28 @@
 
             <h2>{{ menuSeleccionado?.nombre }}</h2>
             <p><b>Precio</b>: ${{ menuSeleccionado?.precio }}</p>
-            <p><b>Descripción</b>: {{ menuSeleccionado?.descripcion }}</p>
 
-            <ul>
-                <li *ngFor="let comida of menuSeleccionado?.comidas">
-                    <p><b>Tipo de Comida:</b> {{ comida.tipoComida }}</p>
-                    <p><b>Nombre:</b> {{ comida.nombre }}</p>
-                </li>
-            </ul>
+            <div *ngIf="menuSeleccionado">
+                <h3>Entrada</h3>
+                <div *ngIf="getComidaPorTipo('ENTRADA') as entrada">
+                    <p>{{ entrada.nombre }}</p>
+                </div>
+
+                <h3>Bebida</h3>
+                <div *ngIf="getComidaPorTipo('BEBIDA') as bebida">
+                    <p>{{ bebida.nombre }}</p>
+                </div>
+
+                <h3>Plato Principal</h3>
+                <div *ngIf="getComidaPorTipo('PLATO_PRINCIPAL') as platoPrincipal">
+                    <p>{{ platoPrincipal.nombre }}</p>
+                </div>
+
+                <h3>Postre</h3>
+                <div *ngIf="getComidaPorTipo('POSTRE') as postre">
+                    <p>{{ postre.nombre }}</p>
+                </div>
+            </div>
         </div>
     </div>
 

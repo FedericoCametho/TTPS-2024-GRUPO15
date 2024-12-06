@@ -10,7 +10,7 @@ export class Comida extends ProductoComercializable {
         precio: number,
         inMenu: boolean,
         tipoComida: TipoComida,
-        foto?: Uint8Array,
+        foto?: string,
     ) {
         super(id, nombre, precio, foto)
         this.inMenu = inMenu;

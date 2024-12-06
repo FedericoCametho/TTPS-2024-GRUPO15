@@ -38,10 +38,12 @@ public class MenuService extends ProductoComercializableService<Menu,MenuDAO, Me
     }
 
     @Override
-    protected void setUpdateSpecificFields(Menu product, MenuRequest request) {
-        product.getComidas().forEach(comida -> {
-            this.comidaService.updateUnlinkComidaMenuRelation(comida.getId());
-        });
+    protected void setUpdateSpecificFields(Menu menuActual, MenuRequest request) {
+        menuActual.setVeggie(request.isVeggie());
+        List<Long> actualComidaIdsInMenu = menuActual.getComidas().stream().mapToLong(Comida::getId).boxed().toList();
+        List<Long> newComidasIdsInMenu = request.getComidas();
+        List<Long> comidasAEliminarRelacion = actualComidaIdsInMenu.stream().filter(comId -> !newComidasIdsInMenu.contains(comId)).toList();
+        comidasAEliminarRelacion.forEach(comidaId -> this.comidaService.updateUnlinkComidaMenuRelation(comidaId, menuActual));
     }
 
     @Override

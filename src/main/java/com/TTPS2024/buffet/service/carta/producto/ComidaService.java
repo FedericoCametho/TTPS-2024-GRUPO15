@@ -4,6 +4,7 @@ import com.TTPS2024.buffet.controller.request.carta.producto.ComidaRequest;
 import com.TTPS2024.buffet.dao.carta.producto.ComidaDAO;
 import com.TTPS2024.buffet.model.carta.producto.Comida;
 import com.TTPS2024.buffet.model.carta.producto.Menu;
+import com.TTPS2024.buffet.model.carta.producto.TipoComida;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,9 +26,9 @@ public class ComidaService extends ProductoComercializableService<Comida,ComidaD
         return this.dao.saveAndFlush(comida);
     }
     @Transactional
-    public Comida updateUnlinkComidaMenuRelation(Long comidaId){
+    public Comida updateUnlinkComidaMenuRelation(Long comidaId, Menu menu){
         Comida comida = this.getProductById(comidaId);
-        comida.removeAllComidaFromMenu();
+        comida.removeComidaFromMenu(menu);
         return this.dao.saveAndFlush(comida);
     }
 
@@ -55,6 +56,10 @@ public class ComidaService extends ProductoComercializableService<Comida,ComidaD
     @Override
     protected void updateSpecificRelations(Comida updatedProduct, ComidaRequest request) {
         // no aplica a este caso, solo para menues
+    }
+
+    public List<Comida> getComidasByTipoComida(TipoComida tipoComida){
+        return this.dao.getComidasByTipoComida(tipoComida);
     }
 
 
