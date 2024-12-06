@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { registrar, login } from './config.json';
+import { HttpClient } from '@angular/common/http';
+import {  registrar, login } from './config.json';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment as env } from '../model/environment/environment';
-import { Usuario } from '../model/usuario/entity/usuario';
+import { StorageService } from './storage.service';
 
-interface Credential {
+export interface Credential {
   expirationInSec: number;
   token: string;
   email: string;
@@ -16,14 +16,15 @@ interface Credential {
   providedIn: 'root'
 })
 export class AuthService {
-  private currentUserSubject: BehaviorSubject<Usuario | any>;
-  public currentUser: Observable<Usuario | any>;
+  private currentUserSubject: BehaviorSubject<Credential | any>;
+  public currentUser: Observable<Credential | any>;
 
-  constructor(private http: HttpClient) { 
-    this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser') || ''));
+  constructor(private http: HttpClient, private storageService :StorageService) { 
+    const currentStoredUser = this.storageService.getItem('currentUser');
+    this.currentUserSubject = new BehaviorSubject<any>(currentStoredUser);
     this.currentUser = this.currentUserSubject.asObservable();
   }
-  public get currentUserValue(): Usuario {
+  public get currentUserValue(): Credential {
     return this.currentUserSubject.value;
 }
 
@@ -35,7 +36,7 @@ export class AuthService {
     return this.http.post<Credential>(`${env.url}${login}/${userType}`, emailAndPass)
     .pipe(map(credential => {
       if (credential && credential.token) {
-        localStorage.setItem('currentUser', JSON.stringify(credential));
+        this.storageService.setItem('currentUser', JSON.stringify(credential));
         this.currentUserSubject.next(credential);
       }
       return credential;
@@ -43,7 +44,7 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('currentUser');
+    this.storageService.removeItem('currentUser');
     this.currentUserSubject.next(null);
   }
 

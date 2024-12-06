@@ -1,4 +1,4 @@
-package com.TTPS2024.buffet.config;
+package com.TTPS2024.buffet.controller;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
