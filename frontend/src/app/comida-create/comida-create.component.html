@@ -1,1 +1,38 @@
-<p>comida-create works!</p>
+<div class="container mt-5">
+  <h2>Crear Comida</h2>
+</div>
+<form [formGroup]="comidaForm" (ngSubmit)="onSubmit()" class="container mt-5">
+  <div class="form-group">
+    <label for="nombre">Nombre</label>
+    <input id="nombre" formControlName="nombre" class="form-control">
+    <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="text-danger">
+      <div *ngIf="nombre.errors?.['required']">El nombre es obligatorio.</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="foto">Foto</label>
+    <input id="foto" formControlName="foto" type="file" class="form-control-file" (change)="onFileSelected($event)">
+  </div>
+
+  <div class="form-group">
+    <label for="tipoComida">Tipo de Comida</label>
+    <select id="tipoComida" formControlName="tipoComida" class="form-control">
+      <option *ngFor="let tipo of tiposComida" [value]="tipo">{{ tipo }}</option>
+    </select>
+    <div *ngIf="tipoComida.invalid && (tipoComida.dirty || tipoComida.touched)" class="text-danger">
+      <div *ngIf="tipoComida.errors?.['required']">El tipo de comida es obligatorio.</div>
+    </div>
+  </div>
+
+    <div class="form-group">
+        <label for="precio">Precio</label>
+        <input id="precio" formControlName="precio" type="number" class="form-control">
+        <div *ngIf="precio?.invalid && (precio?.dirty || precio?.touched)" class="text-danger">
+            <div *ngIf="precio?.errors?.['required']">El precio es obligatorio.</div>
+            <div *ngIf="precio?.errors?.['min']">El precio debe ser mayor o igual a 0.</div>
+        </div>
+    </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="comidaForm.invalid">Crear Comida</button>
+</form>
