@@ -29,7 +29,8 @@ public class MenuController {
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<MenuDTO> update(@PathVariable Long id,@RequestBody MenuRequest menuRequest){
         Menu menu = this.menuService.update(id, menuRequest);
-        return (menu != null) ? new ResponseEntity<>(MenuTransformer.toDTO(menu), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Menu menuToReturn = this.menuService.getProductById(id);
+        return (menu != null) ? new ResponseEntity<>(MenuTransformer.toDTO(menuToReturn), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/listar")

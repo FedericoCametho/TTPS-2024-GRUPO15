@@ -54,7 +54,7 @@ public abstract class ProductoComercializableService<T extends ProductoComercial
         this.setUpdateSpecificFields(originalProduct, request);
         T result = this.dao.saveAndFlush(originalProduct);
         this.updateSpecificRelations(result, request);
-        return result;
+        return this.getProductById(id);
     }
     @Transactional
     public void delete(Long id) {

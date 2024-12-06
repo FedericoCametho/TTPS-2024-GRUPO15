@@ -78,6 +78,9 @@ public class Comida extends ProductoComercializable{
     public void removeAllComidaFromMenu(){
         this.menues.clear();
     }
+    public void removeComidaFromMenu(Menu menu){
+        this.menues.remove(menu);
+    }
     public boolean isInMenu(Menu menu){
         return this.menues.contains(menu);
     }
