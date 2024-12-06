@@ -106,7 +106,6 @@ export class MenuUpdateComponent {
       };
 
       this.menuService.update(menu, this.menuId).subscribe(response => {
-        console.log('Menú actualizado:', response);
         this.router.navigate(['/menu-list']);
       }, error => {
         console.error('Error al actualizar el menú:', error);
