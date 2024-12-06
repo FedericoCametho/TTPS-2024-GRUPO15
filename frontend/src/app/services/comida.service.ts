@@ -23,8 +23,16 @@ export class ComidaService {
     return this.http.get<Comida[]>(`${baseUrl}/comida${listar}PorTipo/${tipo}`)
   }
 
+  getComidaById(id: number) {
+    return this.http.get<Comida>(`${baseUrl}/comida${listar}/${id}`)
+  }
+
   createComida(comida: ComidaRequest) {
     return this.http.post(`${baseUrl}/comida${agregar}`, comida)
+  }
+
+  update(comida: ComidaRequest, id: number) {
+    return this.http.put(`${baseUrl}/comida${actualizar}/${id}`, comida)
   }
 
 }

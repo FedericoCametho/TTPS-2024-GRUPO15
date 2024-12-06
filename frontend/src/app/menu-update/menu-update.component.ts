@@ -35,14 +35,14 @@ export class MenuUpdateComponent {
   ) {
     this.menuForm = this.fb.group({
       titulo: ['', [Validators.required]],
-      foto: [''],
+      foto: [''], // Campo opcional
       precio: ['', [Validators.required, Validators.min(0)]],
-      esVegano: [false, [Validators.required]],
-      comidas: this.fb.group({
-        entrada: ['', [Validators.required]],
-        bebida: ['', [Validators.required]],
-        platoPrincipal: ['', [Validators.required]],
-        postre: ['', [Validators.required]]
+      veggie: [false, [Validators.required]],
+      comidas: this.fb.group({ // Solo un grupo de controles para comida
+        entrada: [''],
+        bebida: [''],
+        platoPrincipal: [''],
+        postre: ['']
       })
     });
     this.menuId = this.route.snapshot.params['id'];
@@ -68,7 +68,7 @@ export class MenuUpdateComponent {
         titulo: menu.nombre,
         foto: menu.foto,
         precio: menu.precio,
-        esVegano: menu.veggie,
+        veggie: menu.veggie,
         comidas: {
           entrada: menu.comidas.find(c => c.tipoComida === 'ENTRADA')?.id,
           bebida: menu.comidas.find(c => c.tipoComida === 'BEBIDA')?.id,
@@ -106,22 +106,23 @@ export class MenuUpdateComponent {
 
   onSubmit(): void {
     if (this.menuForm.valid) {
-      const {titulo, precio, esVegano, comidas } = this.menuForm.value;
+      const { titulo, precio, esVegano, comidas } = this.menuForm.value;
       const {entrada, bebida, platoPrincipal, postre} = comidas;
       const menuRequest: MenuRequest = {
         id: this.menuId,
         nombre: titulo,
         precio: precio,
-        veggie:esVegano,
+        veggie: esVegano,
         foto: this.menuRequest.foto,
         comidas: [
-          entrada,
-          bebida,
-          platoPrincipal,
-          postre
+          entrada || null,
+          bebida || null,
+          platoPrincipal || null,
+          postre || null
         ]
       };
 
+      console.log(menuRequest);
       this.menuService.update(menuRequest, this.menuId).subscribe(response => {
         this.router.navigate(['/menu-list']);
       }, error => {

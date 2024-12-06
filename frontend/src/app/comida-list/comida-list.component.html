@@ -1,1 +1,28 @@
-<p>comida-list works!</p>
+<main class="main-content">
+    <header class="header">
+        <h1>Buffet Informática UNLP</h1>
+        <p>Ofrecemos a diario diversos menús cuidadosamente planificados por nutricionistas de la UNLP</p>
+    </header>
+
+    <div class="container mt-4">
+    <h2>Listado de Comidas</h2>
+    <div *ngIf="comidas.length === 0" class="alert alert-info">
+        No hay comidas disponibles.
+    </div>
+    <div class="row">
+        <div *ngFor="let comida of comidas" class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div *ngIf="comida.foto" class="card-img-top">
+            <img [src]="comida.foto" class="img-fluid rounded-start" alt="{{ comida.nombre }}">
+            </div>
+            <div class="card-body">
+            <h5 class="card-title">{{ comida.nombre }}</h5>
+            <p class="card-text"><b>Precio:</b> {{ comida.precio | currency }}</p>
+            <p class="card-text" *ngIf="comida.inMenu">En menú</p>
+            </div>
+            <button [routerLink]="['/comida-update/', comida.id]">Modificar</button>
+        </div>
+        </div>
+    </div>
+    </div>
+</main>

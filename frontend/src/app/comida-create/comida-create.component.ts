@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';;
+import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
@@ -13,7 +13,7 @@ import { TipoComida } from '../model/carta/producto/tipo-comida.enum';
   selector: 'app-comida-create',
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './comida-create.component.html',
-  styleUrl: './comida-create.component.css'
+  styleUrls: ['./comida-create.component.css']
 })
 export class ComidaCreateComponent {
   comidaForm: FormGroup;
@@ -27,9 +27,9 @@ export class ComidaCreateComponent {
   ) {
     this.comidaForm = this.fb.group({
       nombre: ['', [Validators.required]],
-      foto: [''],
+      foto: [''], // Campo opcional
       tipoComida: ['', [Validators.required]],
-      descripcion: ['', [Validators.required]],
+      inMenu: [false], // Campo opcional
       precio: ['', [Validators.required, Validators.min(0)]]
     });
   }
@@ -63,18 +63,21 @@ export class ComidaCreateComponent {
         id: 0, // El id se genera automáticamente en el backend
         nombre: nombre,
         tipoComida: tipoComida,
-        inMenu: inMenu,
+        inMenu: inMenu || false, // Valor por defecto si es opcional
         precio: precio,
-        foto: foto
+        foto: foto || '' // Valor por defecto si es opcional
       };
 
-      this.comidaService.createComida(comida).subscribe(response => {
-        console.log('Comida agregada:', response);
-        this.router.navigate(['/comida-list']); // Reemplaza '/ruta-deseada' con la ruta a la que deseas redirigir
-        Swal.fire('Éxito', 'La comida se ha creado exitosamente.', 'success');
-      }, error => {
-        console.error('Error al agregar la comida:', error);
-        Swal.fire('Error', 'Hubo un problema al crear la comida.', 'error');
+      this.comidaService.createComida(comida).subscribe({
+        next: (response) => {
+          console.log('Comida agregada:', response);
+          this.router.navigate(['/comida-list']); // Reemplaza '/ruta-deseada' con la ruta a la que deseas redirigir
+          Swal.fire('Éxito', 'La comida se ha creado exitosamente.', 'success');
+        },
+        error: (error) => {
+          console.error('Error al agregar la comida:', error);
+          Swal.fire('Error', 'Hubo un problema al crear la comida.', 'error');
+        }
       });
     } else {
       console.log('Formulario no válido');
