@@ -107,21 +107,16 @@ export class MenuUpdateComponent {
   onSubmit(): void {
     if (this.menuForm.valid) {
       const { titulo, precio, esVegano, comidas } = this.menuForm.value;
-      const {entrada, bebida, platoPrincipal, postre} = comidas;
+      const { entrada, bebida, platoPrincipal, postre } = comidas;
+      const comidasArray = [entrada, bebida, platoPrincipal, postre].filter(comida => comida !== null && comida !== undefined && comida !== '');
       const menuRequest: MenuRequest = {
         id: this.menuId,
         nombre: titulo,
         precio: precio,
         veggie: esVegano,
         foto: this.menuRequest.foto,
-        comidas: [
-          entrada || null,
-          bebida || null,
-          platoPrincipal || null,
-          postre || null
-        ]
+        comidas: comidasArray
       };
-
       console.log(menuRequest);
       this.menuService.update(menuRequest, this.menuId).subscribe(response => {
         this.router.navigate(['/menu-list']);
