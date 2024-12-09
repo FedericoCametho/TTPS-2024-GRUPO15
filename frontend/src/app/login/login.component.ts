@@ -23,6 +23,8 @@ export class LoginComponent {
     });
   }
 
+  
+
   login(): void {
     const {email, contrasena, tipoUsuario } = this.formulario.value;
     

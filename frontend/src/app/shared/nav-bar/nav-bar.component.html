@@ -17,6 +17,7 @@
                 </li>
             </ul>
         </div>
-       <app-login-buttons></app-login-buttons>
+       <app-login-buttons [hidden]="mostrarComponente"></app-login-buttons>
+       <app-user-buttons [hidden]="!mostrarComponente"></app-user-buttons>
     </div>
 </nav>
