@@ -66,14 +66,4 @@ public class ResponsableDeTurnoController {
         return new ResponseEntity<>(ResponsableDeTurnoTransformer.toDTOList(this.ResponsableDeTurnoService.getResponsablesDeTurnoByTurno(turno)), HttpStatus.OK);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<ResponsableDeTurnoDTO> login(@RequestBody LoginRequest loginRequest) {
-        try {
-            ResponsableDeTurno response = this.ResponsableDeTurnoService.login(loginRequest);
-            return ResponseEntity.ok(ResponsableDeTurnoTransformer.toDTO(response));
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-    }
 }

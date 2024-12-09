@@ -4,5 +4,6 @@
     "listar":"/listar",
     "actualizar":"/actualizar",
     "login":"/login",
-    "cartaDelDia": "/cartaDelDia"
+    "cartaDelDia": "/cartaDelDia",
+    "agregar": "/agregar"
 }

@@ -75,8 +75,8 @@ public class ResponsableDeTurnoServiceTest {
         assertNotNull(responsableDeTurno);
         assertEquals(responsableDeTurnoModificationRequestUpdate.getNombre(), responsableDeTurno.getNombre());
         assertEquals(responsableDeTurnoModificationRequestUpdate.getApellido(), responsableDeTurno.getApellido());
-        assertEquals(responsableDeTurnoModificationRequestUpdate.getEmail(), responsableDeTurno.getEmail());
-        assertEquals(responsableDeTurnoModificationRequestUpdate.getDni(), responsableDeTurno.getDni());
+        assertEquals(responsableDeTurnoToUpdate.getEmail(), responsableDeTurno.getEmail());
+        assertEquals(responsableDeTurnoToUpdate.getDni(), responsableDeTurno.getDni());
     }
 
     @Test
@@ -151,8 +151,6 @@ public class ResponsableDeTurnoServiceTest {
         ResponsableDeTurnoRequestUpdate responsableDeTurnoRequest = new ResponsableDeTurnoRequestUpdate();
         responsableDeTurnoRequest.setNombre(nombre);
         responsableDeTurnoRequest.setApellido(apellido);
-        responsableDeTurnoRequest.setEmail(email);
-        responsableDeTurnoRequest.setDni(dni);
         responsableDeTurnoRequest.setTurno(turno);
         return responsableDeTurnoRequest;
     }

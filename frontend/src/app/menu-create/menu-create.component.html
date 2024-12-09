@@ -1,1 +1,66 @@
-<p>menu-create works!</p>
+<div class="container mt-4">
+  <h2>Crear Menú</h2>
+  <form [formGroup]="menuForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="titulo">Título</label>
+      <input id="titulo" formControlName="titulo" type="text" class="form-control">
+      <div *ngIf="menuForm.get('titulo')?.invalid && (menuForm.get('titulo')?.dirty || menuForm.get('titulo')?.touched)"
+        class="text-danger">
+        <div *ngIf="menuForm.get('titulo')?.errors?.['required']">El título es obligatorio.</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="foto" class="form-label">Foto</label>
+      <input class="form-control" type="file" id="foto" (change)="onFileSelected($event)">
+    </div>
+
+    <div class="form-group">
+      <label for="precio">Precio</label>
+      <input id="precio" formControlName="precio" type="number" class="form-control">
+      <div *ngIf="menuForm.get('precio')?.invalid && (menuForm.get('precio')?.dirty || menuForm.get('precio')?.touched)"
+        class="text-danger">
+        <div *ngIf="menuForm.get('precio')?.errors?.['required']">El precio es obligatorio.</div>
+        <div *ngIf="menuForm.get('precio')?.errors?.['min']">El precio debe ser mayor o igual a 0.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="veggie">Es Vegano</label>
+      <input id="veggie" formControlName="veggie" type="checkbox" class="form-check-input">
+    </div>
+
+    <div formGroupName="comidas" class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Comida</h5>
+        <div class="form-group">
+          <label for="entrada">Entrada</label>
+          <select id="entrada" formControlName="entrada" class="form-control">
+            <option *ngFor="let entrada of entradas" [value]="entrada.id">{{ entrada.nombre }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="bebida">Bebida</label>
+          <select id="bebida" formControlName="bebida" class="form-control">
+            <option *ngFor="let bebida of bebidas" [value]="bebida.id">{{ bebida.nombre }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="platoPrincipal">Plato Principal</label>
+          <select id="platoPrincipal" formControlName="platoPrincipal" class="form-control">
+            <option *ngFor="let platoPrincipal of platosPrincipales" [value]="platoPrincipal.id">{{
+              platoPrincipal.nombre }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="postre">Postre</label>
+          <select id="postre" formControlName="postre" class="form-control">
+            <option *ngFor="let postre of postres" [value]="postre.id">{{ postre.nombre }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3" [disabled]="menuForm.invalid">Crear Menú</button>
+  </form>
+</div>

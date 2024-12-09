@@ -65,14 +65,4 @@ public class AlumnoController {
         return new ResponseEntity<>(AlumnoTransformer.toDTOList(this.alumnoService.getAlumnosByEnabled()), HttpStatus.OK);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<AlumnoDTO> login(@RequestBody LoginRequest loginRequest) {
-        try {
-            Alumno response = this.alumnoService.login(loginRequest);
-            return ResponseEntity.ok(AlumnoTransformer.toDTO(response));
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-    }
 }

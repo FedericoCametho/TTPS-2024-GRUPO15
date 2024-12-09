@@ -6,7 +6,9 @@ import { LoginComponent } from './login/login.component';
 import { MenuCreateComponent } from './menu-create/menu-create.component';
 import { MenuUpdateComponent } from './menu-update/menu-update.component';
 import { MenuListComponent } from './menu-list/menu-list.component';
-import { ComidaComponent } from './comida-list/comida.component';
+import { ComidaListComponent } from './comida-list/comida-list.component';
+import { ComidaCreateComponent } from './comida-create/comida-create.component';
+import { ComidaUpdateComponent } from './comida-update/comida-update.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -15,7 +17,9 @@ export const routes: Routes = [
     { path: 'menu-create', component: MenuCreateComponent },
     { path: 'menu-update/:id', component: MenuUpdateComponent },
     { path: 'menu-list', component: MenuListComponent },
-    { path: 'comida-list', component: ComidaComponent}
+    { path: 'comida-list', component: ComidaListComponent },
+    { path: 'comida-create', component: ComidaCreateComponent },
+    { path: 'comida-update/:id', component: ComidaUpdateComponent }
 ];
 
 @NgModule({

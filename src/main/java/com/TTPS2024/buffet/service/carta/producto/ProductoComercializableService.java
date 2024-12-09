@@ -54,7 +54,7 @@ public abstract class ProductoComercializableService<T extends ProductoComercial
         this.setUpdateSpecificFields(originalProduct, request);
         T result = this.dao.saveAndFlush(originalProduct);
         this.updateSpecificRelations(result, request);
-        return result;
+        return this.getProductById(id);
     }
     @Transactional
     public void delete(Long id) {
@@ -83,7 +83,7 @@ public abstract class ProductoComercializableService<T extends ProductoComercial
         T result;
         try{
             result = dao.findById(id).orElseThrow(NoResultException::new);
-            return result;
+                return result;
         } catch (NoResultException e){
             LOGGER.info("El producto no existe con el id: " + id);
             throw new NoResultException("El producto con el id "+ id + " no existe");
