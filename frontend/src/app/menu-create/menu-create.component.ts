@@ -1,30 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MenuService } from '../services/menu.service';
-import { Menu } from '../model/carta/producto/menu';
-
-import { ReactiveFormsModule } from '@angular/forms';;
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import Swal from 'sweetalert2';
 
-
+import { MenuRequest } from '../model/carta/producto/request/menuRequest';
 import { ComidaService } from '../services/comida.service';
+import { MenuService } from '../services/menu.service';
+import { Comida } from '../model/carta/producto/comida';
 import { TipoComida } from '../model/carta/producto/tipo-comida.enum';
-
 
 @Component({
   selector: 'app-menu-create',
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './menu-create.component.html',
-  styleUrl: './menu-create.component.css'
+  styleUrls: ['./menu-create.component.css']
 })
 export class MenuCreateComponent {
   menuForm: FormGroup;
-  entradas: any[] = [];
-  bebidas: any[] = [];
-  platosPrincipales: any[] = [];
-  postres: any[] = [];
+  entradas: Comida[] = [];
+  bebidas: Comida[] = [];
+  platosPrincipales: Comida[] = [];
+  postres: Comida[] = [];
+  menuRequest: MenuRequest = new MenuRequest();
+
 
   constructor(
     private fb: FormBuilder,
@@ -34,80 +33,81 @@ export class MenuCreateComponent {
   ) {
     this.menuForm = this.fb.group({
       titulo: ['', [Validators.required]],
-      foto: [''],
+      foto: [''], // Campo opcional
       precio: ['', [Validators.required, Validators.min(0)]],
-      esVegano: [false, [Validators.required]],
-      comidas: this.fb.group({
-        entrada: ['', [Validators.required]],
-        bebida: ['', [Validators.required]],
-        platoPrincipal: ['', [Validators.required]],
-        postre: ['', [Validators.required]]
+      veggie: [false, [Validators.required]],
+      comidas: this.fb.group({ // Solo un grupo de controles para comida
+        entrada: [''],
+        bebida: [''],
+        platoPrincipal: [''],
+        postre: ['']
       })
     });
   }
 
   ngOnInit(): void {
-    this.comidaService.getComidasByTipo(TipoComida.ENTRADA).subscribe((resp) => {
-      this.entradas = resp;
+    this.comidaService.getComidasByTipo(TipoComida.ENTRADA).subscribe((data: Comida[]) => {
+      this.entradas = data;
     });
-
-    this.comidaService.getComidasByTipo(TipoComida.BEBIDA).subscribe((resp) => {
-      this.bebidas = resp;
+    this.comidaService.getComidasByTipo(TipoComida.BEBIDA).subscribe((data: Comida[]) => {
+      this.bebidas = data;
     });
-
-    this.comidaService.getComidasByTipo(TipoComida.PLATO_PRINCIPAL).subscribe((resp) => {
-      this.platosPrincipales = resp;
+    this.comidaService.getComidasByTipo(TipoComida.PLATO_PRINCIPAL).subscribe((data: Comida[]) => {
+      this.platosPrincipales = data;
     });
-
-    this.comidaService.getComidasByTipo(TipoComida.POSTRE).subscribe((resp) => {
-      this.postres = resp;
+    this.comidaService.getComidasByTipo(TipoComida.POSTRE).subscribe((data: Comida[]) => {
+      this.postres = data;
     });
   }
 
-  get titulo() { return this.menuForm.get('titulo'); }
-  get foto() { return this.menuForm.get('foto'); }
-  get precio() { return this.menuForm.get('precio'); }
-  get esVegano() { return this.menuForm.get('esVegano'); }
-  get entrada() { return this.menuForm.get('comidas.entrada'); }
-  get bebida() { return this.menuForm.get('comidas.bebida'); }
-  get platoPrincipal() { return this.menuForm.get('comidas.platoPrincipal'); }
-  get postre() { return this.menuForm.get('comidas.postre'); }
+  get comida() {
+    return this.menuForm.get('comida') as FormGroup;
+  }
 
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        this.menuRequest.foto = reader.result as string;
+      };
+
+      reader.readAsDataURL(file); // Leer el archivo como Base64
+    }
+  }
 
   onSubmit(): void {
     if (this.menuForm.valid) {
-      const menu: Menu = {
+      const { titulo, foto, precio, veggie, comidas } = this.menuForm.value;
+      const { entrada, bebida, platoPrincipal, postre } = comidas;
+      const menuRequest: MenuRequest = {
         id: 0, // El id se genera automáticamente en el backend
-        nombre: this.titulo?.value,
-        precio: this.precio?.value,
-        veggie: this.esVegano?.value,
-        foto: this.foto?.value,
+        nombre: titulo,
+        precio: precio,
+        veggie: veggie,
+        foto: foto || '', // Valor por defecto si es opcional
         comidas: [
-          this.entrada?.value,
-          this.bebida?.value,
-          this.platoPrincipal?.value,
-          this.postre?.value
-        ]
+          entrada,
+          bebida,
+          platoPrincipal,
+          postre
+        ] // Enviar como   un array con una sola comida
       };
 
-      this.menuService.create(menu).subscribe(response => {
-        console.log('Menú agregado:', response);
-        Swal.fire({
-          title: 'Éxito',
-          text: 'El menú se ha creado exitosamente.',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        }).then(() => {
-          this.router.navigate(['/menu-list']);
-        });
-      }, error => {
-        console.error('Error al agregar el menú:', error);
-        Swal.fire({
-          title: 'Error',
-          text: 'Hubo un problema al crear el menú.',
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
+      console.log(menuRequest);
+
+      this.menuService.create(menuRequest).subscribe({
+        next: (response) => {
+          console.log('Menú agregado:', response);
+          this.router.navigate(['/menu-list']); // Reemplaza '/ruta-deseada' con la ruta a la que deseas redirigir
+          Swal.fire('Éxito', 'El menú se ha creado exitosamente.', 'success');
+        },
+        error: (error) => {
+          console.error('Error al agregar el menú:', error);
+          Swal.fire('Error', 'Hubo un problema al crear el menú.', 'error');
+        }
       });
     } else {
       console.log('Formulario no válido');

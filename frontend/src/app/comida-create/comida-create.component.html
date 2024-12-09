@@ -1,0 +1,40 @@
+<form [formGroup]="comidaForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="nombre">Nombre</label>
+    <input id="nombre" formControlName="nombre" type="text" class="form-control">
+    <div *ngIf="comidaForm.get('nombre')?.invalid && (comidaForm.get('nombre')?.dirty || comidaForm.get('nombre')?.touched)" class="text-danger">
+      <div *ngIf="comidaForm.get('nombre')?.errors?.['required']">El nombre es obligatorio.</div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="foto" class="form-label">Foto</label>
+    <input class="form-control" type="file" id="foto" (change)="onFileSelected($event)">
+  </div>
+
+  <div class="form-group">
+    <label for="tipoComida">Tipo de Comida</label>
+    <select id="tipoComida" formControlName="tipoComida" class="form-control">
+      <option *ngFor="let tipo of tiposComida" [value]="tipo">{{ tipo }}</option>
+    </select>
+    <div *ngIf="comidaForm.get('tipoComida')?.invalid && (comidaForm.get('tipoComida')?.dirty || comidaForm.get('tipoComida')?.touched)" class="text-danger">
+      <div *ngIf="comidaForm.get('tipoComida')?.errors?.['required']">El tipo de comida es obligatorio.</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inMenu">En Menú</label>
+    <input id="inMenu" formControlName="inMenu" type="checkbox" class="form-check-input">
+  </div>
+
+  <div class="form-group">
+    <label for="precio">Precio</label>
+    <input id="precio" formControlName="precio" type="number" class="form-control">
+    <div *ngIf="comidaForm.get('precio')?.invalid && (comidaForm.get('precio')?.dirty || comidaForm.get('precio')?.touched)" class="text-danger">
+      <div *ngIf="comidaForm.get('precio')?.errors?.['required']">El precio es obligatorio.</div>
+      <div *ngIf="comidaForm.get('precio')?.errors?.['min']">El precio debe ser mayor o igual a 0.</div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="comidaForm.invalid">Crear Comida</button>
+</form>
