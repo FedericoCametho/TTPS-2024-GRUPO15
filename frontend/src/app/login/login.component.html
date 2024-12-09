@@ -11,7 +11,7 @@
         <label for="contrasena" class="form-label">Password</label>
         <input class="form-control" type="password" id="contrasena" formControlName="contrasena" name="contrasena" required>
       </div>
-      <select class="form-select mb-3" id="floatingSelect" aria-label="Floating label select example">
+      <select class="form-select mb-3" formControlName="tipoUsuario" id="tipoUsuario" aria-label="Floating label select example">
         <option value="" disabled selected>Seleccione un tipo de usuario</option>
         <option value="ADMINISTRADOR">Administrador</option>
         <option value="RESPONSABLE_TURNO">Responsable de Turno</option>
