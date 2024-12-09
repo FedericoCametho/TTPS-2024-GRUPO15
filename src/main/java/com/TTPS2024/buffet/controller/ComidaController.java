@@ -15,7 +15,6 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RestController
 @RequestMapping("/comida")
-@CrossOrigin(origins = "http://localhost:4200")
 public class ComidaController {
     private ComidaService comidaService;
     @Autowired

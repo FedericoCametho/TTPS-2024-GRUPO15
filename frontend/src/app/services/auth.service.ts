@@ -10,6 +10,7 @@ export interface Credential {
   expirationInSec: number;
   token: string;
   email: string;
+  rol: string;
 }
 
 @Injectable({

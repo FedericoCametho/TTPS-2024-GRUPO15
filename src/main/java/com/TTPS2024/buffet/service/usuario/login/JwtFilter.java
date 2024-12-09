@@ -33,7 +33,7 @@ public class JwtFilter implements Filter {
 
 
         String authHeader = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
-        if (authHeader == null || TokenService.validateToken(authHeader)) {
+        if (authHeader == null || !TokenService.validateToken(authHeader)) {
             httpResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
             return;
         }

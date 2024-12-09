@@ -1,6 +1,7 @@
 package com.TTPS2024.buffet.controller;
 
 import com.TTPS2024.buffet.controller.request.usuario.LoginRequest;
+import com.TTPS2024.buffet.model.permiso.Rol;
 import com.TTPS2024.buffet.service.usuario.AdministradorService;
 import com.TTPS2024.buffet.service.usuario.AlumnoService;
 import com.TTPS2024.buffet.service.usuario.ResponsableDeTurnoService;
@@ -32,7 +33,7 @@ public class LoginController {
     public ResponseEntity<?> authenticateAlumno(@RequestBody LoginRequest loginRequest){
         if(this.alumnoService.login(loginRequest)){
             String token = tokenServices.generateToken(loginRequest.getEmail(), EXPIRATION_IN_SEC);
-            return ResponseEntity.ok(new Credential(token, EXPIRATION_IN_SEC, loginRequest.getEmail()));
+            return ResponseEntity.ok(new Credential(token, EXPIRATION_IN_SEC, loginRequest.getEmail(), Rol.ALUMNO.name()));
         }else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario o contraseña incorrectos");
         }
@@ -42,7 +43,7 @@ public class LoginController {
     public ResponseEntity<?> authenticateResponsable(@RequestBody LoginRequest loginRequest){
         if(this.responsableDeTurnoService.login(loginRequest)){
             String token = tokenServices.generateToken(loginRequest.getEmail(), EXPIRATION_IN_SEC);
-            return ResponseEntity.ok(new Credential(token, EXPIRATION_IN_SEC, loginRequest.getEmail()));
+            return ResponseEntity.ok(new Credential(token, EXPIRATION_IN_SEC, loginRequest.getEmail(),  Rol.RESPONSABLE_DE_TURNO.name()));
         }else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario o contraseña incorrectos");
         }
@@ -52,7 +53,7 @@ public class LoginController {
     public ResponseEntity<?> authenticateAdmin(@RequestBody LoginRequest loginRequest){
         if(this.administradorService.login(loginRequest)){
             String token = tokenServices.generateToken(loginRequest.getEmail(), EXPIRATION_IN_SEC);
-            return ResponseEntity.ok(new Credential(token, EXPIRATION_IN_SEC, loginRequest.getEmail()));
+            return ResponseEntity.ok(new Credential(token, EXPIRATION_IN_SEC, loginRequest.getEmail(),  Rol.ADMINISTRADOR.name()));
         }else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario o contraseña incorrectos");
         }
