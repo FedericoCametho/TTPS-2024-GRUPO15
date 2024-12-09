@@ -29,7 +29,7 @@ export class LoginComponent {
     this.authService.login({email:email, contrasena:contrasena}, tipoUsuario.toLowerCase()).subscribe(
       response => {
         console.log('User logged in successfully');
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
       },
       error => {
         console.error('Error logging in user', error);

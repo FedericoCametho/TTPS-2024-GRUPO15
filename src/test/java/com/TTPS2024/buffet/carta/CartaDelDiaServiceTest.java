@@ -42,7 +42,7 @@ public class CartaDelDiaServiceTest extends AbstractGenericTest {
     @Test
     @Order(2)
     public void testUpdateCartaDelDia() {
-        CartaDelDia cartaDelDia = this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.LUNES).get(0);
+        CartaDelDia cartaDelDia = this.cartaDelDiaService.getCartaDelDiaByDiaSemana(DiaSemana.LUNES);
         CartaDelDiaRequest cartaDelDiaRequest = new CartaDelDiaRequest();
         cartaDelDiaRequest.setMenues(List.of(this.menuService.getProductsByName("Menu Martes Comun").get(0).getId(),this.menuService.getProductsByName("Menu Martes Vegano").get(0).getId()));
         cartaDelDiaRequest.setDiaSemana(DiaSemana.MARTES);

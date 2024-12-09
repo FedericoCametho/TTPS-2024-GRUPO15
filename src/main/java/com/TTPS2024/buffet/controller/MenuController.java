@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RestController
 @RequestMapping("/menu")
-@CrossOrigin(origins = "http://localhost:4200")
 public class MenuController {
 
     @Autowired
