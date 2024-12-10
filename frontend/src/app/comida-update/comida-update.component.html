@@ -13,8 +13,10 @@
     </div>
 
     <div class="form-group mb-3">
+      
       <label for="foto" class="form-label">Foto</label>
-      <input id="foto" formControlName="foto" type="text" class="form-control">
+      <input class="form-control" type="file" id="foto" (change)="onFileSelected($event)">
+      
       <div *ngIf="comidaForm.get('foto')?.invalid && (comidaForm.get('foto')?.dirty || comidaForm.get('foto')?.touched)"
         class="text-danger">
         <div *ngIf="comidaForm.get('foto')?.errors?.['required']">La foto es obligatoria.</div>
