@@ -35,10 +35,10 @@ export class MenuUpdateComponent {
   ) {
     this.menuForm = this.fb.group({
       titulo: ['', [Validators.required]],
-      foto: [''], // Campo opcional
+      foto: [''],
       precio: ['', [Validators.required, Validators.min(0)]],
       veggie: [false, [Validators.required]],
-      comidas: this.fb.group({ // Solo un grupo de controles para comida
+      comidas: this.fb.group({ 
         entrada: [''],
         bebida: [''],
         platoPrincipal: [''],
