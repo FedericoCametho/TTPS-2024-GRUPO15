@@ -1,0 +1,29 @@
+<form [formGroup]="cartaForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="menuVegetariano">Menú Vegetariano:</label>
+    <select id="menuVegetariano" formControlName="menuVegetariano" class="form-control">
+      <option *ngFor="let menu of vegetarianMenus" [value]="menu.id">{{ menu.nombre }}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="menuComun">Menú Común:</label>
+    <select id="menuComun" formControlName="menuComun" class="form-control">
+      <option *ngFor="let menu of commonMenus" [value]="menu.id">{{ menu.nombre }}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="diaSemana">Día de la Semana:</label>
+    <select id="diaSemana" formControlName="diaSemana" class="form-control">
+      <option *ngFor="let dia of diasSemana" [value]="dia">{{ dia }}</option>
+    </select>
+  </div>
+
+  <div class="form-group form-check">
+    <input type="checkbox" id="activo" formControlName="activo" class="form-check-input">
+    <label for="activo" class="form-check-label">Activo</label>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Actualizar Carta del Día</button>
+</form>

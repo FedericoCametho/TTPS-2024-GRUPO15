@@ -4,13 +4,14 @@
         <p>Ofrecemos a diario diversos menús cuidadosamente planificados por nutricionistas de la UNLP</p>
     </header>
     <h2>Listado de Menues</h2>
+    <button [routerLink]="['/menu-create']" class="btn btn-success">Crear</button>
     <section class="menu-grid">
         <div class="menu-card" *ngFor="let menu of menus">
             <div class="card-content">
                 <h4>{{ menu.nombre }}</h4>
                 <p><b>Precio</b>: ${{ menu.precio }}</p>
                 <button (click)="verDetalles(menu)" class="btn-primary">Detalles</button>
-                <button [routerLink]="['/menu-update/', menu.id]">Modificar</button>
+                <button [routerLink]="['/menu-update/', menu.id]" class="btn btn-secondary">Modificar</button>
             </div>
         </div>
     </section>

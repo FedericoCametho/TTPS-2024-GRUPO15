@@ -1,0 +1,31 @@
+<main class="main-content">
+    <header class="header">
+        <h1>Buffet Informática UNLP</h1>
+        <p>Ofrecemos a diario diversos menús cuidadosamente planificados por nutricionistas de la UNLP</p>
+    </header>
+
+    <div class="container mt-4">
+    <h2>Listado de cartas del día</h2>
+    <button [routerLink]="['/carta-del-dia-create']" class="btn btn-success">Crear</button>
+    <div class="row">
+        <div *ngFor="let carta of cartasDelDia" class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+            <h5 class="card-title">{{ carta.diaSemana }}</h5>
+            <p class="card-text">
+                <strong>Menús:</strong>
+                <ul>
+                <li *ngFor="let menu of carta.menus">
+                    {{ menu.nombre }}
+                </li>
+                </ul>
+            <p class="card-text">
+                <strong>Activo:</strong> {{ carta.activa ? 'Sí' : 'No' }}
+            </p>       
+            <button [routerLink]="['/carta-del-dia-update/', carta.id]" class="btn btn-secondary">Modificar</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</main>

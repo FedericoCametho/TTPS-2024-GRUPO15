@@ -9,6 +9,9 @@ import { MenuListComponent } from './menu-list/menu-list.component';
 import { ComidaListComponent } from './comida-list/comida-list.component';
 import { ComidaCreateComponent } from './comida-create/comida-create.component';
 import { ComidaUpdateComponent } from './comida-update/comida-update.component';
+import { CartadeldiaCreateComponent } from './carta-del-dia-create/carta-del-dia-create.component';
+import { CartaDelDiaListComponent } from './carta-del-dia-list/carta-del-dia-list.component';
+import { CartaDelDiaUpdateComponent } from './carta-del-dia-update/carta-del-dia-update.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -19,7 +22,10 @@ export const routes: Routes = [
     { path: 'menu-list', component: MenuListComponent },
     { path: 'comida-list', component: ComidaListComponent },
     { path: 'comida-create', component: ComidaCreateComponent },
-    { path: 'comida-update/:id', component: ComidaUpdateComponent }
+    { path: 'comida-update/:id', component: ComidaUpdateComponent },
+    { path: 'carta-del-dia-create', component: CartadeldiaCreateComponent },
+    { path: 'carta-del-dia-list', component: CartaDelDiaListComponent },
+    { path: 'carta-del-dia-update/:id', component: CartaDelDiaUpdateComponent }
 ];
 
 @NgModule({

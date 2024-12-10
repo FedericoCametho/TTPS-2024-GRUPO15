@@ -44,4 +44,16 @@ public class MenuController {
         return new ResponseEntity<>(MenuTransformer.toDTO(menu), HttpStatus.OK);
     }
 
+    @GetMapping("/listarVeggie")
+    public ResponseEntity<List<MenuDTO>> getVeggieMenus(){
+        List<Menu> menues = this.menuService.getMenuesVeggie();
+        return new ResponseEntity<>(MenuTransformer.toDTOList(menues), HttpStatus.OK);
+    }
+
+    @GetMapping("/listarComunes")
+    public ResponseEntity<List<MenuDTO>> getComunMenus(){
+        List<Menu> menues = this.menuService.getMenuesComun();
+        return new ResponseEntity<>(MenuTransformer.toDTOList(menues), HttpStatus.OK);
+    }
+
 }

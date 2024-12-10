@@ -11,6 +11,15 @@ public class CartaDelDiaDTO {
     private List<MenuDTO> menus;
     private DiaSemana diaSemana;
     private boolean isActiva;
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public List<MenuDTO> getMenus() {
         return menus;

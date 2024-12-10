@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface MenuDAO extends ProductoComercializableDAO<Menu>, JpaRepository<Menu, Long> {
-
+    List<Menu> findByIsVeggie(Boolean isVeggie);
 }

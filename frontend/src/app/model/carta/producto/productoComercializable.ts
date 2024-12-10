@@ -1,5 +1,5 @@
 export abstract class ProductoComercializable {
-    id: number | undefined;
+    id: number;
     nombre: string | undefined;
     precio: number | undefined;
     foto: string | undefined;
