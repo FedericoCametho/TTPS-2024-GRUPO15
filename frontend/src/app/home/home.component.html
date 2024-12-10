@@ -7,16 +7,16 @@
     <section class="menu-grid">
         <div class="menu-card" *ngIf="cartaDelDia">
             <div class="card-content">
-                <h2>CARTA DEL DIA<br>{{ cartaDelDia.diaSemana }}</h2>
+                <h2 class="text-center">CARTA DEL DIA<br>{{ cartaDelDia.diaSemana }}</h2>
                 <div class="card-content" *ngFor="let menu of cartaDelDia.menus">
-                    <p>{{ menu.nombre }}</p>
+                    <p class="text-center">{{ menu.nombre }}</p>
                     <div *ngIf="menu.comidas && menu.comidas.length > 0">
-                        <h3>Comidas:</h3>
-                        <ul>
+                        <h3 class="text-center">Comidas:</h3>
+                        <ul class="text-center">
                             <li *ngFor="let comida of menu.comidas">
-                                <b>{{ comida.tipoComida }}:</b>
-                                {{ comida.nombre }}
-                                <b>Precio: </b>${{ comida.precio }}
+                                <b>{{ comida.tipoComida === 'PLATO_PRINCIPAL' ? 'PLATO PRINCIPAL' : comida.tipoComida
+                                    }}</b>
+                                {{ comida.nombre | titlecase }}
                             </li>
                         </ul>
                     </div>

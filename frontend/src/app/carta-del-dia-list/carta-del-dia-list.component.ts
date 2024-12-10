@@ -7,6 +7,7 @@ import { ReloadService } from '../services/reload.service';
 import { CartaDelDia } from '../model/carta/cartaDelDia';
 
 
+
 @Component({
   selector: 'app-carta-del-dia-list',
   imports: [CommonModule, RouterModule],

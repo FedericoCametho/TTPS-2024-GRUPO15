@@ -3,50 +3,58 @@
         <h1>Buffet Informática UNLP</h1>
         <p>Ofrecemos a diario diversos menús cuidadosamente planificados por nutricionistas de la UNLP</p>
     </header>
-    <h2>Listado de Menues</h2>
-    <button [routerLink]="['/menu-create']" class="btn btn-success">Crear</button>
-    <section class="menu-grid">
-        <div class="menu-card" *ngFor="let menu of menus">
-            <div class="card-content">
-                <h4>{{ menu.nombre }}</h4>
-                <p><b>Precio</b>: ${{ menu.precio }}</p>
-                <button (click)="verDetalles(menu)" class="btn-primary">Detalles</button>
-                <button [routerLink]="['/menu-update/', menu.id]" class="btn btn-secondary">Modificar</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Popup para mostrar los detalles -->
-    <div class="modal" [ngClass]="{'show': mostrarModal}" (click)="cerrarModal()">
-        <div class="modal-content" (click)="$event.stopPropagation()">
-            <span class="close" (click)="cerrarModal()">&times;</span>
-
-            <h2>{{ menuSeleccionado?.nombre }}</h2>
-            <p><b>Precio</b>: ${{ menuSeleccionado?.precio }}</p>
-
-            <div *ngIf="menuSeleccionado">
-                <h3>Entrada</h3>
-                <div *ngIf="getComidaPorTipo('ENTRADA') as entrada">
-                    <p>{{ entrada.nombre }}</p>
-                </div>
-
-                <h3>Bebida</h3>
-                <div *ngIf="getComidaPorTipo('BEBIDA') as bebida">
-                    <p>{{ bebida.nombre }}</p>
-                </div>
-
-                <h3>Plato Principal</h3>
-                <div *ngIf="getComidaPorTipo('PLATO_PRINCIPAL') as platoPrincipal">
-                    <p>{{ platoPrincipal.nombre }}</p>
-                </div>
-
-                <h3>Postre</h3>
-                <div *ngIf="getComidaPorTipo('POSTRE') as postre">
-                    <p>{{ postre.nombre }}</p>
+    <div class="container mt-4">
+        <h2>Listado de Menues</h2>
+        <button [routerLink]="['/menu-create']" class="btn btn-success mb-3">Crear</button>
+        <div class="row">
+            <div class="col-md-4 mb-4" *ngFor="let menu of menus">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h4 class="card-title">{{ menu.nombre }}</h4>
+                        <p class="card-text"><b>Precio</b>: ${{ menu.precio }}</p>
+                        <div class="mt-auto">
+                            <button (click)="verDetalles(menu)" class="btn btn-primary">Detalles</button>
+                            <span class="mx-2"></span>
+                            <button [routerLink]="['/menu-update/', menu.id]" class="btn btn-secondary">Modificar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-
+    <!-- Popup para mostrar los detalles -->
+    <div class="modal" [ngClass]="{'show': mostrarModal}" (click)="cerrarModal()">
+        <div class="modal-dialog modal-dialog-centered" (click)="$event.stopPropagation()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ menuSeleccionado?.nombre }}</h5>
+                </div>
+                <div class="modal-body">
+                    <p><b>Precio</b>: ${{ menuSeleccionado?.precio }}</p>
+                    <div *ngIf="menuSeleccionado">
+                        <div *ngIf="getComidaPorTipo('ENTRADA') as entrada">
+                            <h6><b>Entrada</b></h6>
+                            <p>{{ entrada.nombre }}</p>
+                        </div>
+                        <div *ngIf="getComidaPorTipo('BEBIDA') as bebida">
+                            <h6><b>Bebida</b></h6>
+                            <p>{{ bebida.nombre }}</p>
+                        </div>
+                        <div *ngIf="getComidaPorTipo('PLATO_PRINCIPAL') as platoPrincipal">
+                            <h6><b>Plato Principal</b></h6>
+                            <p>{{ platoPrincipal.nombre }}</p>
+                        </div>
+                        <div *ngIf="getComidaPorTipo('POSTRE') as postre">
+                            <h6><b>Postre</b></h6>
+                            <p>{{ postre.nombre }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>

@@ -71,7 +71,7 @@ export class ComidaCreateComponent {
       this.comidaService.createComida(comida).subscribe({
         next: (response) => {
           console.log('Comida agregada:', response);
-          this.router.navigate(['/']);
+          this.router.navigate(['/comida-list']);
           Swal.fire('Éxito', 'La comida se ha creado exitosamente.', 'success');
         },
         error: (error) => {

@@ -3,10 +3,9 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ReloadService } from '../services/reload.service';
 import Swal from 'sweetalert2';
 
-
+import { ReloadService } from '../services/reload.service';
 import { CartaDelDiaService } from '../services/carta-del-dia.service';
 import { MenuService } from '../services/menu.service';
 import { Menu } from '../model/carta/producto/menu';
