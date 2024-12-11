@@ -66,5 +66,15 @@ public class MenuService extends ProductoComercializableService<Menu,MenuDAO, Me
         return this.getProductsFromIds(ids).stream().filter(menu -> !menu.isVeggie()).collect(Collectors.toList());
     }
 
+    public List<Menu> getMenuesVeggie(){
+        return this.dao.findByIsVeggie(true);
+    }
+
+    public List<Menu> getMenuesComun(){
+        return this.dao.findByIsVeggie(false);
+    }
+
+
+
 }
 

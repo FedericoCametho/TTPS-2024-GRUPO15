@@ -29,9 +29,9 @@ export class ComidaUpdateComponent implements OnInit {
   ) {
     this.comidaForm = this.fb.group({
       nombre: ['', [Validators.required]],
-      foto: [''], // Campo opcional
+      foto: [''], 
       tipoComida: ['', [Validators.required]],
-      inMenu: [false], // Campo opcional
+      inMenu: [false],
       precio: ['', [Validators.required, Validators.min(0)]]
     });
 
@@ -60,7 +60,7 @@ export class ComidaUpdateComponent implements OnInit {
         this.comidaRequest.foto = reader.result as string;
       };
 
-      reader.readAsDataURL(file); // Leer el archivo como Base64
+      reader.readAsDataURL(file); 
     }
   }
 
@@ -71,15 +71,15 @@ export class ComidaUpdateComponent implements OnInit {
         id: this.comidaId,
         nombre: nombre,
         tipoComida: tipoComida,
-        inMenu: inMenu || false, // Valor por defecto si es opcional
+        inMenu: inMenu || false, 
         precio: precio,
-        foto: foto || '' // Valor por defecto si es opcional
+        foto: foto || '' 
       };
 
       this.comidaService.update(comida, this.comidaId).subscribe({
         next: (response) => {
           console.log('Comida actualizada:', response);
-          this.router.navigate(['/comida-list']); // Reemplaza '/ruta-deseada' con la ruta a la que deseas redirigir
+          this.router.navigate(['/comida-list']);
           Swal.fire('Éxito', 'La comida se ha actualizado exitosamente.', 'success');
         },
         error: (error) => {

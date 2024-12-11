@@ -27,9 +27,9 @@ export class ComidaCreateComponent {
   ) {
     this.comidaForm = this.fb.group({
       nombre: ['', [Validators.required]],
-      foto: [''], // Campo opcional
+      foto: [''],
       tipoComida: ['', [Validators.required]],
-      inMenu: [false], // Campo opcional
+      inMenu: [false],
       precio: ['', [Validators.required, Validators.min(0)]]
     });
   }
@@ -63,15 +63,15 @@ export class ComidaCreateComponent {
         id: 0, // El id se genera automáticamente en el backend
         nombre: nombre,
         tipoComida: tipoComida,
-        inMenu: inMenu || false, // Valor por defecto si es opcional
+        inMenu: inMenu || false,
         precio: precio,
-        foto: foto || '' // Valor por defecto si es opcional
+        foto: foto || ''
       };
 
       this.comidaService.createComida(comida).subscribe({
         next: (response) => {
           console.log('Comida agregada:', response);
-          this.router.navigate(['/comida-list']); // Reemplaza '/ruta-deseada' con la ruta a la que deseas redirigir
+          this.router.navigate(['/comida-list']);
           Swal.fire('Éxito', 'La comida se ha creado exitosamente.', 'success');
         },
         error: (error) => {

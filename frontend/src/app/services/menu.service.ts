@@ -36,6 +36,14 @@ export class MenuService {
     return this.http.get<Menu>(`${env.url}/menu${listar}/${id}`);
   }
 
+  getMenuesComunes() {
+    return this.http.get<Menu[]>(`${env.url}/menu${listar}Comunes`)
+  }
+
+  getMenuesVeggies() {
+    return this.http.get<Menu[]>(`${env.url}/menu${listar}Veggie`)
+  }
+
   // getMenuById(id: number): Observable<any> {
   //   return this.http.get<any>(`${this.apiUrl}/${id}`);
   // }

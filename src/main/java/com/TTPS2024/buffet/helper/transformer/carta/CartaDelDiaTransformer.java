@@ -17,6 +17,7 @@ public class CartaDelDiaTransformer {
         cartaDelDiaDTO.setMenus(menuToDTO(cartaDelDia.getMenues()));
         cartaDelDiaDTO.setDiaSemana(cartaDelDia.getDiaSemana());
         cartaDelDiaDTO.setActiva(cartaDelDia.isActiva());
+        cartaDelDiaDTO.setId(cartaDelDia.getId());
         return cartaDelDiaDTO;
     }
 

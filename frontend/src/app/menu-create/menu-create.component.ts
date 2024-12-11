@@ -33,10 +33,10 @@ export class MenuCreateComponent {
   ) {
     this.menuForm = this.fb.group({
       titulo: ['', [Validators.required]],
-      foto: [''], // Campo opcional
+      foto: [''], 
       precio: ['', [Validators.required, Validators.min(0)]],
       veggie: [false, [Validators.required]],
-      comidas: this.fb.group({ // Solo un grupo de controles para comida
+      comidas: this.fb.group({ 
         entrada: [''],
         bebida: [''],
         platoPrincipal: [''],
@@ -74,7 +74,7 @@ export class MenuCreateComponent {
         this.menuRequest.foto = reader.result as string;
       };
 
-      reader.readAsDataURL(file); // Leer el archivo como Base64
+      reader.readAsDataURL(file); 
     }
   }
 
@@ -87,13 +87,13 @@ export class MenuCreateComponent {
         nombre: titulo,
         precio: precio,
         veggie: veggie,
-        foto: foto || '', // Valor por defecto si es opcional
+        foto: foto || '',
         comidas: [
           entrada,
           bebida,
           platoPrincipal,
           postre
-        ] // Enviar como   un array con una sola comida
+        ] 
       };
 
       console.log(menuRequest);
@@ -101,7 +101,7 @@ export class MenuCreateComponent {
       this.menuService.create(menuRequest).subscribe({
         next: (response) => {
           console.log('Menú agregado:', response);
-          this.router.navigate(['/menu-list']); // Reemplaza '/ruta-deseada' con la ruta a la que deseas redirigir
+          this.router.navigate(['/menu-list']);
           Swal.fire('Éxito', 'El menú se ha creado exitosamente.', 'success');
         },
         error: (error) => {
