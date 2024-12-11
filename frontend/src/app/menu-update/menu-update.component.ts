@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';;
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 import { MenuService } from '../services/menu.service';
 import { Comida } from '../model/carta/producto/comida';
@@ -118,10 +119,20 @@ export class MenuUpdateComponent {
         comidas: comidasArray
       };
       console.log(menuRequest);
-      this.menuService.update(menuRequest, this.menuId).subscribe(response => {
-        this.router.navigate(['/menu-list']);
-      }, error => {
-        console.error('Error al actualizar el menú:', error);
+      this.menuService.update(menuRequest, this.menuId).subscribe({
+        next: () => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Menú actualizado',
+            text: 'El menú ha sido actualizado correctamente',
+            confirmButtonText: 'OK'
+          }).then(() => {
+            this.router.navigate(['/menu-list']);
+          });
+        },
+        error: (error) => {
+          console.error('Error al actualizar el menú:', error);
+        }
       });
     } else {
       console.log('Formulario no válido');
