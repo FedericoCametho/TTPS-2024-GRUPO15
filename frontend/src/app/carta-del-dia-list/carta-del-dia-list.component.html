@@ -6,7 +6,7 @@
 
     <div class="container mt-4">
         <h2>Listado de cartas del día</h2>
-        <button [routerLink]="['/carta-del-dia-create']" class="btn btn-success mb-3">Crear</button>
+        <button [routerLink]="['/carta-del-dia-create']" [hidden]="!mostrarBotonesAdmin" class="btn btn-success mb-3">Crear</button>
         <div class="row">
             <div *ngFor="let carta of cartasDelDia" class="col-md-4 mb-4">
                 <div class="card h-100">
@@ -23,8 +23,7 @@
                             <strong>Activo:</strong> {{ carta.activa ? 'Sí' : 'No' }}
                         </p>
                         <div class="mt-auto">
-                            <button [routerLink]="['/carta-del-dia-update/', carta.id]"
-                                class="btn btn-secondary">Modificar</button>
+                            <button [routerLink]="['/carta-del-dia-update/', carta.id]" [hidden]="!mostrarBotonesAdmin"class="btn btn-secondary">Modificar</button>
                         </div>
                     </div>
                 </div>

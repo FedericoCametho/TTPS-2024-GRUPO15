@@ -5,6 +5,7 @@ import { MenuService } from '../services/menu.service';
 import { CommonModule } from '@angular/common';
 import { Comida } from '../model/carta/producto/comida';
 import { ReloadService } from '../services/reload.service'
+import { AuthService } from '../services/auth.service'
 
 
 @Component({
@@ -15,8 +16,12 @@ import { ReloadService } from '../services/reload.service'
 })
 export class MenuListComponent {
   menus: Menu[] = [];
+  rol: string = '';
+  mostrarBotonesAdmin: boolean;
 
-  constructor(private menuService: MenuService, private reloadService: ReloadService) { }
+  constructor(private menuService: MenuService, private reloadService: ReloadService, private authService: AuthService) {
+    this.mostrarBotonesAdmin = this.authService.isLoggedAsAdmin();
+   }
 
   mostrarModal = false;
   menuSeleccionado: any = null;
@@ -33,7 +38,11 @@ export class MenuListComponent {
 
   ngOnInit(): void {
     this.cargarDatosDelBack();
-
+    this.authService.currentUser.subscribe(user => {
+      if (user) {
+        this.rol = user.rol;
+      }
+    });
     this.reloadService.reload$.subscribe(() => {this.cargarDatosDelBack();})
   }
   

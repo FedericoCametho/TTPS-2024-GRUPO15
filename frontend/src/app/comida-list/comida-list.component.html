@@ -6,7 +6,7 @@
 
     <div class="container mt-4">
     <h2>Listado de Comidas</h2>
-    <button [routerLink]="['/comida-create']" class="btn btn-success">Crear</button>
+    <button [routerLink]="['/comida-create']" [hidden]="!mostrarBotonesAdmin" class="btn btn-success">Crear</button>
     <div *ngIf="comidas.length === 0" class="alert alert-info">
         No hay comidas disponibles.
     </div>
@@ -21,7 +21,7 @@
             <p class="card-text"><b>Precio:</b> {{ comida.precio | currency }}</p>
             <p class="card-text" *ngIf="comida.inMenu">En menú</p>
             </div>
-            <button [routerLink]="['/comida-update/', comida.id]"  class="btn btn-secondary">Modificar</button>
+            <button [routerLink]="['/comida-update/', comida.id]" [hidden]="!mostrarBotonesAdmin" class="btn btn-secondary">Modificar</button>
         </div>
         </div>
     </div>

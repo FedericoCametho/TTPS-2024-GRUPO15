@@ -15,7 +15,7 @@ export class NavBarComponent {
   mostrarComponente: boolean;
 
   constructor(private authService: AuthService, private storageService: StorageService) { 
-    this.mostrarComponente = this.storageService.getItem('currentUser') ? true : false;
+    this.mostrarComponente = this.authService.isLoggedIn();
   }
 
   ngOnInit(): void {

@@ -5,7 +5,7 @@
     </header>
     <div class="container mt-4">
         <h2>Listado de Menues</h2>
-        <button [routerLink]="['/menu-create']" class="btn btn-success mb-3">Crear</button>
+        <button [routerLink]="['/menu-create']" [hidden]="!mostrarBotonesAdmin" class="btn btn-success mb-3">Crear</button>
         <div class="row">
             <div class="col-md-4 mb-4" *ngFor="let menu of menus">
                 <div class="card h-100">
@@ -15,7 +15,7 @@
                         <div class="mt-auto">
                             <button (click)="verDetalles(menu)" class="btn btn-primary">Detalles</button>
                             <span class="mx-2"></span>
-                            <button [routerLink]="['/menu-update/', menu.id]" class="btn btn-secondary">Modificar</button>
+                            <button [routerLink]="['/menu-update/', menu.id]" [hidden]="!mostrarBotonesAdmin" class="btn btn-secondary">Modificar</button>
                         </div>
                     </div>
                 </div>

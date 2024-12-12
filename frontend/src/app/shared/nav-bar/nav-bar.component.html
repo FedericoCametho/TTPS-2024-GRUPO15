@@ -7,16 +7,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                    <a class="nav-link active" aria-current="page" [routerLink]="['']">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/carta-del-dia-list']">Cartas del dia</a>
+                    <a class="nav-link" aria-current="Cartas del día" [routerLink]="['/carta-del-dia-list']">Cartas del dia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/menu-list']">Menues</a>
+                    <a class="nav-link" aria-current="Menues" [routerLink]="['/menu-list']">Menues</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/comida-list']">Comidas</a>
+                    <a class="nav-link" aria-current="Comidas" [routerLink]="['/comida-list']">Comidas</a>
                 </li>
             </ul>
         </div>
