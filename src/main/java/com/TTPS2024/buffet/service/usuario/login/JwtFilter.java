@@ -63,6 +63,10 @@ public class JwtFilter implements Filter {
             return true;
         }
 
+        if (path.startsWith("/cartaDelDia/listar")){
+            return true;
+        }
+
         return false;
     }
 
