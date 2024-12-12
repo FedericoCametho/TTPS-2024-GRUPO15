@@ -49,4 +49,15 @@ export class AuthService {
     this.currentUserSubject.next(null);
   }
 
+  isLoggedIn(): boolean {
+    return !!this.currentUserValue ? true : false;
+  }
+
+  isLoggedAsAdmin(): boolean {
+    if (this.isLoggedIn()){
+      return this.currentUserValue.rol === 'ADMINISTRADOR' || this.currentUserValue.rol === 'RESPONSABLE_DE_TURNO';
+    }
+    return false;
+  }
+
 }
