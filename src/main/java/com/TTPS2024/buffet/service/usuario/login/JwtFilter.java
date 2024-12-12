@@ -55,6 +55,14 @@ public class JwtFilter implements Filter {
             return List.of(DiaSemana.values()).contains(DiaSemana.valueOf(dia.toUpperCase()));
         }
 
+        if (path.startsWith("/comida/listar")){
+            return true;
+        }
+
+        if (path.startsWith("/menu/listar")){
+            return true;
+        }
+
         return false;
     }
 
