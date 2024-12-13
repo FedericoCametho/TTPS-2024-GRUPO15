@@ -3,7 +3,7 @@ package com.TTPS2024.buffet.controller.request.carta.producto;
 public abstract class ProductoComercializableRequest {
     private String nombre;
     private Double precio;
-    private byte[] imagen;
+    private String foto;
 
     public String getNombre() {
         return nombre;
@@ -21,11 +21,11 @@ public abstract class ProductoComercializableRequest {
         this.precio = precio;
     }
 
-    public byte[] getImagen() {
-        return imagen;
+    public String getFoto() {
+        return foto;
     }
 
-    public void setImagen(byte[] imagen) {
-        this.imagen = imagen;
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }

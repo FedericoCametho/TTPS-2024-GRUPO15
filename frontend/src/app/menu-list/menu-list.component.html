@@ -9,6 +9,9 @@
         <div class="row">
             <div class="col-md-4 mb-4" *ngFor="let menu of menus">
                 <div class="card h-100">
+                    <div *ngIf="menu.foto" class="card-img-top text-center">
+                        <img [src]="menu.foto" style="max-width: 100%; height: auto;" alt="{{ menu.nombre }}">
+                    </div>
                     <div class="card-body d-flex flex-column">
                         <h4 class="card-title">{{ menu.nombre }}</h4>
                         <p class="card-text"><b>Precio</b>: ${{ menu.precio }}</p>
@@ -30,6 +33,13 @@
                 <div class="modal-header">
                     <h5 class="modal-title">{{ menuSeleccionado?.nombre }}</h5>
                 </div>
+                <div *ngIf="menuSeleccionado?.foto" class="card-img-top text-center">
+                    <img
+                      [src]="menuSeleccionado.foto"
+                      style="max-width: 200px; height: auto;"
+                      alt="{{ menuSeleccionado.nombre }}"
+                    />
+                  </div> 
                 <div class="modal-body">
                     <p><b>Precio</b>: ${{ menuSeleccionado?.precio }}</p>
                     <div *ngIf="menuSeleccionado">

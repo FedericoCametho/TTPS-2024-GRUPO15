@@ -8,10 +8,9 @@ import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Base64;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 public abstract class ProductoComercializableService<T extends ProductoComercializable, S extends ProductoComercializableDAO<T> & JpaRepository<T, Long>,
         R extends ProductoComercializableRequest> {
@@ -50,7 +49,7 @@ public abstract class ProductoComercializableService<T extends ProductoComercial
         }
         originalProduct.setNombre(request.getNombre());
         originalProduct.setPrecio(request.getPrecio());
-        originalProduct.setFoto(request.getImagen());
+        originalProduct.setFoto(this.getBytesFromRequest(request.getFoto()));
         this.setUpdateSpecificFields(originalProduct, request);
         T result = this.dao.saveAndFlush(originalProduct);
         this.updateSpecificRelations(result, request);
@@ -136,5 +135,16 @@ public abstract class ProductoComercializableService<T extends ProductoComercial
         return this.dao.findAllById(ids);
     }
 
+    protected byte[] getBytesFromRequest(String requestBase64String){
+        if(requestBase64String != null && !requestBase64String.isEmpty()){
+            String base64String = requestBase64String;
+            if (base64String.startsWith("data:image")) {
+                base64String = base64String.substring(base64String.indexOf(",") + 1);
+            }
+            return Base64.getDecoder().decode(base64String);
+        } else {
+            return null;
+        }
+    }
 
 }

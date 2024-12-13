@@ -46,7 +46,7 @@ public class ComidaService extends ProductoComercializableService<Comida,ComidaD
 
     @Override
     protected Comida createProductoComercializable(ComidaRequest request) {
-        return new Comida(request.getNombre(), request.getTipoComida(), request.getPrecio(), request.getImagen());
+        return new Comida(request.getNombre(), request.getTipoComida(), request.getPrecio(), this.getBytesFromRequest(request.getFoto()));
     }
 
     @Override

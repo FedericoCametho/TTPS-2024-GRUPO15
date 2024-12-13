@@ -39,7 +39,11 @@ public class AlumnoService extends UsuarioService<Alumno, AlumnoDAO, AlumnoReque
     @Override
     protected void setUpdateSpecificFields(Alumno alumno, AlumnoRequest alumnoRequest) {
         if(alumnoRequest.getFoto() != null){
-            alumno.setFotoDePerfil(Base64.getDecoder().decode(alumnoRequest.getFoto()));
+            String base64String = alumnoRequest.getFoto();
+            if (base64String.startsWith("data:image")) {
+                base64String = base64String.substring(base64String.indexOf(",") + 1);
+            }
+            alumno.setFotoDePerfil(Base64.getDecoder().decode(base64String));
         }
         this.validarHabilitado(alumno, alumnoRequest.isHabilitado());
     }

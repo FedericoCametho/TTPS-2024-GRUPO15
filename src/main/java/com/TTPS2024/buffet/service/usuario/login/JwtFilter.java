@@ -49,6 +49,9 @@ public class JwtFilter implements Filter {
         if(path.startsWith("/login")){
             return true;
         }
+        if(path.contains("/registrar")){
+            return true;
+        }
 
         if (path.startsWith("/cartaDelDia/listarDia/")) {
             String dia = path.substring("/cartaDelDia/listarDia/".length());
@@ -64,6 +67,12 @@ public class JwtFilter implements Filter {
         }
 
         if (path.startsWith("/cartaDelDia/listar")){
+            return true;
+        }
+        if(path.startsWith("/menu")){
+            return true;
+        }
+        if(path.startsWith("/comida")){
             return true;
         }
 

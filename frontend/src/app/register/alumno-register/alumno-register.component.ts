@@ -35,7 +35,7 @@ export class AlumnoRegistroComponent {
       const reader = new FileReader();
 
       reader.onload = () => {
-        this.alumnoRequest.foto = reader.result as string;
+        this.alumnoRequest.foto = reader.result as string || '';
       };
 
       reader.readAsDataURL(file); // Leer el archivo como Base64
@@ -46,14 +46,11 @@ export class AlumnoRegistroComponent {
   register(): void {
     const userType = "alumno";
     const {nombre, apellido, dni, email, contrasena } = this.formulario.value;
-    const alumnoRequest = {
-      nombre: nombre,
-      apellido: apellido,
-      dni: dni,
-      email: email,
-      contrasena: contrasena,
-      foto: this.alumnoRequest.foto || null // Enviar la foto en formato Base64 o null si no hay
-    };
+    this.alumnoRequest.nombre = nombre;
+    this.alumnoRequest.apellido = apellido;
+    this.alumnoRequest.dni = dni;
+    this.alumnoRequest.email = email;
+    this.alumnoRequest.contrasena = contrasena;
 
     this.authService.register(this.alumnoRequest, userType).subscribe(
       response => {

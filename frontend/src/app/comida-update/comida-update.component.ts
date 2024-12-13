@@ -66,17 +66,15 @@ export class ComidaUpdateComponent implements OnInit {
 
   onSubmit(): void {
     if (this.comidaForm.valid) {
-      const { nombre, tipoComida, inMenu, precio, foto } = this.comidaForm.value;
-      const comida: ComidaRequest = {
-        id: this.comidaId,
-        nombre: nombre,
-        tipoComida: tipoComida,
-        inMenu: inMenu || false, 
-        precio: precio,
-        foto: foto || '' 
-      };
+      const { nombre, tipoComida, inMenu, precio } = this.comidaForm.value;
+      this.comidaRequest.id =  this.comidaId;
+      this.comidaRequest.nombre = nombre;
+      this.comidaRequest.tipoComida = tipoComida;
+      this.comidaRequest.inMenu = inMenu;
+      this.comidaRequest.precio = precio;
+    
 
-      this.comidaService.update(comida, this.comidaId).subscribe({
+      this.comidaService.update(this.comidaRequest, this.comidaId).subscribe({
         next: (response) => {
           console.log('Comida actualizada:', response);
           this.router.navigate(['/comida-list']);

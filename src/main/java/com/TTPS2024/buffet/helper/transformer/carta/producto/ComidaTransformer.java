@@ -17,7 +17,7 @@ public class ComidaTransformer  {
         comidaDTO.setNombre(comida.getNombre());
         comidaDTO.setPrecio(comida.getPrecio());
         comidaDTO.setTipoComida(comida.getTipoComida());
-        comidaDTO.setFoto(comida.getFoto());
+        comidaDTO.setFoto(MenuTransformer.getBytesToString(comida.getFoto()));
         comidaDTO.setMenues(comida.getMenues().stream().mapToLong(ProductoComercializable::getId).boxed().toList());
         comidaDTO.setCompras(comida.getCompras().stream().mapToLong(Compra::getId).boxed().toList());
         comidaDTO.setEnMenu(comida.getEnMenu());

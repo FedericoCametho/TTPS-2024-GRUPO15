@@ -6,6 +6,7 @@ import com.TTPS2024.buffet.model.sugerencia.Sugerencia;
 import com.TTPS2024.buffet.model.usuario.Alumno;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 public class AlumnoTransformer {
@@ -19,7 +20,7 @@ public class AlumnoTransformer {
         dto.setDni(alumno.getDni());
         dto.setRol(alumno.getRol());
         dto.setHabilitado(alumno.isHabilitado());
-        dto.setFotoDePerfil(alumno.getFotoDePerfil());
+        dto.setFotoDePerfil(getBytesToString(alumno.getFotoDePerfil()));
         dto.setCompras(alumno.getCompras().stream().mapToLong(Compra::getId).boxed().toList());
         dto.setSugerencias(alumno.getSugerencias().stream().mapToLong(Sugerencia::getId).boxed().toList());
         return dto;
@@ -28,5 +29,10 @@ public class AlumnoTransformer {
     public static List<AlumnoDTO> toDTOList(List<Alumno> alumnos) {
         return (alumnos.isEmpty()) ? new ArrayList<>() :
                 alumnos.stream().map(AlumnoTransformer::toDTO).toList();
+    }
+
+    private static String getBytesToString(byte[] bytes) {
+        return (bytes == null) ? null
+                : Base64.getEncoder().encodeToString(bytes);
     }
 }

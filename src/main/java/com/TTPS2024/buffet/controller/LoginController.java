@@ -39,7 +39,7 @@ public class LoginController {
         }
     }
 
-    @PostMapping("/responsableDeTurno")
+    @PostMapping("/responsable-de-turno")
     public ResponseEntity<?> authenticateResponsable(@RequestBody LoginRequest loginRequest){
         if(this.responsableDeTurnoService.login(loginRequest)){
             String token = tokenServices.generateToken(loginRequest.getEmail(), EXPIRATION_IN_SEC);

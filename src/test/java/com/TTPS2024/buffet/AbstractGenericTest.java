@@ -197,7 +197,7 @@ public abstract class AbstractGenericTest {
         MenuRequest menuRequest = new MenuRequest();
         menuRequest.setNombre(nombre);
         menuRequest.setPrecio(precio);
-        menuRequest.setImagen(null);
+        menuRequest.setFoto(null);
         menuRequest.setComidas(comidasList.stream().mapToLong(ProductoComercializable::getId).boxed().toList());
         menuRequest.setVeggie(isVeggie);
         return menuRequest;

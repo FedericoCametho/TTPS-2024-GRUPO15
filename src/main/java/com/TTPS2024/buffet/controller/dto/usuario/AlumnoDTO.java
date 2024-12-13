@@ -8,8 +8,7 @@ import java.util.List;
 public class AlumnoDTO extends UsuarioDTO{
     private List<Long> compras;
     private Boolean habilitado;
-    @Lob
-    private byte[] fotoDePerfil;
+    private String fotoDePerfil;
 
     private List<Long> sugerencias;
 
@@ -29,11 +28,11 @@ public class AlumnoDTO extends UsuarioDTO{
         this.habilitado = habilitado;
     }
 
-    public byte[] getFotoDePerfil() {
+    public String getFotoDePerfil() {
         return fotoDePerfil;
     }
 
-    public void setFotoDePerfil(byte[] fotoDePerfil) {
+    public void setFotoDePerfil(String fotoDePerfil) {
         this.fotoDePerfil = fotoDePerfil;
     }
 

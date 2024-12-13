@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { Comida } from '../model/carta/producto/comida';
 import { ReloadService } from '../services/reload.service'
 import { AuthService } from '../services/auth.service'
+import { error } from 'node:console';
 
 
 @Component({
@@ -51,10 +52,24 @@ export class MenuListComponent {
     return this.menuSeleccionado?.comidas.find((c: Comida) => c.tipoComida === tipo);
   }
 
+  buildImagesUrl(menus: Menu[]): void{
+    menus.forEach((menu: Menu) => {
+      menu.foto = `data:image/png;base64,${menu.foto}`;
+    })
+  };
 
   cargarDatosDelBack():void{
-    this.menuService.getMenus().subscribe((resp) => {
-      this.menus = resp;
+    this.menuService.getMenus().subscribe({
+      next: (resp: Menu[]) => {
+        this.buildImagesUrl(resp);
+        this.menus = resp;
+      },
+      error: (err) => {
+        console.error('Error loading menus', err);
+      },
     });
   }
+
+
+  
 }

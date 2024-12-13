@@ -14,8 +14,8 @@
         <div *ngFor="let comida of comidas" class="col-md-4 mb-4">
         <div class="card h-100">
             <div *ngIf="comida.foto" class="card-img-top">
-            <img [src]="comida.foto" class="img-fluid rounded-start" alt="{{ comida.nombre }}">
-            </div>
+                <img *ngIf="comida.foto" [src]="comida.foto" style="max-width: 100%; height: auto;"  alt="{{ comida.nombre }}">
+            </div>  
             <div class="card-body">
             <h5 class="card-title">{{ comida.nombre }}</h5>
             <p class="card-text"><b>Precio:</b> {{ comida.precio | currency }}</p>

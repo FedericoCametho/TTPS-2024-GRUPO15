@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,7 +54,7 @@ public class MenuService extends ProductoComercializableService<Menu,MenuDAO, Me
 
     @Override
     protected Menu createProductoComercializable(MenuRequest request) {
-        return new Menu(request.getNombre(), request.getPrecio(), this.comidaService.getProductsFromIds(request.getComidas()), request.getImagen(), request.isVeggie());
+        return new Menu(request.getNombre(), request.getPrecio(), this.comidaService.getProductsFromIds(request.getComidas()), this.getBytesFromRequest(request.getFoto()), request.isVeggie());
     }
 
     public List<Menu> getMenuesVeggieByIds(List<Long> ids){

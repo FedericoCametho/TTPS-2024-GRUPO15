@@ -3,7 +3,6 @@ package com.TTPS2024.buffet.carta.producto;
 import com.TTPS2024.buffet.AbstractGenericTest;
 
 import com.TTPS2024.buffet.controller.request.carta.producto.MenuRequest;
-import com.TTPS2024.buffet.model.carta.producto.Comida;
 import com.TTPS2024.buffet.model.carta.producto.Menu;
 import org.junit.jupiter.api.*;
 
@@ -42,7 +41,7 @@ public class MenuServiceTest extends AbstractGenericTest {
         assertEquals(menuRequest.getNombre(), menu.getNombre());
         assertEquals(menuRequest.getPrecio(), menu.getPrecio());
         assertEquals(menuRequest.getComidas().size(), menu.getComidas().size());
-        assertEquals(menuRequest.getImagen(), menu.getFoto());
+        assertEquals(menuRequest.getFoto(), menu.getFoto());
     }
 
 

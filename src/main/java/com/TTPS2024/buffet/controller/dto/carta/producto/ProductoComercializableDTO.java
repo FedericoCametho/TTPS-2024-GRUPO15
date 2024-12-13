@@ -6,8 +6,8 @@ public abstract class ProductoComercializableDTO {
     protected Long id;
     protected String nombre;
     protected Double precio;
-    @Lob
-    protected byte[] foto;
+
+    protected String foto;
 
     public Long getId() {
         return id;
@@ -33,11 +33,11 @@ public abstract class ProductoComercializableDTO {
         this.precio = precio;
     }
 
-    public byte[] getFoto() {
+    public String getFoto() {
         return foto;
     }
 
-    public void setFoto(byte[] foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 }

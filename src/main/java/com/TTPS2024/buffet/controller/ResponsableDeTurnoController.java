@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ResponsableDeTurno")
+@RequestMapping("/responsable-de-turno")
 public class ResponsableDeTurnoController {
 
     @Autowired

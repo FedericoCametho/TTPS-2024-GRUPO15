@@ -26,10 +26,21 @@ export class ComidaListComponent {
     this.reloadService.reload$.subscribe(() => {this.cargarDatosDelBack();})
   }
 
+  buildImagesUrl(comidas: Comida[]): void{
+    comidas.forEach((comida: Comida) => {
+      comida.foto = `data:image/png;base64,${comida.foto}`;
+    })
+  };
 
-  cargarDatosDelBack(): void {
-    this.comidaService.getComidas().subscribe((resp) => {
-      this.comidas = resp;
+  cargarDatosDelBack(): void {    
+    this.comidaService.getComidas().subscribe({
+      next: (resp: Comida[]) => {
+        this.buildImagesUrl(resp);
+        this.comidas = resp;
+      },
+      error: (err) => {
+        console.error('Error loading menus', err);
+      },
     });
   }
 }
