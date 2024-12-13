@@ -19,7 +19,7 @@
                                 {{ menu.nombre }}
                             </li>
                         </ul>
-                        <p class="card-text">
+                        <p class="card-text" [hidden]="!mostrarBotonesAdmin">
                             <strong>Activo:</strong> {{ carta.activa ? 'Sí' : 'No' }}
                         </p>
                         <div class="mt-auto">
