@@ -58,17 +58,13 @@ export class ComidaCreateComponent {
 
   onSubmit(): void {
     if (this.comidaForm.valid) {
-      const { nombre, tipoComida, inMenu, precio, foto } = this.comidaForm.value;
-      const comida: ComidaRequest = {
-        id: 0, // El id se genera automáticamente en el backend
-        nombre: nombre,
-        tipoComida: tipoComida,
-        inMenu: inMenu || false,
-        precio: precio,
-        foto: foto || ''
-      };
+      const { nombre, tipoComida, inMenu, precio } = this.comidaForm.value;
+      this.comidaRequest.nombre = nombre;
+      this.comidaRequest.tipoComida = tipoComida;
+      this.comidaRequest.inMenu = inMenu;
+      this.comidaRequest.precio = precio;
 
-      this.comidaService.createComida(comida).subscribe({
+      this.comidaService.createComida(this.comidaRequest).subscribe({
         next: (response) => {
           console.log('Comida agregada:', response);
           this.router.navigate(['/comida-list']);

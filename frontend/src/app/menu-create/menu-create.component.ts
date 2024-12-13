@@ -82,23 +82,18 @@ export class MenuCreateComponent {
     if (this.menuForm.valid) {
       const { titulo, foto, precio, veggie, comidas } = this.menuForm.value;
       const { entrada, bebida, platoPrincipal, postre } = comidas;
-      const menuRequest: MenuRequest = {
-        id: 0, // El id se genera automáticamente en el backend
-        nombre: titulo,
-        precio: precio,
-        veggie: veggie,
-        foto: foto || '',
-        comidas: [
-          entrada,
-          bebida,
-          platoPrincipal,
-          postre
-        ] 
-      };
 
-      console.log(menuRequest);
+      this.menuRequest.nombre = titulo;
+      this.menuRequest.precio = precio;
+      this.menuRequest.veggie = veggie;
+      this.menuRequest.comidas = [
+        entrada,
+        bebida,
+        platoPrincipal,
+        postre
+      ] 
 
-      this.menuService.create(menuRequest).subscribe({
+      this.menuService.create(this.menuRequest).subscribe({
         next: (response) => {
           console.log('Menú agregado:', response);
           this.router.navigate(['/menu-list']);

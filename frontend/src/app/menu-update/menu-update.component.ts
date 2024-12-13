@@ -110,16 +110,13 @@ export class MenuUpdateComponent {
       const { titulo, precio, esVegano, comidas } = this.menuForm.value;
       const { entrada, bebida, platoPrincipal, postre } = comidas;
       const comidasArray = [entrada, bebida, platoPrincipal, postre].filter(comida => comida !== null && comida !== undefined && comida !== '');
-      const menuRequest: MenuRequest = {
-        id: this.menuId,
-        nombre: titulo,
-        precio: precio,
-        veggie: esVegano,
-        foto: this.menuRequest.foto,
-        comidas: comidasArray
-      };
-      console.log(menuRequest);
-      this.menuService.update(menuRequest, this.menuId).subscribe({
+      this.menuRequest.id =  this.menuId;
+      this.menuRequest.nombre = titulo;
+      this.menuRequest.precio = precio;
+      this.menuRequest.veggie = esVegano;
+      this.menuRequest.comidas = comidasArray;
+        
+      this.menuService.update(this.menuRequest, this.menuId).subscribe({
         next: () => {
           Swal.fire({
             icon: 'success',
