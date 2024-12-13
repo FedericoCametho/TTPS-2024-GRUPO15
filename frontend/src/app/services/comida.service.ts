@@ -31,7 +31,6 @@ export class ComidaService {
   }
 
   update(comida: ComidaRequest, id: number) {
-    console.log(comida);
     return this.http.put(`${env.url}/comida${actualizar}/${id}`, comida)
   }
 }

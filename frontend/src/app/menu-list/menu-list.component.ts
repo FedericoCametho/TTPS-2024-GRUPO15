@@ -53,8 +53,14 @@ export class MenuListComponent {
   }
 
   buildImagesUrl(menus: Menu[]): void{
+    const defaultImage  = 'assets/images/default-menu.png';
+
     menus.forEach((menu: Menu) => {
-      menu.foto = `data:image/png;base64,${menu.foto}`;
+      if (menu.foto){
+        menu.foto = `data:image/png;base64,${menu.foto}`;
+      } else {
+        menu.foto = defaultImage;
+      }
     })
   };
 

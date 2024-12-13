@@ -14,7 +14,7 @@
         <div *ngFor="let comida of comidas" class="col-md-4 mb-4">
         <div class="card h-100">
             <div *ngIf="comida.foto" class="card-img-top">
-                <img *ngIf="comida.foto" [src]="comida.foto" style="max-width: 100%; height: auto;"  alt="{{ comida.nombre }}">
+                <img *ngIf="comida.foto" [src]="comida.foto ? comida.foto : 'assets/images/default-comida.png'" style="max-width: 100%; height: auto;"  alt="{{ comida.nombre }}">
             </div>  
             <div class="card-body">
             <h5 class="card-title">{{ comida.nombre }}</h5>

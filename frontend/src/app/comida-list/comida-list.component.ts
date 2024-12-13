@@ -27,8 +27,13 @@ export class ComidaListComponent {
   }
 
   buildImagesUrl(comidas: Comida[]): void{
+    const defaultImage = 'assets/images/default-comida.png';
     comidas.forEach((comida: Comida) => {
-      comida.foto = `data:image/png;base64,${comida.foto}`;
+      if(comida.foto){
+        comida.foto = `data:image/png;base64,${comida.foto}`;
+      }else {
+        comida.foto = defaultImage;
+      }
     })
   };
 

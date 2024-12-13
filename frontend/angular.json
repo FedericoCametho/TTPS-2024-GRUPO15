@@ -91,7 +91,10 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              "src/favicon.ico",
+              "src/assets",
+              "public/assets"
             ],
             "styles": [
               "src/styles.css"
