@@ -21,7 +21,7 @@ export class AuthService {
   public currentUser: Observable<Credential | any>;
 
   constructor(private http: HttpClient, private storageService :StorageService) { 
-    const currentStoredUser = this.storageService.getItem('currentUser');
+    const currentStoredUser = JSON.parse(this.storageService.getItem('currentUser') || 'null') as Credential | null;
     this.currentUserSubject = new BehaviorSubject<any>(currentStoredUser);
     this.currentUser = this.currentUserSubject.asObservable();
   }
