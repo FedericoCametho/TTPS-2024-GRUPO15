@@ -69,12 +69,6 @@ public class JwtFilter implements Filter {
         if (path.startsWith("/cartaDelDia/listar")){
             return true;
         }
-        if(path.startsWith("/menu")){
-            return true;
-        }
-        if(path.startsWith("/comida")){
-            return true;
-        }
 
         return false;
     }
